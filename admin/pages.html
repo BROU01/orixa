@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pages — Administration ORIXA</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/admin.css">
+<style>
+.rte { border: 1px solid var(--a-line-2); border-radius: 8px; overflow: hidden; }
+.rte__bar { display: flex; gap: 2px; padding: 8px; border-bottom: 1px solid var(--a-line); background: #FAFBFA; flex-wrap: wrap; }
+.rte__b { min-width: 32px; height: 30px; padding: 0 8px; border-radius: 5px; font-size: 12.5px; color: var(--a-ink-2); }
+.rte__b:hover { background: #EEF1EF; }
+.rte__area { min-height: 160px; padding: 14px; outline: none; line-height: 1.6; }
+.rte__area h2 { font-size: 19px; margin: 10px 0 6px; }
+.rte__area p { margin: 0 0 10px; }
+.rte__area ul { list-style: disc; padding-left: 22px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Aller au contenu</a>
+<div class="admin">
+<aside class="side">
+<div class="side__brand"><span class="side__mark">ORIXA</span><span class="side__role">Administration</span></div>
+<nav class="side__nav" aria-label="Navigation du back-office">
+<p class="side__group">Pilotage</p>
+<a class="side__link" href="index.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Tableau de bord</span></a>
+<a class="side__link" href="commandes.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Commandes</span></a>
+<a class="side__link" href="clients.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg><span>Clients</span></a>
+<p class="side__group">Catalogue</p>
+<a class="side__link" href="produits.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>Produits</span></a>
+<a class="side__link" href="rayons.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 3h18v18H3z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Rayons</span></a>
+<a class="side__link" href="collections.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Collections</span></a>
+<a class="side__link" href="reductions.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.6 13.4 12 22l-9-9V3h10z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/></svg><span>Réductions</span></a>
+<p class="side__group">Boutique en ligne</p>
+<a class="side__link" href="personnalisation.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".6" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".6" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".6" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".6" fill="currentColor"/><path d="M12 2a10 10 0 0 0 0 20 2.5 2.5 0 0 0 2-4 2.5 2.5 0 0 1 2-4h2a4 4 0 0 0 4-4 10 10 0 0 0-10-8z"/></svg><span>Personnalisation</span></a>
+<a class="side__link" href="menus.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="13" y2="18"/></svg><span>Menus</span></a>
+<a class="side__link" href="medias.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Médiathèque</span></a>
+<a class="side__link" href="articles.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Articles</span></a>
+<a class="side__link" href="pages.html" aria-current="page"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Pages</span></a>
+<p class="side__group">Administration</p>
+<a class="side__link" href="utilisateurs.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Utilisateurs</span></a>
+<a class="side__link" href="reglages.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Réglages</span></a>
+</nav>
+<div class="side__foot"><div class="side__user"><span class="side__avatar">KG</span><span><strong style="display:block;color:#fff;font-size:12.5px">Kalipé G.</strong><span style="font-size:11.5px;opacity:.75">Propriétaire</span></span></div><a class="side__view" href="../index.html" target="_blank" rel="noopener">Voir la boutique <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
+</aside>
+  <div class="main">
+    <header class="topbar">
+      <h1 class="topbar__title">Pages</h1>
+      <div class="topbar__actions">
+        <a class="b b--default b--sm" href="../index.html" target="_blank" rel="noopener">Voir la boutique <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </header>
+    <main id="main" style="flex:1;min-width:0;display:flex;flex-direction:column">
+<div class="content">
+<div class="page-head">
+  <div><h2 class="page-title">Pages</h2><p class="page-sub">Modifiez le contenu des pages statiques de la boutique.</p></div>
+</div>
+
+<div class="note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>La page d'accueil se compose par sections via <a href="personnalisation.html" style="color:var(--a-brand);font-weight:600">Personnalisation</a>. Les autres pages s'éditent ici.</span></div>
+
+<section class="card"><div class="tbl-wrap"><table class="tbl">
+  <thead><tr><th>Page</th><th>Adresse</th><th>Composition</th><th class="tbl__num">Action</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Accueil</strong></td><td style="font-size:12.5px;color:var(--a-muted)">/index.html</td>
+      <td><span class="pill pill--ok">Sections modifiables</span></td>
+      <td class="tbl__num"><a class="b b--primary b--sm" href="personnalisation.html">Composer</a></td></tr>
+    <tr><td><strong>Boutique</strong></td><td style="font-size:12.5px;color:var(--a-muted)">/boutique.html</td>
+      <td><span class="pill pill--neutral">Généré depuis le catalogue</span></td>
+      <td class="tbl__num"><a class="b b--default b--sm" href="produits.html">Gérer les produits</a></td></tr>
+    <tr data-page-row="histoire"><td><strong>Notre histoire</strong></td><td style="font-size:12.5px;color:var(--a-muted)">/histoire.html</td>
+      <td><span class="pill pill--warn">Contenu CMS</span></td>
+      <td class="tbl__num"><button class="b b--default b--sm" data-edit-page="histoire">Modifier</button></td></tr>
+    <tr data-page-row="contact"><td><strong>Contact</strong></td><td style="font-size:12.5px;color:var(--a-muted)">/contact.html</td>
+      <td><span class="pill pill--warn">Contenu CMS</span></td>
+      <td class="tbl__num"><button class="b b--default b--sm" data-edit-page="contact">Modifier</button></td></tr>
+    <tr data-page-row="legal"><td><strong>Informations légales</strong></td><td style="font-size:12.5px;color:var(--a-muted)">/legal.html</td>
+      <td><span class="pill pill--warn">Contenu CMS</span></td>
+      <td class="tbl__num"><button class="b b--default b--sm" data-edit-page="legal">Modifier</button></td></tr>
+  </tbody></table></div></section>
+
+<dialog class="emodal" data-pmodal style="max-width:780px">
+  <form method="dialog" style="margin:0">
+    <div class="card__head"><h2 class="card__title" data-ptitle>Modifier la page</h2></div>
+    <div class="card__body" style="max-height:70vh;overflow-y:auto">
+      <div class="f"><label class="f__label" for="p-titre">Titre de la page</label><input class="f__ctrl" id="p-titre"></div>
+      <div class="f"><label class="f__label" for="p-chapo">Chapô (description courte)</label><input class="f__ctrl" id="p-chapo"></div>
+      <div class="f"><span class="f__label">Image d'en-tête</span>
+        <div class="mpick"><img class="mpick__img" id="p-img-prev" src="../assets/img/placeholder.svg" alt="">
+          <div class="mpick__meta"><span id="p-img-name">—</span>
+            <button class="b b--default b--sm" type="button" data-ppick>Choisir une image</button></div></div></div>
+      <div class="f"><span class="f__label">Contenu de la page</span>
+        <div class="rte">
+          <div class="rte__bar" role="toolbar" aria-label="Mise en forme">
+            <button class="rte__b" type="button" data-pcmd="bold" aria-label="Gras"><strong>G</strong></button>
+            <button class="rte__b" type="button" data-pcmd="italic" aria-label="Italique"><em>I</em></button>
+            <button class="rte__b" type="button" data-pcmd="formatBlock" data-parg="h2" aria-label="Titre H2">H2</button>
+            <button class="rte__b" type="button" data-pcmd="formatBlock" data-parg="p" aria-label="Paragraphe">P</button>
+            <button class="rte__b" type="button" data-pcmd="insertUnorderedList" aria-label="Liste">•</button>
+            <button class="rte__b" type="button" data-pcmd="createLink" aria-label="Lien">Lien</button>
+            <button class="rte__b" type="button" data-pcmd="removeFormat" aria-label="Effacer la mise en forme">✕</button>
+          </div>
+          <div class="rte__area" id="p-contenu" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Contenu de la page" style="min-height:240px"></div>
+        </div></div>
+    </div>
+    <div class="card__foot" style="display:flex;justify-content:space-between;gap:10px">
+      <button class="b b--danger" type="button" data-preset>Rétablir le contenu d'origine</button>
+      <div style="display:flex;gap:10px">
+        <button class="b b--default" value="cancel">Annuler</button>
+        <button class="b b--primary" value="save">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="emodal" data-pmedia>
+  <div class="card__head"><h2 class="card__title">Choisir une image</h2></div>
+  <div class="card__body" style="max-height:60vh;overflow-y:auto"><div class="mgrid" data-pgrid></div></div>
+  <div class="card__foot" style="text-align:right"><button class="b b--default" data-pclose>Fermer</button></div>
+</dialog>
+</div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/catalog.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/admin.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var A = window.OrixaAdmin, esc = window.OrixaTheme.esc;
+  var pages = A.pages(), editing = null, curImg = '';
+  var modal = document.querySelector('[data-pmodal]'), media = document.querySelector('[data-pmedia]');
+
+  function find(id) { return pages.find(function (p) { return p.id === id; }); }
+
+  function setImg(s) {
+    curImg = s;
+    document.getElementById('p-img-prev').src = /^data:/.test(s) ? s : '../' + s;
+    document.getElementById('p-img-name').textContent = /^data:/.test(s) ? 'Image téléversée' : String(s).split('/').pop();
+  }
+
+  function open(id) {
+    var p = find(id);
+    if (!p) return A.toast('Page inconnue');
+    editing = p;
+    document.querySelector('[data-ptitle]').textContent = 'Modifier : ' + p.titre;
+    document.getElementById('p-titre').value = p.titre || '';
+    document.getElementById('p-chapo').value = p.chapo || '';
+    document.getElementById('p-contenu').innerHTML = p.contenu || '<p></p>';
+    setImg(p.image || 'assets/img/hero-poster.jpg');
+    modal.showModal();
+  }
+
+  // Barre de mise en forme
+  document.querySelectorAll('[data-pcmd]').forEach(function (b) {
+    b.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    b.addEventListener('click', function () {
+      var cmd = b.dataset.pcmd, arg = b.dataset.parg || null;
+      document.getElementById('p-contenu').focus();
+      if (cmd === 'createLink') {
+        var u = prompt('Adresse du lien :', 'https://');
+        if (!u) return;
+        arg = u;
+      }
+      try { document.execCommand(cmd, false, arg); } catch (e) {}
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    var b;
+    if ((b = e.target.closest('[data-edit-page]'))) return open(b.dataset.editPage);
+    if (e.target.closest('[data-ppick]')) {
+      document.querySelector('[data-pgrid]').innerHTML = A.media().map(function (m) {
+        return '<button class="mgrid__i" type="button" data-psel="' + esc(m.src) + '">' +
+          '<img src="' + (m.builtin ? '../' + esc(m.src) : esc(m.src)) + '" alt="" loading="lazy">' +
+          '<span>' + esc(m.name) + '</span></button>';
+      }).join('');
+      return media.showModal();
+    }
+    if ((b = e.target.closest('[data-psel]'))) { setImg(b.dataset.psel); media.close(); return; }
+    if (e.target.closest('[data-pclose]')) return media.close();
+    if (e.target.closest('[data-preset]')) {
+      if (!confirm('Rétablir le contenu d\'origine de cette page ?')) return;
+      var d = A.DEFAULT_PAGES.find(function (x) { return x.id === editing.id; });
+      if (d) {
+        document.getElementById('p-titre').value = d.titre;
+        document.getElementById('p-chapo').value = d.chapo;
+        document.getElementById('p-contenu').innerHTML = d.contenu;
+        setImg(d.image);
+        A.toast('Contenu d\'origine rétabli — pensez à enregistrer');
+      }
+      return;
+    }
+  });
+
+  modal.addEventListener('close', function () {
+    if (modal.returnValue !== 'save' || !editing) return;
+    editing.titre = document.getElementById('p-titre').value.trim();
+    editing.chapo = document.getElementById('p-chapo').value.trim();
+    editing.contenu = document.getElementById('p-contenu').innerHTML;
+    editing.image = curImg;
+    A.savePages(pages);
+    A.toast('Page enregistrée — visible sur la boutique');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nouveautés — ORIXA</title>
+<meta name="description" content="Les nouveautés ORIXA : dernières arrivées en cosmétiques et produits exotiques. Livrés partout en Europe.">
+<meta name="theme-color" content="#111110">
+<meta property="og:title" content="Nouveautés — ORIXA">
+<meta property="og:description" content="Les nouveautés ORIXA : dernières arrivées en cosmétiques et produits exotiques. Livrés partout en Europe.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-prefix="" data-active="nouveautes.html">
+<a href="#main" class="skip-link">Aller au contenu</a>
+
+<div class="announce"><span data-announce>Livraison <strong>Mondial Relay offerte dès 100 €</strong> — partout en Europe</span></div>
+
+<header class="header">
+  <div class="header__bar">
+    <a href="index.html" class="brand" aria-label="ORIXA, accueil"><span class="brand__mark">ORIXA</span></a>
+
+    <nav class="nav" aria-label="Navigation principale" data-nav>
+      <a class="nav__link" href="index.html">Accueil</a>
+      <a class="nav__link" href="boutique.html">Boutique</a>
+      <a class="nav__link" href="histoire.html">Notre histoire</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="icon-btn" href="favoris.html" aria-label="Mes favoris">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21.2l7.7-7.8 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </a>
+      <a class="icon-btn" href="compte/index.html" aria-label="Mon compte">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="icon-btn" data-drawer-open aria-label="Ouvrir le panier">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="icon-btn__count" data-cart-count style="display:none">0</span>
+      </button>
+      <button class="icon-btn header__burger" data-burger aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navigation mobile" data-mobile-nav>
+    <a href="index.html">Accueil</a>
+    <a href="boutique.html">Boutique</a>
+    <a href="compte/index.html">Connexion</a>
+  </nav>
+</header>
+
+<main id="main">
+  <div class="wrap">
+    <nav class="crumb" aria-label="Fil d'Ariane">
+      <a href="index.html">Accueil</a><span aria-hidden="true">/</span>
+      <a href="boutique.html">Boutique</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Nouveautés</span>
+    </nav>
+
+    <div style="margin-bottom:32px">
+      <span class="eyebrow eyebrow--muted">Arrivages</span>
+      <h1 class="h-display h1" style="margin-top:8px">Nouveautés</h1>
+      <p class="lede" style="margin-top:12px">Les dernières arrivées à la maison, sélectionnées avec soin.</p>
+    </div>
+
+    <nav class="cat-pills" aria-label="Rayons du catalogue">
+      <a class="cat-pill" href="cosmetiques.html">Cosmétiques</a>
+      <a class="cat-pill" href="exotiques.html">Produits exotiques</a>
+      <a class="cat-pill" href="nouveautes.html" aria-current="page">Nouveautés</a>
+      <a class="cat-pill" href="boutique.html">Tout le catalogue</a>
+    </nav>
+
+    <div class="shop__toolbar">
+      <p class="shop__count" data-count>&nbsp;</p>
+      <a class="sec-head__link" href="boutique.html">Tout voir &rarr;</a>
+    </div>
+
+    <div class="prod-grid" data-results></div>
+
+    <div class="empty" data-empty hidden>
+      <p class="empty__title">Aucune nouveauté pour l'instant</p>
+      <p class="empty__text">Revenez bientôt, ou parcourez tout le catalogue.</p>
+      <a class="btn btn--primary" href="boutique.html">Voir le catalogue</a>
+    </div>
+  </div>
+</main>
+
+<div class="scrim" data-scrim></div>
+<aside class="drawer" data-drawer role="dialog" aria-modal="true" aria-label="Panier">
+  <div class="drawer__head">
+    <h2 class="drawer__title">Votre panier</h2>
+    <button class="icon-btn" data-drawer-close aria-label="Fermer le panier">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer__body" data-cart-body></div>
+  <div class="drawer__foot">
+    <div class="total"><span>Total</span><span data-cart-total>0,00 €</span></div>
+    <a class="btn btn--primary btn--block" href="commande.html" data-cart-checkout>Passer la commande</a>
+  </div>
+</aside>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <span class="brand__mark">ORIXA</span>
+        <p class="site-footer__about" data-footer-about>Cosmétiques naturels et produits exotiques sélectionnés avec soin, livrés partout en Europe depuis notre atelier.</p>
+      </div>
+
+      <nav class="site-footer__col" aria-label="La maison">
+        <h3 class="site-footer__title">La maison</h3>
+        <ul class="site-footer__list">
+          <li><a href="histoire.html">Notre histoire</a></li>
+          <li><a href="histoire.html#valeurs">Nos valeurs</a></li>
+          <li><a href="histoire.html#producteurs">Nos producteurs</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col" aria-label="Boutique">
+        <h3 class="site-footer__title">Boutique</h3>
+        <ul class="site-footer__list">
+          <li><a href="cosmetiques.html">Cosmétiques</a></li>
+          <li><a href="exotiques.html">Produits exotiques</a></li>
+          <li><a href="nouveautes.html">Nouveautés</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col" aria-label="Services">
+        <h3 class="site-footer__title">Services</h3>
+        <ul class="site-footer__list">
+          <li><a href="contact.html#livraison">Livraison</a></li>
+          <li><a href="contact.html#retours">Retours</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col" aria-label="Mon compte">
+        <h3 class="site-footer__title">Mon compte</h3>
+        <ul class="site-footer__list">
+          <li><a href="favoris.html">Mes favoris</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col" aria-label="Informations">
+        <h3 class="site-footer__title">Informations</h3>
+        <ul class="site-footer__list">
+          <li><a href="legal.html#cgv">CGV</a></li>
+          <li><a href="legal.html#rgpd">RGPD</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <hr class="site-footer__rule">
+
+    <div class="site-footer__trust">
+      <div class="site-footer__trust-group">
+        <h4 class="site-footer__trust-title">Paiements sécurisés</h4>
+        <ul class="site-footer__pay">
+          <li><svg class="pay-badge" role="img" aria-label="Paiement par carte Visa" viewBox="0 0 46 14"><rect width="46" height="14" rx="2" fill="#1A1F71"/><text x="23" y="10" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="7.5" fill="#fff" letter-spacing=".5">VISA</text></svg></li>
+          <li><svg class="pay-badge" role="img" aria-label="Paiement par carte Mastercard" viewBox="0 0 46 14"><rect width="46" height="14" rx="2" fill="#fff"/><circle cx="18" cy="7" r="4.2" fill="#EB001B"/><circle cx="23" cy="7" r="4.2" fill="#F79E1B" fill-opacity=".92"/><path d="M20.5 3.4a4.2 4.2 0 0 0 0 7.2 4.2 4.2 0 0 0 0-7.2z" fill="#FF5F00"/></svg></li>
+          <li><svg class="pay-badge" role="img" aria-label="Paiement par PayPal" viewBox="0 0 46 14"><rect width="46" height="14" rx="2" fill="#003087"/><text x="23" y="10" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="7.5" fill="#fff">PayPal</text></svg></li>
+          <li><svg class="pay-badge" role="img" aria-label="Paiement avec Wero" viewBox="0 0 46 14"><rect width="46" height="14" rx="2" fill="#7B2D8E"/><text x="23" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="7" fill="#fff">Wero</text></svg></li>
+          <li><svg class="pay-badge" role="img" aria-label="Virement bancaire" viewBox="0 0 46 14"><rect width="46" height="14" rx="2" fill="#2A2A28"/><text x="23" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="6.5" fill="#fff" letter-spacing=".5">VIREMENT</text></svg></li>
+        </ul>
+      </div>
+      <div class="site-footer__trust-group">
+        <h4 class="site-footer__trust-title">Mode de livraison</h4>
+        <ul class="site-footer__pay">
+          <li><svg class="pay-badge" role="img" aria-label="Livraison Mondial Relay" viewBox="0 0 86 14"><rect width="86" height="14" rx="2" fill="#E4002B"/><path d="M6 3h14v4H6z" fill="#fff"/><circle cx="9" cy="10.2" r="1.5" fill="#fff"/><circle cx="17" cy="10.2" r="1.5" fill="#fff"/><text x="46" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="6.5" fill="#fff">Mondial Relay</text></svg></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="site-footer__rule">
+
+    <div class="site-footer__legal">
+      <p>© <span data-year>2026</span> ORIXA — Tous droits réservés</p>
+      <nav aria-label="Liens légaux">
+        <a href="legal.html#mentions">Mentions légales</a>
+        <a href="legal.html#confidentialite">Politique de confidentialité</a>
+        <a href="legal.html#cookies">Cookies</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var P = (window.OrixaProducts ? window.OrixaProducts() : window.ORIXA_PRODUCTS)
+    .filter(function (p) { return p.badge === 'Nouveau'; });
+  document.querySelector('[data-results]').innerHTML = P.map(window.OrixaCard).join('');
+  document.querySelector('[data-count]').textContent = P.length + (P.length > 1 ? ' produits' : ' produit');
+  document.querySelector('[data-empty]').hidden = P.length > 0;
+});
+</script>
+</body>
+</html>

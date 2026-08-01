@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commandes — Administration ORIXA</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/admin.css">
+<style>
+.od-status-flow { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.od-line { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--a-line); }
+.od-line:last-child { border-bottom: none; }
+.od-line img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; border: 1px solid var(--a-line); }
+.od-sum { display: flex; justify-content: space-between; font-size: 13.5px; padding: 6px 0; }
+.od-sum strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Aller au contenu</a>
+<div class="admin">
+<aside class="side">
+<div class="side__brand"><span class="side__mark">ORIXA</span><span class="side__role">Administration</span></div>
+<nav class="side__nav" aria-label="Navigation du back-office">
+<p class="side__group">Pilotage</p>
+<a class="side__link" href="index.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg><span>Tableau de bord</span></a>
+<a class="side__link" href="commandes.html" aria-current="page"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Commandes</span></a>
+<a class="side__link" href="clients.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg><span>Clients</span></a>
+<p class="side__group">Catalogue</p>
+<a class="side__link" href="produits.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span>Produits</span></a>
+<a class="side__link" href="rayons.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 3h18v18H3z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>Rayons</span></a>
+<a class="side__link" href="collections.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Collections</span></a>
+<a class="side__link" href="reductions.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.6 13.4 12 22l-9-9V3h10z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/></svg><span>Réductions</span></a>
+<p class="side__group">Boutique en ligne</p>
+<a class="side__link" href="personnalisation.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="13.5" cy="6.5" r=".6" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".6" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".6" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".6" fill="currentColor"/><path d="M12 2a10 10 0 0 0 0 20 2.5 2.5 0 0 0 2-4 2.5 2.5 0 0 1 2-4h2a4 4 0 0 0 4-4 10 10 0 0 0-10-8z"/></svg><span>Personnalisation</span></a>
+<a class="side__link" href="menus.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="13" y2="18"/></svg><span>Menus</span></a>
+<a class="side__link" href="medias.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Médiathèque</span></a>
+<a class="side__link" href="articles.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Articles</span></a>
+<a class="side__link" href="pages.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Pages</span></a>
+<p class="side__group">Administration</p>
+<a class="side__link" href="utilisateurs.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Utilisateurs</span></a>
+<a class="side__link" href="reglages.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Réglages</span></a>
+</nav>
+<div class="side__foot"><div class="side__user"><span class="side__avatar">KG</span><span><strong style="display:block;color:#fff;font-size:12.5px">Kalipé G.</strong><span style="font-size:11.5px;opacity:.75">Propriétaire</span></span></div><a class="side__view" href="../index.html" target="_blank" rel="noopener">Voir la boutique <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div>
+</aside>
+  <div class="main">
+    <header class="topbar">
+      <h1 class="topbar__title">Commandes</h1>
+      <div class="topbar__actions">
+        <a class="b b--default b--sm" href="../index.html" target="_blank" rel="noopener">Voir la boutique <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </header>
+    <main id="main" style="flex:1;min-width:0;display:flex;flex-direction:column">
+<div class="content">
+<div class="page-head">
+  <div><h2 class="page-title">Commandes</h2><p class="page-sub">Suivi et préparation.</p></div>
+  <div style="display:flex;gap:10px">
+    <button class="b b--default" data-export-cmd>Exporter en CSV</button>
+    <button class="b b--primary" data-new-cmd><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nouvelle commande</button>
+  </div>
+</div>
+<section class="card">
+  <div class="toolbar">
+    <div class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <label class="visually-hidden" for="qc">Rechercher</label>
+      <input class="f__ctrl" id="qc" type="search" placeholder="Numéro, client ou ville" data-qc></div>
+    <label class="visually-hidden" for="fst">Statut</label>
+    <select class="f__ctrl" id="fst" style="width:auto" data-fst>
+      <option value="">Tous les statuts</option><option>À préparer</option><option>Payée</option>
+      <option>Expédiée</option><option>Livrée</option><option>Paiement refusé</option></select>
+  </div>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Commande</th><th>Date</th><th>Client</th><th>Paiement</th><th>Statut</th><th class="tbl__num">Total</th><th class="tbl__num">Action</th></tr></thead>
+    <tbody data-cmds></tbody></table></div>
+  <div class="empty-a" data-cmd-empty hidden>Aucune commande ne correspond.</div>
+</section>
+
+<dialog class="emodal" data-cmd-modal style="max-width:640px">
+  <div class="card__head"><h2 class="card__title" data-cmd-title>Commande</h2></div>
+  <div class="card__body" data-cmd-detail style="max-height:70vh;overflow-y:auto"></div>
+  <div class="card__foot" style="display:flex;justify-content:flex-end;gap:10px">
+    <button class="b b--default" data-cmd-print>Imprimer</button>
+    <button class="b b--primary" data-cmd-close>Fermer</button>
+  </div>
+</dialog>
+</div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/catalog.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/admin.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var A = window.OrixaAdmin, esc = window.OrixaTheme.esc;
+  var P = A.products();
+
+  // Données de démonstration + commandes enregistrées
+  var saved = A.Store.get('orixa:orders', null);
+  var CMDS = saved || [
+    { n:'ORX-2418', d:'30/07/2026', c:'Camille Durand',  q:'Paris',     pay:'Stripe',   st:'Payée',           t:184.00, mail:'camille@exemple.fr', tel:'+33 6 12 34 56 78', items:[{id:'gari',qte:2},{id:'karite',qte:1}] },
+    { n:'ORX-2417', d:'30/07/2026', c:'Nicolas Lefèvre', q:'Lyon',      pay:'PayPal',   st:'À préparer',      t:72.00,  mail:'nicolas@exemple.fr', tel:'+33 6 23 45 67 89', items:[{id:'attieke',qte:1},{id:'piments',qte:1}] },
+    { n:'ORX-2416', d:'29/07/2026', c:'Awa Diallo',      q:'Bordeaux',  pay:'Wero',     st:'Expédiée',        t:312.00, mail:'awa@exemple.fr', tel:'+33 6 34 56 78 90', items:[{id:'karite',qte:2},{id:'pommade',qte:2}] },
+    { n:'ORX-2415', d:'29/07/2026', c:'Hugo Bernard',    q:'Nantes',    pay:'Virement', st:'Paiement refusé', t:53.00,  mail:'hugo@exemple.fr', tel:'+33 6 45 67 89 01', items:[{id:'aklui',qte:1},{id:'koms',qte:1}] },
+    { n:'ORX-2414', d:'28/07/2026', c:'Sofia Rossi',     q:'Marseille', pay:'Stripe',   st:'Livrée',          t:127.50, mail:'sofia@exemple.fr', tel:'+33 6 56 78 90 12', items:[{id:'hibiscus',qte:1},{id:'tapioca',qte:1},{id:'piments',qte:1}] },
+    { n:'ORX-2413', d:'27/07/2026', c:'Élodie Martin',   q:'Vernon',    pay:'PayPal',   st:'Livrée',          t:98.00,  mail:'elodie@exemple.fr', tel:'+33 6 67 89 01 23', items:[{id:'igname',qte:1},{id:'gombo',qte:1}] },
+    { n:'ORX-2412', d:'27/07/2026', c:'Karim Haddad',    q:'Toulouse',  pay:'Stripe',   st:'Expédiée',        t:241.00, mail:'karim@exemple.fr', tel:'+33 6 78 90 12 34', items:[{id:'gari',qte:3},{id:'farine-haricot',qte:2}] },
+    { n:'ORX-2411', d:'26/07/2026', c:'Léa Petit',       q:'Rennes',    pay:'Wero',     st:'Livrée',          t:64.50,  mail:'lea@exemple.fr', tel:'+33 6 89 01 23 45', items:[{id:'parfum',qte:1}] }
+  ];
+  var PILL = { 'Payée':'pill--ok','Expédiée':'pill--ok','À préparer':'pill--warn',
+               'Paiement refusé':'pill--danger','Livrée':'pill--neutral','Annulée':'pill--danger' };
+  var STATUTS = ['À préparer', 'Payée', 'Expédiée', 'Livrée', 'Paiement refusé', 'Annulée'];
+
+  function save() { A.Store.set('orixa:orders', CMDS); }
+
+  function find(o) { return CMDS.find(function (x) { return x.n === o; }); }
+
+  function render() {
+    var q = A.norm(document.querySelector('[data-qc]').value);
+    var st = document.querySelector('[data-fst]').value;
+    var rows = CMDS.filter(function (o) {
+      if (st && o.st !== st) return false;
+      if (q && A.norm(o.n + ' ' + o.c + ' ' + o.q).indexOf(q) === -1) return false;
+      return true;
+    });
+    document.querySelector('[data-cmds]').innerHTML = rows.map(function (o) {
+      return '<tr><td><strong>#' + esc(o.n) + '</strong></td><td>' + esc(o.d) + '</td>' +
+        '<td>' + esc(o.c) + '<br><span style="font-size:12px;color:var(--a-muted)">' + esc(o.q) + '</span></td>' +
+        '<td>' + esc(o.pay) + '</td><td><span class="pill ' + PILL[o.st] + '">' + esc(o.st) + '</span></td>' +
+        '<td class="tbl__num">' + window.OrixaFmt.prix(o.t) + '</td>' +
+        '<td class="tbl__num"><button class="b b--default b--sm" data-see="' + esc(o.n) + '">Détail</button></td></tr>';
+    }).join('');
+    document.querySelector('[data-cmd-empty]').hidden = rows.length > 0;
+  }
+
+  function detailHtml(o) {
+    var lines = (o.items || []).map(function (i) {
+      var p = P.find(function (x) { return x.id === i.id; });
+      if (!p) return '';
+      return '<div class="od-line"><img src="' + (/^data:/.test(p.img) ? p.img : '../' + p.img) + '" alt="">' +
+        '<div style="flex:1"><strong style="font-size:13.5px">' + esc(p.nom) + '</strong><br>' +
+        '<span style="font-size:12px;color:var(--a-muted)">' + esc(p.unite) + ' · qty ' + i.qte + '</span></div>' +
+        '<span style="font-size:13.5px;font-weight:600">' + window.OrixaFmt.prix(p.prix * i.qte) + '</span></div>';
+    }).join('') || '<p class="f__hint">Aucun article détaillé.</p>';
+
+    return '<div class="od-status-flow">' + STATUTS.map(function (s) {
+      var active = s === o.st;
+      return '<button class="b b--sm ' + (active ? 'b--primary' : 'b--default') + '" data-set-status="' + o.n + '|' + s + '">' + s + '</button>';
+    }).join('') + '</div>' +
+    '<p class="f__hint" style="margin-bottom:14px">Cliquez sur un statut pour mettre à jour la commande.</p>' +
+    lines +
+    '<div style="margin-top:16px;border-top:1px solid var(--a-line);padding-top:12px">' +
+      '<div class="od-sum"><span>Client</span><strong>' + esc(o.c) + '</strong></div>' +
+      '<div class="od-sum"><span>Quartier / ville</span><span>' + esc(o.q) + '</span></div>' +
+      '<div class="od-sum"><span>E-mail</span><span>' + esc(o.mail || '—') + '</span></div>' +
+      '<div class="od-sum"><span>Téléphone</span><span>' + esc(o.tel || '—') + '</span></div>' +
+      '<div class="od-sum"><span>Paiement</span><span>' + esc(o.pay) + '</span></div>' +
+      '<div class="od-sum" style="font-size:16px;margin-top:8px"><span>Total</span><strong>' + window.OrixaFmt.prix(o.t) + '</strong></div>' +
+    '</div>';
+  }
+
+  var modal = document.querySelector('[data-cmd-modal]');
+  function openDetail(o) {
+    document.querySelector('[data-cmd-title]').textContent = 'Commande #' + o.n;
+    document.querySelector('[data-cmd-detail]').innerHTML = detailHtml(o);
+    modal.showModal();
+  }
+
+  document.querySelector('[data-qc]').addEventListener('input', render);
+  document.querySelector('[data-fst]').addEventListener('change', render);
+
+  document.addEventListener('click', function (e) {
+    var s = e.target.closest('[data-see]');
+    if (s) { openDetail(find(s.dataset.see)); return; }
+
+    var st = e.target.closest('[data-set-status]');
+    if (st) {
+      var parts = st.dataset.setStatus.split('|');
+      var o = find(parts[0]);
+      if (o) { o.st = parts[1]; save(); document.querySelector('[data-cmd-detail]').innerHTML = detailHtml(o); render(); A.toast('Statut mis à jour : ' + parts[1]); }
+      return;
+    }
+
+    if (e.target.closest('[data-cmd-close]')) { modal.close(); return; }
+    if (e.target.closest('[data-cmd-print]')) {
+      var o = find(document.querySelector('[data-cmd-title]').textContent.replace('Commande #', ''));
+      if (o) { A.toast('Impression — à brancher sur un vrai modèle'); }
+      return;
+    }
+    if (e.target.closest('[data-new-cmd]')) {
+      var s2 = A.settings();
+      var maxNum = 0;
+      CMDS.forEach(function (x) {
+        var m = parseInt(String(x.n).replace(/^.*?(\d+)$/, '$1'), 10);
+        if (!isNaN(m) && m > maxNum) maxNum = m;
+      });
+      var num = maxNum > 0 ? maxNum + 1 : (s2.nextOrderNum || 1000);
+      var o2 = {
+        n: (s2.orderPrefix || 'ORX-') + num, d: new Date().toLocaleDateString('fr-FR'),
+        c: 'Nouveau client', q: '—', pay: 'Espèces', st: 'À préparer', t: 0, items: [], mail: '', tel: ''
+      };
+      CMDS.unshift(o2); save(); render(); openDetail(o2); A.toast('Commande créée — renseignez le client et les articles');
+    }
+    if (e.target.closest('[data-export-cmd]'))
+      A.exportCSV(CMDS, ['n','d','c','q','pay','st','t'], 'orixa-commandes.csv');
+  });
+  render();
+});
+</script>
+</body>
+</html>
