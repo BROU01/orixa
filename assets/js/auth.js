@@ -1,7 +1,12 @@
 /* ORIXA — auth.js
-   Validation cliente pour connexion, inscription et mot de passe oublié. */
+   Validation cliente + câblage Supabase pour la connexion,
+   l'inscription et le mot de passe oublié des clients.
+   Sans Supabase configuré (config.js), un message clair
+   invite à suivre GUIDE-SUPABASE.md. */
 (function () {
   'use strict';
+
+  var B = window.OrixaBackend;
 
   function err(input, el, msg) {
     if (!input || !el) return;
@@ -18,6 +23,18 @@
 
   const isEmail = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
   const isTel = function (v) { return /^[+()\d\s.-]{8,}$/.test(v); };
+
+  /* Note contextuelle (backend non configuré, succès, etc.) */
+  function authNote(form, msg) {
+    var old = form.querySelector('.auth-note');
+    if (old) old.remove();
+    var n = document.createElement('p');
+    n.className = 'auth-note';
+    n.setAttribute('role', 'status');
+    n.setAttribute('aria-live', 'polite');
+    n.textContent = msg;
+    form.appendChild(n);
+  }
 
   /* Toggle mot de passe (toutes les pages) */
   document.querySelectorAll('[data-toggle-password]').forEach(function (btn) {
@@ -77,8 +94,20 @@
       if (bad) return focusFirstError(login);
 
       const reset = submitState(login, 'Connexion…');
-      // TODO : brancher sur l'endpoint d'authentification réel.
-      setTimeout(function () { reset(); console.log('[ORIXA] Connexion validée — à câbler sur l’API.'); }, 700);
+
+      if (!B || !B.isConfigured()) {
+        reset();
+        authNote(login, 'Le backend client n’est pas configuré. Suivez GUIDE-SUPABASE.md pour activer les comptes clients (inscription, Google, etc.).');
+        return;
+      }
+
+      B.signIn(email.value.trim(), pass.value).then(function () {
+        reset();
+        location.href = '../index.html';
+      }).catch(function (x) {
+        reset();
+        err(email, document.getElementById('email-error'), B.msg(x));
+      });
     });
   }
 
@@ -118,7 +147,28 @@
       if (bad) return focusFirstError(signup);
 
       const reset = submitState(signup, 'Création…');
-      setTimeout(function () { reset(); console.log('[ORIXA] Inscription validée — à câbler sur l’API.'); }, 700);
+
+      if (!B || !B.isConfigured()) {
+        reset();
+        authNote(signup, 'Le backend client n’est pas configuré. Suivez GUIDE-SUPABASE.md pour activer l’inscription.');
+        return;
+      }
+
+      B.signUp(email.value.trim(), pass.value, {
+        full_name: nom.value.trim(),
+        phone: tel.value.trim()
+      }).then(function (data) {
+        reset();
+        // Si la confirmation par e-mail est activée, l'utilisateur doit
+        // cliquer le lien reçu avant de pouvoir se connecter.
+        authNote(signup, (data && data.session)
+          ? 'Compte créé. Vous êtes connecté(e) — bienvenue chez ORIXA !'
+          : 'Compte créé ! Vérifiez votre boîte mail pour confirmer votre adresse, puis connectez-vous.');
+        if (data && data.session) setTimeout(function () { location.href = '../index.html'; }, 1400);
+      }).catch(function (x) {
+        reset();
+        err(email, document.getElementById('email-error'), B.msg(x));
+      });
     });
   }
 
@@ -135,14 +185,42 @@
       err(email, document.getElementById('email-error'), '');
 
       const reset = submitState(forgot, 'Envoi…');
-      setTimeout(function () {
+
+      if (!B || !B.isConfigured()) {
+        reset();
+        authNote(forgot, 'Le backend n’est pas configuré. Suivez GUIDE-SUPABASE.md pour activer la récupération de mot de passe.');
+        return;
+      }
+
+      B.resetPassword(email.value.trim()).then(function () {
         reset();
         forgot.hidden = true;
         const done = document.getElementById('forgot-done');
         if (done) { done.hidden = false; done.setAttribute('tabindex', '-1'); done.focus(); }
-      }, 700);
+      }).catch(function (x) {
+        reset();
+        err(email, document.getElementById('email-error'), B.msg(x));
+      });
     });
   }
+
+  /* ---------- Connexion sociale (Google, Apple…) ---------- */
+  document.querySelectorAll('[data-oauth]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var provider = btn.getAttribute('data-oauth');
+      if (!B || !B.isConfigured()) {
+        var f = btn.closest('form');
+        authNote(f || document.body, 'La connexion ' + provider + ' nécessite Supabase. Suivez GUIDE-SUPABASE.md (section « Fournisseurs de connexion »).');
+        return;
+      }
+      btn.disabled = true;
+      B.oauth(provider).catch(function (x) {
+        btn.disabled = false;
+        var f = btn.closest('form');
+        authNote(f || document.body, B.msg(x));
+      });
+    });
+  });
 
   /* Année dynamique */
   document.querySelectorAll('[data-year]').forEach(function (el) {

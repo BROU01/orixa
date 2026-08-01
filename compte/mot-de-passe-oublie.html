@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap">
 <link rel="stylesheet" href="../assets/css/site.css">
 <link rel="stylesheet" href="../assets/css/auth.css">
+<style>
+  .reset-title { margin: 0 0 8px; font-family: var(--f-display); font-weight: 500; font-size: clamp(28px, 4vw, 34px); line-height: 1.12; color: #FBFAF6; }
+</style>
 </head>
 <body class="auth-body">
 <a href="#main" class="skip-link">Aller au formulaire</a>
@@ -27,25 +30,59 @@
 
 <main class="auth-center" id="main">
   <div class="glass">
-    <span class="glass__eyebrow">Cosmétiques &amp; produits exotiques</span>
-    <h1 class="glass__title">Mot de passe oublié</h1>
-    <p class="glass__sub">Indiquez votre adresse e-mail. Nous vous envoyons un lien pour en définir un nouveau.</p>
+    <!-- Vue 1 : demander l'e-mail -->
+    <div id="forgot-view">
+      <span class="glass__eyebrow">Cosmétiques &amp; produits exotiques</span>
+      <h1 class="glass__title">Mot de passe oublié</h1>
+      <p class="glass__sub">Indiquez votre adresse e-mail. Nous vous envoyons un lien pour en définir un nouveau.</p>
 
-    <form id="forgot-form" class="gform" novalidate>
-      <div class="gfield">
-        <label class="gfield__label" for="email">Adresse e-mail</label>
-        <input class="gfield__input" id="email" name="email" type="email" autocomplete="email" required placeholder="vous@exemple.com">
-        <p class="gfield__error" id="email-error" hidden></p>
+      <form id="forgot-form" class="gform" novalidate>
+        <div class="gfield">
+          <label class="gfield__label" for="email">Adresse e-mail</label>
+          <input class="gfield__input" id="email" name="email" type="email" autocomplete="email" required placeholder="vous@exemple.com">
+          <p class="gfield__error" id="email-error" hidden></p>
+        </div>
+
+        <button type="submit" class="gbtn gbtn--solid">Envoyer le lien</button>
+
+        <p class="gfoot"><a href="index.html">Revenir à la connexion</a></p>
+      </form>
+
+      <div class="gnote" id="forgot-done" hidden>
+        <p class="gnote__t">Lien envoyé</p>
+        <p class="gnote__x">Si un compte existe pour cette adresse, le lien arrive d'ici quelques minutes. Pensez à vérifier les indésirables.</p>
       </div>
+    </div>
 
-      <button type="submit" class="gbtn gbtn--solid">Envoyer le lien</button>
+    <!-- Vue 2 : définir un nouveau mot de passe (jeton reçu par e-mail) -->
+    <div id="reset-view" hidden>
+      <span class="glass__eyebrow">Cosmétiques &amp; produits exotiques</span>
+      <h1 class="reset-title">Nouveau mot de passe</h1>
+      <p class="glass__sub">Choisissez un mot de passe fort : 8 caractères minimum, dont au moins un chiffre.</p>
 
-      <p class="gfoot"><a href="index.html">Revenir à la connexion</a></p>
-    </form>
+      <form id="reset-form" class="gform" novalidate>
+        <div class="gfield">
+          <label class="gfield__label" for="new-password">Nouveau mot de passe</label>
+          <div class="gfield__wrap">
+            <input class="gfield__input" id="new-password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="Au moins 8 caractères">
+            <button type="button" class="gfield__toggle" data-toggle-password="new-password" aria-label="Afficher le mot de passe"><svg class="i-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="i-eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true" hidden><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-6.5 0-10-7-10-7a17.6 17.6 0 0 1 3.87-4.87"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c6.5 0 10 7 10 7a17.63 17.63 0 0 1-3.17 4.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg></button>
+          </div>
+          <p class="gfield__error" id="new-password-error" hidden></p>
+        </div>
 
-    <div class="gnote" id="forgot-done" hidden>
-      <p class="gnote__t">Lien envoyé</p>
-      <p class="gnote__x">Si un compte existe pour cette adresse, le lien arrive d'ici quelques minutes. Pensez à vérifier les indésirables.</p>
+        <div class="gfield">
+          <label class="gfield__label" for="new-password2">Confirmer le mot de passe</label>
+          <input class="gfield__input" id="new-password2" name="password2" type="password" autocomplete="new-password" required minlength="8" placeholder="Répétez le mot de passe">
+          <p class="gfield__error" id="new-password2-error" hidden></p>
+        </div>
+
+        <button type="submit" class="gbtn gbtn--solid">Mettre à jour</button>
+      </form>
+
+      <div class="gnote" id="reset-done" hidden>
+        <p class="gnote__t">Mot de passe mis à jour ✓</p>
+        <p class="gnote__x">Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</p>
+      </div>
     </div>
   </div>
 </main>
@@ -59,6 +96,111 @@
   </nav>
 </footer>
 
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/supabase.js"></script>
 <script src="../assets/js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var B = window.OrixaBackend;
+  var forgotView = document.getElementById('forgot-view');
+  var resetView = document.getElementById('reset-view');
+  var resetForm = document.getElementById('reset-form');
+  var resetDone = document.getElementById('reset-done');
+
+  function err(input, el, msg) {
+    input.setAttribute('aria-invalid', 'true');
+    el.textContent = msg;
+    el.hidden = false;
+  }
+  function clearErr(input, el) {
+    input.removeAttribute('aria-invalid');
+    el.textContent = '';
+    el.hidden = true;
+  }
+
+  /* Détection du lien de récupération reçu par e-mail.
+     Supabase place le jeton soit dans le hash (#access_token…
+     &type=recovery — flux implicite), soit dans la query string
+     (?code=… — flux PKCE, par défaut dans supabase-js v2).
+     On bascule alors sur le formulaire « nouveau mot de passe ».*/
+  var isRecovery = /(access_token|recovery_token|type=recovery|[?&#]code=)/i.test(
+    location.hash + location.search
+  );
+
+  function showReset() {
+    forgotView.hidden = true;
+    resetView.hidden = false;
+    resetForm.querySelector('input').focus();
+  }
+
+  if (B && B.isConfigured()) {
+    // Enregistré inconditionnellement : le SDK traite le jeton de façon
+    // asynchrone, et l'événement PASSWORD_RECOVERY/SIGNED_IN arrive quelle
+    // que soit la forme du lien (hash ou query).
+    B.onAuthChange(function (ev) {
+      if (ev === 'SIGNED_IN' || ev === 'PASSWORD_RECOVERY') showReset();
+    }).catch(function () {});
+  }
+
+  if (isRecovery) {
+    if (B && B.isConfigured()) {
+      // Filet de sécurité : si la session est déjà rétablie, on affiche.
+      setTimeout(function () {
+        if (B.user() && resetView.hidden) showReset();
+      }, 1500);
+    } else {
+      // Mode démo : pas de vrai jeton, on affiche simplement le formulaire.
+      showReset();
+    }
+  }
+
+  if (resetForm) {
+    resetForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var p1 = resetForm.querySelector('#new-password');
+      var p2 = resetForm.querySelector('#new-password2');
+      var e1 = document.getElementById('new-password-error');
+      var e2 = document.getElementById('new-password2-error');
+      var bad = false;
+
+      if (p1.value.length < 8 || !/\d/.test(p1.value)) {
+        err(p1, e1, '8 caractères minimum, dont au moins un chiffre.'); bad = true;
+      } else clearErr(p1, e1);
+
+      if (p2.value !== p1.value || !p2.value) {
+        err(p2, e2, 'Les deux mots de passe ne correspondent pas.'); bad = true;
+      } else clearErr(p2, e2);
+
+      if (bad) return;
+
+      var btn = resetForm.querySelector('button[type=submit]');
+      btn.disabled = true; btn.textContent = 'Mise à jour…';
+
+      var apply = function () {
+        return B.updatePassword(p1.value).then(function () {
+          btn.disabled = false;
+          resetForm.hidden = true;
+          resetDone.hidden = false;
+          resetDone.setAttribute('tabindex', '-1');
+          resetDone.focus();
+          setTimeout(function () { location.href = 'index.html'; }, 1800);
+        }).catch(function (x) {
+          btn.disabled = false; btn.textContent = 'Mettre à jour';
+          err(p1, e1, B.msg(x));
+        });
+      };
+
+      if (!B || !B.isConfigured()) {
+        // Mode démo : le changement est simulé localement.
+        btn.disabled = false;
+        resetForm.hidden = true;
+        resetDone.hidden = false;
+        return;
+      }
+      apply();
+    });
+  }
+});
+</script>
 </body>
 </html>

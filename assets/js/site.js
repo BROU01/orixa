@@ -369,7 +369,7 @@
   });
 
   /* ---------- Boot ---------- */
-  document.addEventListener('DOMContentLoaded', function () {
+  function orixaBoot() {
     paint();
     initHeader();
     initCurrencyPicker();
@@ -384,7 +384,19 @@
 
     // Signale à l'éditeur que la page est prête à recevoir l'aperçu
     try { if (window.parent !== window) window.parent.postMessage({ type: 'orixa:ready' }, '*'); } catch (e) {}
-  });
+  }
+
+  // Attends l'hydratation Supabase (config.js + supabase.js chargés avant site.js),
+  // puis démarre. Sans backend configuré, OrixaBackend.ready est déjà résolu.
+  (function () {
+    if (window.OrixaBackend && window.OrixaBackend.ready) {
+      window.OrixaBackend.ready.then(orixaBoot).catch(orixaBoot);
+    } else if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', orixaBoot);
+    } else {
+      orixaBoot();
+    }
+  })();
 
   function applySettings() {
     const s = settings();

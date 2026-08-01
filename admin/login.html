@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion — Administration ORIXA</title>
+<meta name="description" content="Espace d'administration ORIXA — accès réservé.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111110">
+<link rel="icon" href="../assets/img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="stylesheet" href="../assets/css/auth.css">
+<style>
+  /* Petites retouches propres à l'écran d'administration */
+  :root {
+    --f-display: 'Playfair Display', Georgia, serif;
+    --auth-bg: url('../assets/img/auth-bg.png');
+  }
+  .admin-login__lock {
+    width: 44px; height: 44px; margin-bottom: 16px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    background: rgba(201,168,76,.14);
+    border: 1px solid rgba(201,168,76,.4);
+    color: #C9A84C;
+  }
+  .admin-login__badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 10.5px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(251,250,246,.6);
+    border: 1px solid rgba(251,250,246,.18);
+    border-radius: 999px;
+    padding: 5px 11px;
+    margin-bottom: 18px;
+  }
+  .admin-login__badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: #6FD08B; box-shadow: 0 0 0 3px rgba(111,208,139,.18);
+  }
+  .admin-login__badge[data-cloud="false"]::before { background: #E8C97A; box-shadow: 0 0 0 3px rgba(232,201,122,.18); }
+  .auth-banner {
+    margin-top: 18px; padding: 13px 15px;
+    border-radius: 12px;
+    font-size: 12.5px; line-height: 1.55;
+    color: rgba(251,250,246,.85);
+    background: rgba(201,168,76,.10);
+    border: 1px solid rgba(201,168,76,.32);
+  }
+  .auth-banner strong { color: #E8C97A; font-weight: 600; }
+  .auth-banner code {
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px;
+    color: #FBFAF6; background: rgba(251,250,246,.1);
+    padding: 1px 5px; border-radius: 5px;
+  }
+  .auth-form-error {
+    display: none;
+    font-size: 12.5px; color: #F6BCAB;
+    background: rgba(242,163,143,.1);
+    border: 1px solid rgba(242,163,143,.3);
+    border-radius: 10px; padding: 11px 13px; line-height: 1.5;
+  }
+  .auth-form-error[data-open="true"] { display: block; }
+  .auth-banner--ok { color: rgba(251,250,246,.82); background: rgba(111,208,139,.08); border-color: rgba(111,208,139,.3); }
+  .auth-banner--ok strong { color: #6FD08B; }
+</style>
+</head>
+<body class="auth-body">
+<a href="#main" class="skip-link">Aller au formulaire</a>
+
+<header class="auth-top">
+  <a href="../index.html" class="brand" aria-label="ORIXA, accueil"><span class="brand__mark">ORIXA</span></a>
+  <a href="../index.html" class="auth-top__back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    <span>Retour à la boutique</span>
+  </a>
+</header>
+
+<main class="auth-center" id="main">
+  <div class="glass" style="max-width:420px">
+    <span class="glass__eyebrow">Espace réservé</span>
+    <span class="admin-login__badge" id="mode-badge" data-cloud="false">Chargement…</span>
+
+    <div class="admin-login__lock" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+
+    <h1 class="glass__title">Administration</h1>
+    <p class="glass__sub">Connectez-vous avec le compte administrateur pour gérer la boutique.</p>
+
+    <div class="auth-form-error" id="form-error" role="alert" aria-live="polite"></div>
+
+    <form id="admin-login-form" class="gform" novalidate>
+      <div class="gfield">
+        <label class="gfield__label" for="email">Adresse e-mail</label>
+        <input class="gfield__input" id="email" name="email" type="email" autocomplete="username" required placeholder="admin@orixa.fr">
+      </div>
+
+      <div class="gfield">
+        <div class="gfield__row">
+          <label class="gfield__label" for="password">Mot de passe</label>
+        </div>
+        <div class="gfield__wrap">
+          <input class="gfield__input" id="password" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Mot de passe">
+          <button type="button" class="gfield__toggle" data-toggle-password="password" aria-label="Afficher le mot de passe">
+            <svg class="i-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="i-eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true" hidden><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-6.5 0-10-7-10-7a17.6 17.6 0 0 1 3.87-4.87"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c6.5 0 10 7 10 7a17.63 17.63 0 0 1-3.17 4.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="gbtn gbtn--solid">Se connecter</button>
+    </form>
+
+    <div class="auth-banner" id="demo-banner" hidden>
+      <strong>Mode démonstration</strong> — la sécurité cloud n'est pas encore branchée.
+      Utilisez <code>admin@2026.fr</code> / <code>Azerty@2026Orixa</code>.
+      Pour une vraie sécurité, suivez <code>GUIDE-SUPABASE.md</code>.
+    </div>
+    <div class="auth-banner auth-banner--ok" id="cloud-banner" hidden>
+      <strong>Mode sécurisé</strong> — connexion vérifiée par Supabase (mots de passe chiffrés, jamais stockés dans le navigateur).
+    </div>
+  </div>
+</main>
+
+<footer class="auth-foot">
+  <p>© <span data-year>2026</span> ORIXA — Administration</p>
+  <nav aria-label="Liens légaux">
+    <a href="../legal.html#confidentialite">Confidentialité</a>
+    <a href="../legal.html#mentions">Mentions légales</a>
+  </nav>
+</footer>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/supabase.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var CFG = window.ORIXA_CONFIG || {};
+  var B = window.OrixaBackend;
+  var form = document.getElementById('admin-login-form');
+  var errEl = document.getElementById('form-error');
+  var badge = document.getElementById('mode-badge');
+  var demoBanner = document.getElementById('demo-banner');
+  var cloudBanner = document.getElementById('cloud-banner');
+
+  var params = new URLSearchParams(location.search);
+  var next = params.get('next') || 'index.html';
+
+  function showErr(msg) {
+    errEl.textContent = msg;
+    errEl.setAttribute('data-open', 'true');
+  }
+
+  /* Toggle afficher/masquer le mot de passe (auth.js n'est pas chargé ici) */
+  document.querySelectorAll('[data-toggle-password]').forEach(function (btn) {
+    var input = document.getElementById(btn.getAttribute('data-toggle-password'));
+    if (!input) return;
+    btn.addEventListener('click', function () {
+      var hidden = input.type === 'password';
+      input.type = hidden ? 'text' : 'password';
+      btn.setAttribute('aria-label', hidden ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+      var on = btn.querySelector('.i-eye'), off = btn.querySelector('.i-eye-off');
+      if (on && off) { on.hidden = hidden; off.hidden = !hidden; }
+      input.focus();
+    });
+  });
+
+  if (B && B.isConfigured()) {
+    badge.setAttribute('data-cloud', 'true');
+    badge.textContent = 'Sécurité Supabase active';
+    cloudBanner.hidden = false;
+  } else {
+    badge.textContent = 'Mode démonstration';
+    demoBanner.hidden = false;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = form.querySelector('#email').value.trim();
+    var pass = form.querySelector('#password').value;
+    errEl.setAttribute('data-open', 'false');
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Connexion…';
+
+    function fail(msg) {
+      btn.disabled = false;
+      btn.textContent = 'Se connecter';
+      showErr(msg);
+    }
+
+    if (!email || !pass) { fail('Merci de remplir tous les champs.'); return; }
+    var isAdminEmail = email.toLowerCase() === String(CFG.ADMIN_EMAIL || '').toLowerCase();
+
+    /* ----- Mode démo (Supabase non configuré) ----- */
+    if (!B || !B.isConfigured()) {
+      if (isAdminEmail && pass === String(CFG.DEMO_ADMIN_PASSWORD || '')) {
+        try { sessionStorage.setItem('orixa:demo-admin', '1'); } catch (x) {}
+        location.href = next;
+      } else {
+        fail('Identifiants invalides. Vérifiez l\u2019e-mail et le mot de passe (mode démo : voir la bannière ci-dessus).');
+      }
+      return;
+    }
+
+    /* ----- Mode cloud (Supabase) ----- */
+    B.signIn(email, pass).then(function () {
+      if (!isAdminEmail) {
+        return B.signOut().then(function () {
+          fail('Ce compte n\u2019a pas accès à l\u2019administration.');
+        });
+      }
+      try { sessionStorage.removeItem('orixa:demo-admin'); } catch (x) {}
+      location.href = next;
+    }).catch(function (err) {
+      fail(B.msg(err));
+    });
+  });
+
+  /* Année dynamique */
+  document.querySelectorAll('[data-year]').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+});
+</script>
+</body>
+</html>

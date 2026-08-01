@@ -234,6 +234,18 @@
 .gnote__t { font-size: 14px; font-weight: 600; margin: 0 0 5px; color: #fff; }
 .gnote__x { font-size: 13px; color: rgba(251,250,246,.78); margin: 0; }
 
+/* Note contextuelle dynamique (backend non configuré, succès…) */
+.auth-note {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #E8C97A;
+  background: rgba(201,168,76,.10);
+  border: 1px solid rgba(201,168,76,.35);
+  border-radius: 10px;
+  padding: 11px 13px;
+}
+
 /* ---- Pied ---- */
 .auth-foot {
   position: relative; z-index: 2;
