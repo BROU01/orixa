@@ -245,6 +245,11 @@
   border-radius: 10px;
   padding: 11px 13px;
 }
+.auth-note--ok {
+  color: #A8E6B8;
+  background: rgba(111,208,139,.08);
+  border-color: rgba(111,208,139,.35);
+}
 
 /* ---- Pied ---- */
 .auth-foot {

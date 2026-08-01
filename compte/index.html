@@ -86,5 +86,34 @@
 <script src="../assets/js/config.js"></script>
 <script src="../assets/js/supabase.js"></script>
 <script src="../assets/js/auth.js"></script>
+<script>
+/* Confirmation d'e-mail : quand le client revient du lien de confirmation
+   Supabase (?code=… ou #access_token=…), le SDK échange le code et établit
+   la session. On affiche alors un message clair et on nettoie l'URL. */
+document.addEventListener('DOMContentLoaded', function () {
+  var B = window.OrixaBackend;
+  if (!B || !B.isConfigured()) return;
+  var hasCode = /[?&#]code=|#access_token|type=recovery/.test(location.hash + location.search);
+  if (!hasCode) return;
+  B.ready.then(function () {
+    var form = document.getElementById('login-form');
+    if (!form) return;
+    var note = document.createElement('p');
+    note.className = 'auth-note auth-note--ok';
+    note.setAttribute('role', 'status');
+    note.setAttribute('aria-live', 'polite');
+    var submitBtn = form.querySelector('button[type=submit]');
+    if (B.user()) {
+      note.textContent = 'Adresse e-mail confirmée — vous êtes connecté(e). Bienvenue chez ORIXA !';
+      if (submitBtn) form.insertBefore(note, submitBtn); else form.appendChild(note);
+      setTimeout(function () { location.href = '../index.html'; }, 1600);
+    } else {
+      note.textContent = 'Adresse e-mail confirmée. Vous pouvez maintenant vous connecter.';
+      if (submitBtn) form.insertBefore(note, submitBtn); else form.appendChild(note);
+    }
+    try { history.replaceState({}, '', location.pathname); } catch (e) {}
+  });
+});
+</script>
 </body>
 </html>

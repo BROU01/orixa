@@ -104,7 +104,13 @@
     return makeClient().then(function (c) {
       return c.auth.signUp({
         email: email, password: pass,
-        options: { data: meta || {} }
+        options: {
+          data: meta || {},
+          // Où renvoyer le client après confirmation de l'e-mail.
+          // Sans cela, Supabase utilise son « Site URL » (par défaut
+          // http://localhost:3000) → lien mort + compte jamais confirmé.
+          emailRedirectTo: location.origin + '/compte/index.html'
+        }
       }).then(function (r) {
         if (r.error) throw r.error;
         if (r.data && r.data.session) session = r.data.session;

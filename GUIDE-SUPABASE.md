@@ -106,11 +106,27 @@ réservée à `admin@2026.fr`.
 
 ## Étape 6 — Autoriser votre domaine (Vercel)
 
+> ⚠️ **ÉTAPE OBLIGATOIRE — c'est elle qui rend la confirmation d'e-mail fonctionnelle.**
+> Par défaut, le « Site URL » de Supabase est `http://localhost:3000`. Si vous ne le
+> changez pas, le lien de confirmation envoyé par e-mail s'ouvre sur `localhost:3000`
+> (page vide) → le compte n'est **jamais confirmé** → la connexion échoue ensuite
+> avec « E-mail ou mot de passe incorrect ». Symptômes à connaître :
+> l'URL du navigateur devient `http://localhost:3000/?code=…` après inscription.
+
 1. Dans Supabase : **Authentication → URL Configuration**.
 2. **Site URL** : votre boutique, ex. `https://orixa-mu.vercel.app`.
 3. **Redirect URLs** : ajoutez
    - `https://orixa-mu.vercel.app/**`
    - `http://localhost:8000/**` (pour tester en local)
+   - `http://localhost:8018/**` (si vous testez sur ce port)
+4. **Cliquez Save.**
+5. Après avoir changé le Site URL, **refaites une inscription de test** : le lien de
+   confirmation doit maintenant ouvrir `https://orixa-mu.vercel.app/compte/index.html`
+   avec le message vert « Adresse e-mail confirmée ».
+
+> 💡 **Si des comptes ont déjà été créés avant ce réglage** (donc non confirmés) :
+> supprimez-les dans **Authentication → Users** et recréez-les, ou invitez-les à
+> nouveau. Un compte non confirmé ne peut pas se connecter.
 
 ---
 
@@ -158,6 +174,8 @@ en collant vos valeurs, et revenez en démo en les vidant.
 | Le site ne montre pas les nouvelles données | L'hydratation recharge la page si le contenu change. Si besoin, recharger manuellement (Ctrl+F5). |
 | « CDN bloqué » en local hors-ligne | Le SDK est chargé depuis jsDelivr uniquement en mode cloud. En mode démo, aucun SDK n'est requis. En production, si le CDN est bloqué, le site retombe sur ses données locales en attendant. |
 | Google ne marche pas | Vérifiez l'URI de redirection Google (Étape 5) et les Redirect URLs (Étape 6). |
+| Après inscription, le navigateur affiche `localhost:3000/?code=…` | Le **Site URL** est encore la valeur par défaut de Supabase. Corrigez-le (Étape 6) puis **recréez le compte**. |
+| « E-mail ou mot de passe incorrect » juste après inscription | Le compte n'est pas **confirmé** (lien de confirmation non cliqué ou Site URL non corrigé). Refaites l'inscription après l'Étape 6, cliquez le lien reçu, puis connectez-vous. |
 | Je veux tout remettre à zéro | Dans Supabase → Table editor → `cms` → supprimez les lignes ; le site repart sur ses données par défaut. |
 | Le lien « mot de passe oublié » ne fonctionne pas | Vérifiez la **Redirect URL** dans Authentication → URL Configuration : ajoutez `https://votre-site.vercel.app/compte/mot-de-passe-oublie.html` (et `http://localhost:8000/…` en local).
 
