@@ -1,8 +1,8 @@
 /* ORIXA — auth.js
    Validation cliente + câblage Supabase pour la connexion,
    l'inscription et le mot de passe oublié des clients.
-   Sans Supabase configuré (config.js), un message clair
-   invite à suivre GUIDE-SUPABASE.md. */
+   Sans Supabase configuré (config.js), un message neutre
+   indique que le service est momentanément indisponible. */
 (function () {
   'use strict';
 
@@ -97,7 +97,7 @@
 
       if (!B || !B.isConfigured()) {
         reset();
-        authNote(login, 'Le backend client n’est pas configuré. Suivez GUIDE-SUPABASE.md pour activer les comptes clients (inscription, Google, etc.).');
+        authNote(login, 'La connexion est temporairement indisponible. Réessayez dans quelques instants.');
         return;
       }
 
@@ -150,7 +150,7 @@
 
       if (!B || !B.isConfigured()) {
         reset();
-        authNote(signup, 'Le backend client n’est pas configuré. Suivez GUIDE-SUPABASE.md pour activer l’inscription.');
+        authNote(signup, 'L’inscription est temporairement indisponible. Réessayez dans quelques instants.');
         return;
       }
 
@@ -188,7 +188,7 @@
 
       if (!B || !B.isConfigured()) {
         reset();
-        authNote(forgot, 'Le backend n’est pas configuré. Suivez GUIDE-SUPABASE.md pour activer la récupération de mot de passe.');
+        authNote(forgot, 'La récupération de mot de passe est temporairement indisponible. Réessayez dans quelques instants.');
         return;
       }
 
@@ -210,7 +210,7 @@
       var provider = btn.getAttribute('data-oauth');
       if (!B || !B.isConfigured()) {
         var f = btn.closest('form');
-        authNote(f || document.body, 'La connexion ' + provider + ' nécessite Supabase. Suivez GUIDE-SUPABASE.md (section « Fournisseurs de connexion »).');
+        authNote(f || document.body, 'La connexion via ' + provider + ' est temporairement indisponible. Réessayez dans quelques instants.');
         return;
       }
       btn.disabled = true;

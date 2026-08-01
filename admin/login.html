@@ -17,7 +17,9 @@
   /* Petites retouches propres à l'écran d'administration */
   :root {
     --f-display: 'Playfair Display', Georgia, serif;
-    --auth-bg: url('../assets/img/auth-bg.png');
+    /* Le fond verre translucide est défini dans auth.css (chemin correct).
+       Ne pas redéclarer --auth-bg ici : l'URL serait résolue depuis
+       assets/css/ et produirait un double dossier assets/assets. */
   }
   .admin-login__lock {
     width: 44px; height: 44px; margin-bottom: 16px;
@@ -116,9 +118,9 @@
     </form>
 
     <div class="auth-banner" id="demo-banner" hidden>
-      <strong>Mode démonstration</strong> — la sécurité cloud n'est pas encore branchée.
-      Utilisez <code>admin@2026.fr</code> / <code>Azerty@2026Orixa</code>.
-      Pour une vraie sécurité, suivez <code>GUIDE-SUPABASE.md</code>.
+      <strong>Mode démonstration</strong> — la sécurité cloud n'est pas branchée.
+      Aucune donnée n'est partagée. Pour activer la vraie sécurité,
+      suivez <code>GUIDE-SUPABASE.md</code>.
     </div>
     <div class="auth-banner auth-banner--ok" id="cloud-banner" hidden>
       <strong>Mode sécurisé</strong> — connexion vérifiée par Supabase (mots de passe chiffrés, jamais stockés dans le navigateur).
@@ -201,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
         try { sessionStorage.setItem('orixa:demo-admin', '1'); } catch (x) {}
         location.href = next;
       } else {
-        fail('Identifiants invalides. Vérifiez l\u2019e-mail et le mot de passe (mode démo : voir la bannière ci-dessus).');
+        fail('Identifiants invalides. Vérifiez l\u2019e-mail et le mot de passe.');
       }
       return;
     }

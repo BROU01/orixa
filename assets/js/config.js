@@ -20,8 +20,9 @@
    ========================================================= */
 window.ORIXA_CONFIG = {
   /* --- Supabase (collez vos valeurs ici) ------------------ */
-  SUPABASE_URL: '',      // ex. : 'https://abcdefgh.supabase.co'
-  SUPABASE_ANON_KEY: '', // ex. : 'eyJhbGciOiJIUzI1NiIs...'
+  // ⚠️ URL du PROJET, sans « /rest/v1/ » à la fin (le SDK l'ajoute seul).
+  SUPABASE_URL: 'https://bgmohxkfqialawrtokgb.supabase.co',
+  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnbW9oeGtmcWlhbGF3cnRva2diIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2MDc5MjYsImV4cCI6MjEwMTE4MzkyNn0.8X7A3Dldv_WiVBU-o-HGOkeF4WKt1tb0TWdmZpKi1n4',
 
   /* --- Compte administrateur ------------------------------ */
   // Email autorisé à se connecter au panneau d'administration.

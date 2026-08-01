@@ -16,6 +16,14 @@
 
   var CFG = window.ORIXA_CONFIG || {};
 
+  /* Normalise l'URL du projet : retire « /rest/v1/ » et le slash final
+     que l'utilisateur aurait collés par erreur depuis le dashboard. */
+  function cleanUrl() {
+    return String(CFG.SUPABASE_URL || '').trim()
+      .replace(/\/rest\/v1\/?$/, '')
+      .replace(/\/+$/, '');
+  }
+
   function isConfigured() {
     return !!(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY &&
       /^https:\/\//.test(String(CFG.SUPABASE_URL).trim()));
@@ -52,7 +60,7 @@
   function makeClient() {
     return loadSDK().then(function (sb) {
       if (!client) {
-        client = sb.createClient(CFG.SUPABASE_URL.trim(), CFG.SUPABASE_ANON_KEY.trim(), {
+        client = sb.createClient(cleanUrl(), CFG.SUPABASE_ANON_KEY.trim(), {
           auth: { persistSession: true, autoRefreshToken: true, flowType: 'pkce' }
         });
       }
