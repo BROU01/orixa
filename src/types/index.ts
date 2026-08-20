@@ -125,3 +125,42 @@ export interface AdminRole {
   label: string;
   permissions: string[];
 }
+
+/* ── Fidélité ── */
+
+/** Bon d'achat généré par le programme de fidélité */
+export interface Voucher {
+  id: string;
+  code: string;
+  amount: number;           // Montant en € (10 par défaut)
+  generatedAt: string;      // ISO date
+  expiresAt: string;        // ISO date — 6 mois par défaut
+  consumed: boolean;
+  consumedAt?: string;
+  orderId?: string;         // Commande qui a généré ce bon
+  refunded: boolean;        // true si la commande d'origine a été remboursée
+}
+
+/** Solde fidélité d'un client */
+export interface LoyaltyBalance {
+  cumulativeSpend: number;  // Total TTC payé (hors frais de port)
+  remainder: number;        // Solde restant après dernier palier
+  vouchers: Voucher[];      // Bons générés
+  nextThreshold: number;    // Prochain palier (100, 200, 300...)
+}
+
+/** Commande enregistrée */
+export interface Order {
+  id: string;
+  date: string;
+  client: string;
+  email: string;
+  adresse: string;
+  livraison: string;
+  paiement: string;
+  total: number;
+  subtotal: number;         // Montant articles hors frais de port
+  articles: Array<{ nom: string; qty: number; prix: number }>; 
+  statut: 'En attente' | 'Payée' | 'Expédiée' | 'Livrée' | 'Remboursée';
+  voucherUsed?: string;     // ID du bon d'achat utilisé
+}

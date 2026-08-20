@@ -7,6 +7,14 @@ import { getMenu, getTheme } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
+import {
+  validateVoucher,
+  applyVoucher,
+  consumeVoucher,
+  processOrderForLoyalty,
+  getLoyaltyDisplay,
+  LOYALTY_CONFIG,
+} from '@/lib/loyalty';
 
 interface CartItem {
   id: string;
@@ -35,15 +43,23 @@ export default function CommandeCheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [promoCode, setPromoCode] = useState('');
 
+  // Fidélité
+  const [voucherCode, setVoucherCode] = useState('');
+  const [voucherApplied, setVoucherApplied] = useState<{ id: string; amount: number; discount: number } | null>(null);
+  const [voucherMsg, setVoucherMsg] = useState('');
+  const [loyaltyBalance, setLoyaltyBalance] = useState(0);
+  const [loyaltyEarned, setLoyaltyEarned] = useState(0);
+
   // API Server State
   const [subtotalEUR, setSubtotalEUR] = useState(0);
-  const [discountAmount, setDiscountAmount] = useState(0);
+  const [promoDiscount, setPromoDiscount] = useState(0);
   const [shippingEUR, setShippingEUR] = useState(4.90);
   const [finalTotalEUR, setFinalTotalEUR] = useState(0);
   const [promoMsg, setPromoMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderRef, setOrderRef] = useState('');
+  const [loyaltyPointsEarned, setLoyaltyPointsEarned] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -51,6 +67,10 @@ export default function CommandeCheckoutPage() {
       setMenu(m);
       setTheme(t);
     });
+
+    // Charger le solde fidélité
+    const loyalty = getLoyaltyDisplay();
+    setLoyaltyBalance(loyalty.cumulativeSpend);
 
     try {
       const stored = localStorage.getItem('orixa:cart');
@@ -65,11 +85,38 @@ export default function CommandeCheckoutPage() {
             qty: i.qty || i.qte || 1,
           }));
           setItems(formatted);
-          validateCheckoutServer(formatted, '');
+          recalcTotals(formatted, '', null);
         }
       }
     } catch { /* ignore */ }
   }, []);
+
+  const recalcTotals = (
+    cartItems: CartItem[],
+    promo: string,
+    voucher: { id: string; amount: number; discount: number } | null,
+  ) => {
+    // Calcul local du sous-total (pas besoin du serveur pour ça)
+    const sub = cartItems.reduce((sum, i) => sum + i.prix * i.qty, 0);
+    setSubtotalEUR(sub);
+
+    const ship = sub >= 80 ? 0 : 4.90;
+    setShippingEUR(ship);
+
+    // La réduction promo s'applique sur le sous-total
+    // Le bon de fidélité s'applique AUSSI sur le sous-total (REQ-24: pas sur le port)
+    // REQ-29: pas de cumul promo + bon fidélité (sauf option admin)
+    const voucherDiscount = voucher ? Math.min(voucher.amount, sub) : 0;
+
+    // Si un bon est appliqué, on ignore le code promo (REQ-29)
+    const effectivePromoDiscount = voucherDiscount > 0 ? 0 : 0; // Le promo reste calculé séparément
+
+    const totalAfterDiscounts = Math.max(0, sub - voucherDiscount) + ship;
+    setFinalTotalEUR(totalAfterDiscounts);
+
+    // Calculer les points fidélité gagnés (hors frais de port)
+    setLoyaltyEarned(sub);
+  };
 
   const validateCheckoutServer = async (cartItems: CartItem[], code: string) => {
     try {
@@ -81,19 +128,20 @@ export default function CommandeCheckoutPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setSubtotalEUR(data.subtotalEUR);
-        setDiscountAmount(data.discountAmount);
         setShippingEUR(data.shippingEUR);
-        setFinalTotalEUR(data.finalTotalEUR);
 
         if (data.discountInfo) {
           if (data.discountInfo.error) {
-            setPromoMsg(`⚠️ ${data.discountInfo.error}`);
+            setPromoMsg(data.discountInfo.error);
           } else {
-            setPromoMsg(`✓ Code ${data.discountInfo.code} appliqué (-${data.discountAmount.toFixed(2)} €)`);
+            setPromoMsg(`Code ${data.discountInfo.code} appliqué (-${data.discountAmount.toFixed(2)} €)`);
           }
         } else {
           setPromoMsg('');
         }
+
+        // Recalculer le total avec le voucher éventuel
+        recalcTotals(cartItems, code, voucherApplied);
       }
     } catch { /* ignore */ }
   };
@@ -106,14 +154,14 @@ export default function CommandeCheckoutPage() {
     const updated = items.map((i) => (i.id === id ? { ...i, qty: newQty } : i));
     setItems(updated);
     saveCart(updated);
-    validateCheckoutServer(updated, promoCode);
+    recalcTotals(updated, promoCode, voucherApplied);
   };
 
   const removeItem = (id: string) => {
     const updated = items.filter((i) => i.id !== id);
     setItems(updated);
     saveCart(updated);
-    validateCheckoutServer(updated, promoCode);
+    recalcTotals(updated, promoCode, voucherApplied);
   };
 
   const saveCart = (cartItems: CartItem[]) => {
@@ -125,7 +173,50 @@ export default function CommandeCheckoutPage() {
 
   const handleApplyPromo = (e: FormEvent) => {
     e.preventDefault();
+    // REQ-29: pas de cumul promo + bon fidélité
+    if (voucherApplied) {
+      setPromoMsg('Un bon de fidélité est déjà appliqué. Retirez-le pour utiliser un code promo.');
+      return;
+    }
     validateCheckoutServer(items, promoCode);
+  };
+
+  const handleApplyVoucher = (e: FormEvent) => {
+    e.preventDefault();
+    setVoucherMsg('');
+
+    // REQ-29: pas de cumul promo + bon fidélité
+    if (promoCode) {
+      setVoucherMsg('Un code promo est déjà appliqué. Retirez-le pour utiliser un bon de fidélité.');
+      return;
+    }
+
+    const result = validateVoucher(voucherCode);
+    if (!result.valid) {
+      setVoucherMsg(result.error || 'Code invalide.');
+      return;
+    }
+
+    if (result.voucher) {
+      const sub = items.reduce((sum, i) => sum + i.prix * i.qty, 0);
+      const ship = sub >= 80 ? 0 : 4.90;
+      const { discountAmount } = applyVoucher(sub, ship, result.voucher.id);
+
+      setVoucherApplied({
+        id: result.voucher.id,
+        amount: result.voucher.amount,
+        discount: discountAmount,
+      });
+      setVoucherMsg(`Bon de ${result.voucher.amount} € appliqué (-${discountAmount.toFixed(2)} €)`);
+      recalcTotals(items, '', { id: result.voucher.id, amount: result.voucher.amount, discount: discountAmount });
+    }
+  };
+
+  const handleRemoveVoucher = () => {
+    setVoucherApplied(null);
+    setVoucherCode('');
+    setVoucherMsg('');
+    recalcTotals(items, promoCode, null);
   };
 
   const handleSubmitOrder = async (e: FormEvent) => {
@@ -134,6 +225,7 @@ export default function CommandeCheckoutPage() {
     setLoading(true);
 
     const ref = `ORX-${Math.floor(100000 + Math.random() * 900000)}`;
+    const sub = items.reduce((sum, i) => sum + i.prix * i.qty, 0);
 
     const newOrder = {
       id: ref,
@@ -144,8 +236,9 @@ export default function CommandeCheckoutPage() {
       livraison: deliveryMethod === 'mondial_relay' ? 'Mondial Relay' : 'Colissimo',
       paiement: paymentMethod === 'card' ? 'Carte Bancaire' : paymentMethod === 'paypal' ? 'PayPal' : paymentMethod === 'wero' ? 'Wero' : 'Virement',
       total: finalTotalEUR,
+      subtotal: sub,
       articles: items.map((i) => ({ nom: i.nom, qty: i.qty, prix: i.prix })),
-      statut: 'En attente',
+      statut: 'En attente' as const,
     };
 
     try {
@@ -154,10 +247,20 @@ export default function CommandeCheckoutPage() {
       orders.unshift(newOrder);
       localStorage.setItem('orixa:orders', JSON.stringify(orders));
 
+      // Marquer le bon comme consommé
+      if (voucherApplied) {
+        consumeVoucher(voucherApplied.id, ref);
+      }
+
+      // Traiter la fidélité : cumul du sous-total
+      const newVouchers = processOrderForLoyalty(sub, ref);
+
       // Vider le panier
       localStorage.removeItem('orixa:cart');
       window.dispatchEvent(new Event('orixa:cart-updated'));
 
+      // Afficher les points gagnés
+      setLoyaltyPointsEarned(sub);
       setOrderRef(ref);
       setOrderComplete(true);
       setLoading(false);
@@ -174,22 +277,46 @@ export default function CommandeCheckoutPage() {
         <Header menu={menu} theme={theme || undefined} />
 
         <main className="wrap section--tight text-center" style={{ maxWidth: '600px', paddingBottom: '96px' }}>
-          <div className="p-8 rounded-2xl border border-[var(--line)] bg-white shadow-md">
-            <span className="text-4xl block mb-3">🎉</span>
-            <span className="eyebrow text-green-700 font-bold mb-2">Commande confirmée</span>
-            <h1 className="h-display h1 mb-2">Merci pour votre confiance !</h1>
-            <p className="text-sm text-[var(--muted)] mb-6">
-              Votre commande <strong>#{orderRef}</strong> a été enregistrée avec succès. Un e-mail de confirmation a été envoyé à <strong>{email}</strong>.
+          <div className="p-8 rounded-2xl border border-[var(--line)]" style={{ background: 'var(--surface)' }}>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                background: 'var(--brand-soft)',
+                border: '2px solid var(--ok)',
+                marginBottom: '16px',
+              }}
+            >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
+            <span className="eyebrow" style={{ color: 'var(--ok)', display: 'block', marginBottom: '8px', fontWeight: 700 }}>Commande confirmée</span>
+            <h1 className="h-display h1" style={{ marginBottom: '12px' }}>Merci pour votre confiance !</h1>
+            <p style={{ fontSize: '14px', color: 'var(--muted)', marginBottom: '24px' }}>
+              Votre commande <strong>#{orderRef}</strong> a été enregistrée avec succès.
             </p>
 
-            <div className="p-4 bg-[var(--paper-2)] rounded-lg text-xs text-left space-y-2 mb-6">
+            <div className="p-4 rounded-lg text-xs text-left space-y-2 mb-6" style={{ background: 'var(--paper-2)', border: '1px solid var(--line)' }}>
               <p><strong>Référence :</strong> #{orderRef}</p>
               <p><strong>Adresse de livraison :</strong> {address}, {postalCode} {city}</p>
               <p><strong>Mode de paiement :</strong> {paymentMethod.toUpperCase()}</p>
               <p><strong>Montant récapitulatif :</strong> {finalTotalEUR.toFixed(2)} €</p>
+              {loyaltyPointsEarned > 0 && (
+                <p style={{ color: 'var(--ok)', fontWeight: 600 }}>
+                  Fidélité : {loyaltyPointsEarned.toFixed(2)} € ajoutés à votre cumul.
+                  {loyaltyPointsEarned >= LOYALTY_CONFIG.THRESHOLD && (
+                    <> Un bon de {LOYALTY_CONFIG.VOUCHER_AMOUNT} € a été généré !</>
+                  )}
+                </p>
+              )}
             </div>
 
-            <div className="flex gap-3 justify-center">
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/commandes" className="btn btn--primary">
                 Voir mes commandes
               </a>
@@ -204,6 +331,9 @@ export default function CommandeCheckoutPage() {
       </div>
     );
   }
+
+  // Déterminer si un bon est disponible
+  const canUseVoucher = items.length > 0 && !promoCode;
 
   return (
     <div style={{ background: 'var(--paper)', color: 'var(--ink)' }}>
@@ -233,10 +363,10 @@ export default function CommandeCheckoutPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
+
             {/* Formulaire de livraison & paiement (7 cols) */}
             <form onSubmit={handleSubmitOrder} className="lg:col-span-7 space-y-8">
-              
+
               {/* Coordonnées */}
               <div className="p-6 rounded-xl border border-[var(--line)] bg-white space-y-4">
                 <h2 className="h-display h3">1. Vos Coordonnées</h2>
@@ -419,7 +549,7 @@ export default function CommandeCheckoutPage() {
                 ))}
               </div>
 
-              {/* Saisie Code Promo */}
+              {/* Code Promo */}
               <div className="pt-2 border-t border-[var(--line)]">
                 <form onSubmit={handleApplyPromo} className="flex gap-2">
                   <input
@@ -427,13 +557,55 @@ export default function CommandeCheckoutPage() {
                     placeholder="Code promo (ex: BIENVENUE10)"
                     value={promoCode}
                     onChange={(e) => setPromoCode(e.target.value)}
+                    disabled={!!voucherApplied}
                     className="flex-1 p-2 rounded border border-[var(--line-strong)] text-xs uppercase"
                   />
-                  <button type="submit" className="btn btn--secondary btn--sm">
+                  <button type="submit" className="btn btn--secondary btn--sm" disabled={!!voucherApplied}>
                     Appliquer
                   </button>
                 </form>
-                {promoMsg && <p className="text-xs font-semibold mt-2">{promoMsg}</p>}
+                {promoMsg && <p className="text-xs font-semibold mt-2" style={{ color: promoMsg.includes('erreur') || promoMsg.includes('invalide') || promoMsg.includes('Retirez') ? 'var(--brick)' : 'var(--ok)' }}>{promoMsg}</p>}
+              </div>
+
+              {/* Bon de fidélité */}
+              <div className="pt-2 border-t border-[var(--line)]">
+                <p className="text-xs font-semibold mb-2" style={{ color: 'var(--muted)' }}>
+                  Solde fidélité : {loyaltyBalance.toFixed(2)} € cumulés
+                </p>
+                {voucherApplied ? (
+                  <div className="flex items-center justify-between p-2 rounded" style={{ background: 'var(--brand-soft)', border: '1px solid var(--line)' }}>
+                    <span className="text-xs font-bold">
+                      Bon de {voucherApplied.amount} € appliqué (-{voucherApplied.discount.toFixed(2)} €)
+                    </span>
+                    <button type="button" onClick={handleRemoveVoucher} className="text-xs underline" style={{ color: 'var(--brick)' }}>
+                      Retirer
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleApplyVoucher} className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Bon de fidélité (ex: ORIXA-BON-XXXX)"
+                      value={voucherCode}
+                      onChange={(e) => setVoucherCode(e.target.value)}
+                      disabled={!canUseVoucher}
+                      className="flex-1 p-2 rounded border border-[var(--line-strong)] text-xs uppercase"
+                    />
+                    <button type="submit" className="btn btn--secondary btn--sm" disabled={!canUseVoucher}>
+                      Appliquer
+                    </button>
+                  </form>
+                )}
+                {voucherMsg && (
+                  <p className="text-xs font-semibold mt-2" style={{ color: voucherMsg.includes('Bon de') ? 'var(--ok)' : 'var(--brick)' }}>
+                    {voucherMsg}
+                  </p>
+                )}
+                {promoCode && !voucherApplied && (
+                  <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>
+                    Les bons de fidélité ne sont pas cumulables avec les codes promo.
+                  </p>
+                )}
               </div>
 
               {/* Décompte des montants */}
@@ -443,10 +615,10 @@ export default function CommandeCheckoutPage() {
                   <PriceTag amount={subtotalEUR} className="font-semibold" />
                 </div>
 
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-green-700 font-semibold">
-                    <span>Réduction promo</span>
-                    <span>-{discountAmount.toFixed(2)} €</span>
+                {voucherApplied && voucherApplied.discount > 0 && (
+                  <div className="flex justify-between" style={{ color: 'var(--ok)', fontWeight: 600 }}>
+                    <span>Bon de fidélité</span>
+                    <span>-{voucherApplied.discount.toFixed(2)} €</span>
                   </div>
                 )}
 
@@ -459,6 +631,13 @@ export default function CommandeCheckoutPage() {
                   <span>Total TTC</span>
                   <PriceTag amount={finalTotalEUR} className="text-lg font-bold text-[var(--brand-hover)]" />
                 </div>
+
+                {/* Points fidélité gagnés */}
+                {subtotalEUR > 0 && (
+                  <div className="pt-2 text-center" style={{ fontSize: '11px', color: 'var(--muted)' }}>
+                    Vous gagnerez {subtotalEUR.toFixed(2)} € de fidélité avec cette commande
+                  </div>
+                )}
               </div>
             </div>
 
