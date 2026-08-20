@@ -85,14 +85,14 @@ export default async function ContactPage() {
                 Service client basé en France, disponible du lundi au vendredi de 9h à 18h.
               </p>
               <div className="space-y-2 text-sm">
-                <p>📧 <strong>E-mail :</strong> contact@orixa.fr</p>
-                <p>📍 <strong>Atelier :</strong> Maison ORIXA, France</p>
-                <p>⏱️ <strong>Délai de réponse :</strong> Sous 24h ouvrées</p>
+                <p><strong>E-mail :</strong> contact@orixa.fr</p>
+                <p><strong>Atelier :</strong> Maison ORIXA, France</p>
+                <p><strong>Délai de réponse :</strong> Sous 24h ouvrées</p>
               </div>
             </div>
 
             <div id="livraison" className="p-6 rounded-xl border border-[var(--line)]" style={{ background: 'var(--paper-2)' }}>
-              <h3 className="h-display h3" style={{ marginBottom: '12px' }}>🚚 Délais & Frais de Livraison</h3>
+              <h3 className="h-display h3" style={{ marginBottom: '12px' }}>Délais & Frais de Livraison</h3>
               <p className="text-sm text-[var(--muted)] mb-3">
                 Expédition rapide vers la France, la Belgique, la Suisse et toute l&apos;Europe.
               </p>
@@ -103,7 +103,7 @@ export default async function ContactPage() {
             </div>
 
             <div id="retours" className="p-6 rounded-xl border border-[var(--line)]" style={{ background: 'var(--paper-2)' }}>
-              <h3 className="h-display h3" style={{ marginBottom: '12px' }}>🔄 Retours & Satisfait ou Remboursé</h3>
+              <h3 className="h-display h3" style={{ marginBottom: '12px' }}>Retours & Satisfait ou Remboursé</h3>
               <p className="text-sm text-[var(--muted)]">
                 Vous disposez de 14 jours de rétractation à compter de la réception de votre commande pour renvoyer les cosmétiques non ouverts dans leur emballage d&apos;origine.
               </p>

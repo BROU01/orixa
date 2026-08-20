@@ -1,18 +1,17 @@
-import { getProducts, getCategories, getTheme, getMenu } from '@/lib/data';
+import { getProducts, getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
 import type { Product } from '@/types';
 
 export default async function NouveautesPage() {
-  const [products, categories, theme, menu] = await Promise.all([
+  const [products, theme, menu] = await Promise.all([
     getProducts(),
-    getCategories(),
     getTheme(),
     getMenu(),
   ]);
 
-  const newProducts = products.filter((p: Product) => p.badge === 'Nouveau' || p.id === 'hibiscus');
+  const newProducts = products.filter((p: Product) => p.badge === 'Nouveau');
 
   return (
     <div style={{ background: 'var(--paper)', color: 'var(--ink)' }}>
@@ -36,41 +35,42 @@ export default async function NouveautesPage() {
         </p>
       </div>
 
-      <div className="wrap mb-6">
-        <div className="cat-pills">
-          <a href="/boutique" className="cat-pill">Tous</a>
-          <a href="/cosmetiques" className="cat-pill">Cosmétiques</a>
-          <a href="/exotiques" className="cat-pill">Produits exotiques</a>
-          <a href="/nouveautes" className="cat-pill" aria-current="page">Nouveautés ({newProducts.length})</a>
-        </div>
-      </div>
-
       <div className="wrap section--tight" style={{ paddingTop: 0, paddingBottom: '96px' }}>
-        <div className="prod-grid">
-          {newProducts.map((product: Product) => (
-            <div key={product.id} className="prod-card">
-              <div className="prod-card__media">
-                <img src={product.img} alt={product.nom} loading="lazy" />
-                <span className="prod-card__badge badge badge--new">
-                  Nouveau
-                </span>
-              </div>
-              <div className="prod-card__body">
-                <span className="origine">{product.origine}</span>
-                <h3 className="prod-card__name">
-                  <a href={`/produit?id=${product.id}`}>{product.nom}</a>
-                </h3>
-                <p className="prod-card__meta">{product.unite}</p>
-                <div className="prod-card__foot">
-                  <PriceTag amount={product.prix} className="prod-card__price" />
-                  <a href={`/produit?id=${product.id}`} className="btn btn--primary btn--sm">
-                    Découvrir
-                  </a>
+        {newProducts.length === 0 ? (
+          <div className="empty">
+            <h2 className="empty__title">Aucune nouveauté pour le moment</h2>
+            <p className="empty__text">De nouveaux produits arrivent bientôt. Revenez bientôt ou découvrez l&apos;ensemble du catalogue.</p>
+            <a href="/boutique" className="btn btn--primary">
+              Parcourir la boutique
+            </a>
+          </div>
+        ) : (
+          <div className="prod-grid">
+            {newProducts.map((product: Product) => (
+              <div key={product.id} className="prod-card">
+                <div className="prod-card__media">
+                  <img src={product.img} alt={product.nom} loading="lazy" />
+                  <span className="prod-card__badge badge badge--new">
+                    Nouveau
+                  </span>
+                </div>
+                <div className="prod-card__body">
+                  <span className="origine">{product.origine}</span>
+                  <h3 className="prod-card__name">
+                    <a href={`/produit?id=${product.id}`}>{product.nom}</a>
+                  </h3>
+                  <p className="prod-card__meta">{product.unite}</p>
+                  <div className="prod-card__foot">
+                    <PriceTag amount={product.prix} className="prod-card__price" />
+                    <a href={`/produit?id=${product.id}`} className="btn btn--primary btn--sm">
+                      Découvrir
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <Footer theme={theme} />

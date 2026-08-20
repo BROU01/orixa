@@ -65,19 +65,19 @@ export default async function HomePage() {
       <div className="announce" style={{ background: 'var(--ink-2)', color: 'var(--paper-2)', paddingBlock: '16px' }}>
         <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', textAlign: 'center' }}>
           <div className="reveal reveal-delay-1">
-            <span style={{ color: 'var(--brand)', fontWeight: 600 }}>🌿 Ingrédients 100% Purs</span>
+            <span style={{ color: 'var(--accent-2)', fontWeight: 600 }}>Ingrédients 100% Purs</span>
             <p style={{ fontSize: '11px', textTransform: 'none', letterSpacing: '0', color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>
               Coopératives éco-responsables du Burkina Faso, Sénégal & Côte d'Ivoire
             </p>
           </div>
           <div className="reveal reveal-delay-2">
-            <span style={{ color: 'var(--brand)', fontWeight: 600 }}>✨ Savoir-Faire Artisanal</span>
+            <span style={{ color: 'var(--accent-2)', fontWeight: 600 }}>Savoir-Faire Artisanal</span>
             <p style={{ fontSize: '11px', textTransform: 'none', letterSpacing: '0', color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>
               Formulations pures préservant les vertus naturelles originelles
             </p>
           </div>
           <div className="reveal reveal-delay-3">
-            <span style={{ color: 'var(--brand)', fontWeight: 600 }}>📦 Expédition Europe</span>
+            <span style={{ color: 'var(--accent-2)', fontWeight: 600 }}>Expédition Europe</span>
             <p style={{ fontSize: '11px', textTransform: 'none', letterSpacing: '0', color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>
               Livraison offerte dès 80 € avec suivi Colissimo & Mondial Relay
             </p>

@@ -1,51 +1,90 @@
 import type { Theme } from '@/types';
 
+/**
+ * Configuration des réseaux sociaux.
+ * Ajouter ou retirer un réseau = modifier ce tableau uniquement.
+ */
+const SOCIAL_LINKS: Array<{
+  name: string;
+  url: string;
+  label: string;
+  icon: JSX.Element;
+}> = [
+  {
+    name: 'Instagram',
+    url: 'https://instagram.com/orixa',
+    label: 'ORIXA sur Instagram',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Facebook',
+    url: 'https://facebook.com/orixa',
+    label: 'ORIXA sur Facebook',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'TikTok',
+    url: 'https://tiktok.com/@orixa',
+    label: 'ORIXA sur TikTok',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+      </svg>
+    ),
+  },
+];
+
 interface FooterProps {
   theme?: Theme;
 }
 
 /**
  * Composant Footer sémantique ORIXA.
- * Icônes réseaux sociaux, liens pages complètes, mentions légales.
+ * - 5 liens uniques dans « Informations » (pas de doublons)
+ * - Sous-footer : copyright + logos paiement uniquement
+ * - Réseaux sociaux en SVG monochromes avec aria-label
+ * - Aucun Pinterest
  */
 export default function Footer({ theme }: FooterProps) {
   return (
     <footer className="site-footer">
       <div className="wrap">
         <div className="site-footer__grid">
-          
-          {/* Brand Col */}
+
+          {/* Brand Col + Socials */}
           <div className="site-footer__brand">
             <span className="brand__mark">ORIXA</span>
             <p className="site-footer__about" data-footer-about>
               {theme?.footerAbout || 'Cosmétiques naturels et produits exotiques sélectionnés avec soin, livrés partout en Europe depuis notre atelier.'}
             </p>
-            {/* Réseaux sociaux */}
-            <div className="site-footer__socials" style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-              <a href="https://instagram.com/orixa" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                </svg>
-              </a>
-              <a href="https://facebook.com/orixa" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                </svg>
-              </a>
-              <a href="https://tiktok.com/@orixa" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="social-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
-                </svg>
-              </a>
-              <a href="https://pinterest.com/orixa" target="_blank" rel="noopener noreferrer" aria-label="Pinterest" className="social-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 12a4 4 0 1 1 8 0c0 4-3 6-3 6"/>
-                  <path d="M9.5 16.5 8 22"/>
-                </svg>
-              </a>
-            </div>
+
+            {/* Réseaux sociaux — config-driven */}
+            {SOCIAL_LINKS.length > 0 && (
+              <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                {SOCIAL_LINKS.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="social-icon"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* La maison */}
@@ -53,7 +92,7 @@ export default function Footer({ theme }: FooterProps) {
             <h3 className="site-footer__title">La maison</h3>
             <ul className="site-footer__list">
               <li><a href="/histoire">Notre histoire</a></li>
-              <li><a href="/histoire#valeurs">Nos valeurs</a></li>
+              <li><a href="/nos-valeurs">Nos valeurs</a></li>
             </ul>
           </nav>
 
@@ -87,7 +126,7 @@ export default function Footer({ theme }: FooterProps) {
             </ul>
           </nav>
 
-          {/* Informations */}
+          {/* Informations — exactement 5 liens uniques */}
           <nav className="site-footer__col" aria-label="Informations">
             <h3 className="site-footer__title">Informations</h3>
             <ul className="site-footer__list">
@@ -95,6 +134,7 @@ export default function Footer({ theme }: FooterProps) {
               <li><a href="/confidentialite">Politique de confidentialité</a></li>
               <li><a href="/cookies">Politique de cookies</a></li>
               <li><a href="/cgv">Conditions générales de vente</a></li>
+              <li><a href="/paiements-securises">Paiements sécurisés</a></li>
             </ul>
           </nav>
         </div>
@@ -138,15 +178,9 @@ export default function Footer({ theme }: FooterProps) {
 
         <hr className="site-footer__rule" />
 
-        {/* Bas de page */}
+        {/* Bas de page — copyright uniquement (pas de doublons de liens) */}
         <div className="site-footer__legal">
-          <p>© <span data-year>{new Date().getFullYear()}</span> ORIXA — Tous droits réservés</p>
-          <nav aria-label="Liens légaux">
-            <a href="/mentions-legales">Mentions légales</a>
-            <a href="/confidentialite">Confidentialité</a>
-            <a href="/cookies">Cookies</a>
-            <a href="/cgv">CGV</a>
-          </nav>
+          <p>&copy; {new Date().getFullYear()} ORIXA — Tous droits réservés</p>
         </div>
       </div>
     </footer>

@@ -77,7 +77,6 @@ export default function HeaderClient({ menu, theme }: HeaderClientProps) {
     { label: 'Cosmétiques', url: '/cosmetiques' },
     { label: 'Produits exotiques', url: '/exotiques' },
     { label: 'Nouveautés', url: '/nouveautes' },
-    { label: 'Notre histoire', url: '/histoire' },
     { label: 'Contact', url: '/contact' },
   ];
 
