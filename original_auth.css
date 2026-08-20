@@ -1,0 +1,262 @@
+/* =========================================================
+   ORIXA — Authentification (direction éditoriale)
+   Fond photo plein écran + carte centrale translucide.
+   Le verre est conservé mais le contraste est tenu :
+   voile sombre sous la carte, texte clair, accents or.
+   ========================================================= */
+
+.auth-body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: #111110;
+  background-image:
+    linear-gradient(135deg, rgba(17,17,16,.78), rgba(17,17,16,.58) 45%, rgba(17,17,16,.80)),
+    var(--auth-bg, url('../img/auth-bg.png'));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* En-tête minimal — pas de nav marketing sur un écran d'authentification */
+.auth-top {
+  position: relative;
+  z-index: 2;
+  padding: 22px clamp(16px, 5vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.auth-top .brand__mark { color: #FBFAF6; }
+.auth-top__back {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 500;
+  color: rgba(251,250,246,.82);
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(251,250,246,.22);
+  background: rgba(17,17,16,.35);
+  backdrop-filter: blur(6px);
+  transition: background .18s, color .18s, border-color .18s;
+}
+.auth-top__back:hover { color: #fff; border-color: rgba(201,168,76,.55); background: rgba(17,17,16,.5); }
+
+/* Zone centrale */
+.auth-center {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 40px) clamp(16px, 5vw, 48px) clamp(32px, 6vw, 56px);
+}
+
+/* ---- La carte de verre ---- */
+.glass {
+  width: 100%;
+  max-width: 460px;
+  padding: clamp(28px, 4vw, 42px);
+  border-radius: 20px;
+
+  background: rgba(22, 21, 19, .58);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(201, 168, 76, .28);
+  box-shadow:
+    0 24px 70px rgba(10, 10, 8, .55),
+    inset 0 1px 0 rgba(255, 255, 255, .10);
+  color: #FBFAF6;
+}
+
+/* Repli si backdrop-filter n'est pas supporté : on opacifie */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(20, 19, 17, .92); }
+}
+
+.glass__eyebrow {
+  display: block;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 10px;
+}
+.glass__title {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 34px);
+  line-height: 1.12;
+  letter-spacing: -.015em;
+  color: #FBFAF6;
+  margin: 0 0 8px;
+}
+.glass__sub {
+  font-size: 14px;
+  color: rgba(251,250,246,.76);
+  margin: 0 0 26px;
+}
+
+/* ---- Champs sur verre ---- */
+.gform { display: flex; flex-direction: column; gap: 17px; }
+
+.gfield { display: flex; flex-direction: column; gap: 6px; }
+.gfield__row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.gfield__label { font-size: 12.5px; font-weight: 600; color: rgba(251,250,246,.9); }
+.gfield__link  { font-size: 12px; font-weight: 500; color: rgba(251,250,246,.75); }
+.gfield__link:hover { color: #fff; text-decoration: underline; }
+.gfield__hint  { font-size: 11.5px; color: rgba(251,250,246,.6); }
+.gfield__wrap  { position: relative; }
+
+.gfield__input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  color: #FBFAF6;
+  background: rgba(251, 250, 246, .10);
+  border: 1px solid rgba(251, 250, 246, .26);
+  border-radius: 10px;
+  transition: border-color .16s, background .16s, box-shadow .16s;
+  appearance: none;
+}
+.gfield__input::placeholder { color: rgba(251,250,246,.5); }
+.gfield__input:hover { border-color: rgba(251,250,246,.42); }
+.gfield__input:focus {
+  outline: none;
+  background: rgba(251,250,246,.16);
+  border-color: #C9A84C;
+  box-shadow: 0 0 0 3px rgba(201,168,76,.18);
+}
+.gfield__input[aria-invalid="true"] {
+  border-color: #F2A38F;
+  box-shadow: 0 0 0 3px rgba(242,163,143,.18);
+}
+/* Autofill : Chrome force un fond blanc, on le neutralise */
+.gfield__input:-webkit-autofill,
+.gfield__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #FBFAF6;
+  -webkit-box-shadow: 0 0 0 1000px rgba(24,23,20,.96) inset;
+  caret-color: #FBFAF6;
+}
+
+.gfield__wrap .gfield__input { padding-right: 44px; }
+.gfield__toggle {
+  position: absolute; top: 50%; right: 5px; transform: translateY(-50%);
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  color: rgba(251,250,246,.72);
+  transition: color .15s, background .15s;
+}
+.gfield__toggle:hover { color: #fff; background: rgba(251,250,246,.12); }
+
+.gfield__error { font-size: 12px; color: #F6BCAB; }
+
+/* Case à cocher sur verre */
+.gcheck {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; user-select: none;
+  font-size: 13px; color: rgba(251,250,246,.86);
+  min-height: 36px;
+}
+.gcheck input { position: absolute; opacity: 0; pointer-events: none; }
+.gcheck__box {
+  width: 19px; height: 19px; flex: none;
+  border-radius: 5px;
+  border: 1px solid rgba(251,250,246,.4);
+  background: rgba(251,250,246,.10);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: transparent;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.gcheck input:checked + .gcheck__box {
+  background: #C9A84C; border-color: #C9A84C; color: #111110;
+}
+.gcheck input:focus-visible + .gcheck__box { box-shadow: 0 0 0 3px rgba(251,250,246,.22); }
+.gcheck a { color: #fff; font-weight: 600; text-decoration: underline; }
+
+/* ---- Boutons sur verre ---- */
+.gbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; min-height: 48px;
+  padding-inline: 20px;
+  font-size: 14.5px; font-weight: 600;
+  border: 1px solid transparent; border-radius: 10px;
+  transition: background .18s, border-color .18s, color .18s, transform .06s;
+  touch-action: manipulation;
+}
+.gbtn:active { transform: translateY(1px); }
+.gbtn[disabled] { opacity: .55; pointer-events: none; }
+
+.gbtn--solid { background: #C9A84C; color: #111110; }
+.gbtn--solid:hover { background: #E8C97A; }
+
+.gbtn--outline {
+  background: rgba(251,250,246,.08);
+  border-color: rgba(251,250,246,.32);
+  color: #FBFAF6;
+  flex: 1; width: auto; min-height: 44px; font-size: 13.5px;
+}
+.gbtn--outline:hover { background: rgba(251,250,246,.18); border-color: rgba(251,250,246,.55); }
+
+.gdivider {
+  position: relative; text-align: center;
+  font-size: 11.5px; color: rgba(251,250,246,.6);
+  margin: 2px 0;
+}
+.gdivider::before, .gdivider::after {
+  content: ''; position: absolute; top: 50%;
+  width: calc(50% - 74px); height: 1px;
+  background: rgba(251,250,246,.22);
+}
+.gdivider::before { left: 0; }
+.gdivider::after  { right: 0; }
+
+.gsocials { display: flex; gap: 10px; }
+
+.gfoot {
+  text-align: center; font-size: 13px;
+  color: rgba(251,250,246,.72);
+  margin: 4px 0 0;
+}
+.gfoot a { color: #fff; font-weight: 600; }
+.gfoot a:hover { text-decoration: underline; }
+
+.gnote {
+  margin-top: 22px; padding: 16px;
+  border-radius: 12px;
+  background: rgba(251,250,246,.10);
+  border: 1px solid rgba(251,250,246,.2);
+}
+.gnote__t { font-size: 14px; font-weight: 600; margin: 0 0 5px; color: #fff; }
+.gnote__x { font-size: 13px; color: rgba(251,250,246,.78); margin: 0; }
+
+/* ---- Pied ---- */
+.auth-foot {
+  position: relative; z-index: 2;
+  padding: 16px clamp(16px, 5vw, 48px) 22px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  font-size: 12px;
+  color: rgba(251,250,246,.62);
+}
+.auth-foot nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.auth-foot a:hover { color: #fff; text-decoration: underline; }
+
+/* ---- Responsive ---- */
+@media (max-width: 560px) {
+  .auth-body { background-attachment: scroll; }
+  .glass { border-radius: 18px; }
+  .auth-top__back span { display: none; }
+  .gsocials { flex-direction: column; }
+  .gbtn--outline { width: 100%; }
+  .auth-foot { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+/* Moins d'effets si l'utilisateur réduit la transparence */
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: rgba(20,19,17,.94); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

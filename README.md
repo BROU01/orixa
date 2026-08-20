@@ -1,168 +1,91 @@
-# ORIXA — boutique en ligne + CMS
+# ORIXA — Next.js + TypeScript
 
-Cosmétiques naturels et produits exotiques. Maison française, livraison partout
-en Europe. Statique (HTML/CSS/JS), sans build, sans dépendance npm.
-22 pages, dont un back-office éditable.
+Boutique e-commerce pour cosmétiques naturels et produits exotiques.
+Refonte du site statique HTML/JS vers Next.js avec TypeScript et protection admin server-side.
 
----
+## 🔒 Sécurité
 
-## Lancer
+- **Admin protégé côté serveur** via le middleware Next.js (pas contournable par JavaScript)
+- **Pas de mots de passe dans le frontend** — les secrets sont dans `.env.local`
+- **RLS Supabase** — lecture publique, écriture admin uniquement
+- **Auth Supabase** — sessions sécurisées avec PKCE flow
 
-**Servir en HTTP**, pas en double-clic :
+## 🚀 Démarrage rapide
 
 ```bash
+# 1. Installer les dépendances
 cd orixa
-python3 -m http.server 8000
+npm install
+
+# 2. Configurer l'environnement
+cp .env.example .env.local
+# Remplir les valeurs Supabase dans .env.local
+
+# 3. Lancer le serveur de développement
+npm run dev
 ```
 
-<http://localhost:8000> pour la boutique, <http://localhost:8000/admin/> pour l'administration.
-
-En `file://`, l'aperçu de l'éditeur de thème ne fonctionne pas (iframe bloquée par
-la politique d'origine) et la persistance devient aléatoire.
-
----
-
-## Le CMS
-
-La page d'accueil n'est pas du HTML figé : elle est **composée de sections** que
-l'on ajoute, réordonne, masque et supprime depuis `admin/personnalisation.html`,
-avec aperçu en direct.
-
-**9 types de sections** : bannière (vidéo ou image), grille de rayons, grille de
-produits, points forts, texte libre, bandeau image+texte, questions fréquentes,
-newsletter, galerie.
-
-Chaque type déclare son schéma dans `assets/js/theme.js`. Les formulaires de
-l'éditeur sont **générés depuis ce schéma** — ajouter un type le rend
-automatiquement éditable, sans toucher à l'interface d'administration.
-
-Types de champs pris en charge : texte, texte long, liste déroulante,
-interrupteur, curseur, lien, image (via médiathèque), vidéo, sélecteur de
-produits, sélecteur de rayon, et **listes répétables** (questions FAQ, points
-forts, images de galerie) avec ajout/suppression/réordonnancement.
-
-Certains champs sont **conditionnels** : choisir « image » plutôt que « vidéo »
-dans la bannière remplace le champ correspondant.
-
-### Le reste du back-office
-
-| Écran | Ce qu'on peut faire |
-|---|---|
-| Tableau de bord | KPI, histogramme des ventes, répartition par rayon, stock faible |
-| Commandes | Recherche, filtre par statut, export CSV *(données de démo)* |
-| Clients | Liste *(données de démo)* |
-| Produits | Créer, modifier, supprimer, image depuis la médiathèque, actions en lot (stock, rayon, suppression), export CSV |
-| Collections | Créer des regroupements de produits, slug, visibilité |
-| Réductions | Codes promo : pourcentage, montant fixe, livraison offerte, minimum, limite, expiration |
-| Personnalisation | Constructeur de sections + thème (couleurs, typographie, formes, bandeau, pied) |
-| Menus | Entrées et sous-entrées, réordonnancement, visibilité, aperçu |
-| Médiathèque | 32 visuels du projet + téléversement d'images |
-| Articles | Journal avec éditeur de texte enrichi (gras, italique, titres, listes, liens) |
-| Pages | Inventaire des pages et leur mode de composition |
-| Utilisateurs | Comptes et 4 rôles avec permissions décrites |
-| Réglages | Boutique, livraison, paiements, **sauvegarde/restauration JSON**, réinitialisation |
-
----
-
-## Ce qui est réel, ce qui ne l'est pas
-
-**Réel et fonctionnel** : le catalogue (28 produits liés aux vrais visuels), le
-constructeur de sections, le thème, les menus, la médiathèque, les collections,
-les codes de réduction, les articles, les utilisateurs, le panier, les favoris,
-le tunnel de commande, la sauvegarde/restauration.
-
-**Données de démonstration statiques** : chiffre d'affaires, liste des commandes,
-liste des clients, histogramme des ventes. Signalé par une bannière sur les écrans
-concernés.
-
-**La limite à connaître** : tout est écrit dans le `localStorage` du navigateur.
-**Vos modifications ne sont visibles que par vous, sur cet appareil.** C'est
-suffisant pour concevoir, démontrer et valider, pas pour exploiter une boutique.
-Le bouton *Télécharger la sauvegarde* de la page Réglages exporte l'ensemble en
-JSON — de quoi transmettre la configuration à un développeur back-end.
-
----
-
-## Arborescence
+## 📁 Structure
 
 ```
 orixa/
-├── index.html            Accueil — composée de sections modifiables
-├── boutique.html         Catalogue : filtres rayon/prix/stock + tri
-├── produit.html          Fiche produit (?id=karite)
-├── histoire.html         Notre histoire
-├── contact.html          Contact, livraison, retours, FAQ
-├── legal.html            Mentions, CGV, confidentialité, RGPD, cookies
-├── favoris.html          Favoris client
-├── commandes.html        Historique client
-├── commande.html         Tunnel de commande (Stripe / PayPal / Wero / virement)
-│
-├── compte/
-│   ├── index.html                Connexion — carte de verre sur fond photo
-│   ├── inscription.html
-│   └── mot-de-passe-oublie.html
-│
-├── admin/                13 écrans (voir tableau ci-dessus)
-│
-├── assets/
-│   ├── css/site.css      Design system front
-│   ├── css/auth.css      Pages d'authentification
-│   ├── css/admin.css     Back-office + constructeur
-│   ├── js/catalog.js     28 produits — source unique de vérité
-│   ├── js/theme.js       MOTEUR CMS : schémas des sections, rendu, menus, thème
-│   ├── js/site.js        Rendu front, panier, favoris, aperçu live
-│   ├── js/editor.js      Constructeur de pages
-│   ├── js/admin.js       État du back-office
-│   ├── js/auth.js        Validation des formulaires
-│   ├── img/              logo, favicon, poster vidéo, fond d'authentification
-│   └── video/hero.mp4    Vidéo de la bannière d'accueil
-│
-└── products/             28 visuels (cosmetics/ + exotic/)
+├── src/
+│   ├── app/                    # Pages Next.js (App Router)
+│   │   ├── layout.tsx          # Layout racine
+│   │   ├── page.tsx            # Accueil
+│   │   ├── globals.css         # Styles globaux
+│   │   ├── admin/              # Pages admin (protégées par middleware)
+│   │   │   ├── layout.tsx      # Layout admin avec sidebar
+│   │   │   ├── page.tsx        # Dashboard
+│   │   │   └── login/          # Connexion admin
+│   │   ├── boutique/           # Page boutique
+│   │   ├── compte/             # Compte client (login/inscription)
+│   │   └── ...                 # Autres pages
+│   ├── lib/
+│   │   ├── supabase.ts         # Client Supabase
+│   │   └── data.ts             # Fonctions de récupération des données
+│   ├── types/
+│   │   └── index.ts            # Types TypeScript
+│   └── middleware.ts           # Protection admin (server-side)
+├── .env.local                  # Variables d'environnement (SECRET)
+├── .env.example                # Modèle pour .env.local
+├── next.config.js              # Configuration Next.js
+├── tsconfig.json               # Configuration TypeScript
+└── package.json
 ```
 
----
+## 🔐 Protection Admin
 
-## Direction visuelle
+Le middleware Next.js (`src/middleware.ts`) vérifie **côté serveur** que :
+1. L'utilisateur est authentifié via Supabase
+2. Son email correspond à l'adresse admin configurée
 
-- Or `#C9A84C` / or profond `#9A7A2E`, noir `#111110`, papier crème `#F6F3EC`.
-- Playfair Display (titres) + Space Grotesk (texte), chargées depuis Google Fonts.
-- **Signature** : la provenance. Chaque produit porte son origine réelle
-  (Burkina Faso, Côte d'Ivoire, Maroc…), traitée en libellé typographique.
+Si ces conditions ne sont pas remplies, il redirige vers `/admin/login`.
 
-La page de connexion utilise le fond photo plein écran avec une carte translucide
-centrée (`backdrop-filter: blur(22px)`). Le contraste mesuré du texte sur la carte
-est de **16,8:1** — le voile sombre sous le verre garantit la lisibilité quelle que
-soit la photo de fond. Un repli opaque est prévu si le navigateur ne gère pas
-`backdrop-filter`, ainsi que si l'utilisateur demande une transparence réduite.
+**Contrairement au site statique**, cette protection n'est PAS contournable par :
+- Désactivation de JavaScript
+- Modification de sessionStorage
+- Accès direct aux fichiers
 
-Le back-office est délibérément différent du front — sidebar noire, fond crème,
-tableaux denses — pour qu'on ne confonde jamais les deux contextes.
+## 📦 Variables d'environnement
 
----
+| Variable | Description | Côté |
+|----------|-------------|------|
+| `NEXT_PUBLIC_SUPABASE_URL` | URL du projet Supabase | Client + Serveur |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Clé anon Supabase | Client + Serveur |
+| `ADMIN_EMAIL` | Email de l'administrateur | Serveur uniquement |
 
-## À brancher pour la production
+## 🔄 Migration depuis le site statique
 
-| Emplacement | À faire |
-|---|---|
-| `assets/js/auth.js` | Connexion, inscription, réinitialisation |
-| `commande.html` | Passerelle Stripe / PayPal / Wero / virement |
-| `assets/js/admin.js` | Remplacer le `localStorage` par des appels API |
-| `admin/reductions.html` | **Valider les codes côté serveur** — une remise vérifiée dans le navigateur est contournable |
-| `admin/utilisateurs.html` | **Appliquer les rôles côté serveur** — masquer un écran ne protège rien |
-| `admin/commandes.html` | Commandes réelles |
-| `admin/medias.html` | Stockage serveur au lieu du data URL |
-| `legal.html` | Faire relire par un juriste, renseigner SIRET et hébergeur |
+Le code source original est conservé dans `orixa-legacy/` pour référence.
+Les fonctionnalités sont progressivement migrées vers les composants React.
 
----
+## 🛠️ Développement
 
-## Notes techniques
-
-- Fichiers produits renommés en slugs ASCII. L'original
-  `Crayon #U00e0 sourcils blond.jpg` contenait un `#`, qui casse toute URL.
-- Recherches insensibles aux accents : « karite » trouve « karité ».
-- Accessibilité : skip links, focus visibles, labels réels, `aria-*` sur les
-  contrôles à icône seule, `prefers-reduced-motion` et
-  `prefers-reduced-transparency` respectés, cibles tactiles ≥ 44 px.
-- L'accueil étant rendu en JavaScript, un repli `<noscript>` est prévu. Pour un
-  référencement optimal, il faudra un rendu serveur ou une pré-génération.
-- Responsive vérifié de 390 px à 1500 px.
+```bash
+npm run dev          # Serveur de développement
+npm run build        # Build de production
+npm run start        # Démarrer le build
+npm run type-check   # Vérification TypeScript
+npm run lint         # Linting
+```

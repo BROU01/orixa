@@ -1,0 +1,21 @@
+# Next.js
+node_modules/
+.next/
+out/
+
+# Environment
+.env.local
+.env.*.local
+
+# Legacy
+../orixa-legacy/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
