@@ -213,12 +213,14 @@ export default function ProduitPage() {
             </p>
 
             {/* Loyalty points notification */}
-            <div className="bg-[var(--accent)]/10 border border-[var(--accent)]/30 rounded-xl p-4 text-xs flex items-center gap-3">
-              <span className="text-xl">✨</span>
+            <div className="rounded-xl p-4 text-xs flex items-center gap-3" style={{ background: 'var(--brand-soft)', border: '1px solid var(--line)' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21.2l7.7-7.8 1.1-1a5.5 5.5 0 0 0 0-7.8z" />
+              </svg>
               <div>
-                <p className="font-bold text-[var(--brand)]">Programme Fidélité ORIXA</p>
-                <p className="text-[var(--text)]/80">
-                  Cet achat vous rapporte <strong>{pointsFidelite} points</strong> (100 € cumulés = bon d'achat de 10 €).
+                <p className="font-bold" style={{ color: 'var(--ink)' }}>Programme Fidélité ORIXA</p>
+                <p style={{ color: 'var(--ink-2)' }}>
+                  Cet achat vous rapporte <strong>{product.prix.toFixed(2)} €</strong> de fidélité (100 € cumulés = bon de 10 €).
                 </p>
               </div>
             </div>
@@ -266,12 +268,22 @@ export default function ProduitPage() {
               </div>
             </div>
 
-            {/* Perishable goods note */}
-            {product.cat === 'exotic' && (
-              <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-600">
-                ⚠️ <strong>Information Hygiène & Alimentation :</strong> Conformément à la réglementation européenne, les denrées périssables scellées ne peuvent pas faire l'objet d'un retour après ouverture.
-              </div>
-            )}
+            {/* Livraison & Retours — bloquer les retours périssables */}
+            <div className="p-4 rounded-xl text-xs" style={{ background: 'var(--paper-2)', border: '1px solid var(--line)', color: 'var(--ink-2)' }}>
+              <p className="font-bold mb-2" style={{ color: 'var(--ink)' }}>Livraison & retours</p>
+              <p style={{ marginBottom: '8px' }}>
+                Livraison en 3 à 5 jours. Livraison offerte dès 80 € d&apos;achat.
+              </p>
+              {product.cat === 'exotic' ? (
+                <p style={{ color: 'var(--brick)', fontWeight: 600 }}>
+                  Denrée périssable : non reprise ni échange conformément à la réglementation en vigueur.
+                </p>
+              ) : (
+                <p>
+                  Retour possible sous 14 jours si le produit est non ouvert et dans son emballage d&apos;origine.
+                </p>
+              )}
+            </div>
           </div>
 
         </div>

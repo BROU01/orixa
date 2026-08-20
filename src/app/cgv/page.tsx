@@ -69,11 +69,18 @@ export default function CGV() {
               </section>
 
               <section>
-                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 7 — Droit de rétractation</h2>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 7 — Droit de rétractation & retours</h2>
+                <p style={{ marginBottom: '12px' }}>
+                  <strong>Cosmétiques non ouverts :</strong> Vous disposez de 14 jours à compter de la réception pour exercer votre droit de rétractation. Le produit doit être retourné dans son emballage d&apos;origine, non ouvert et en parfait état.
+                </p>
+                <p style={{ marginBottom: '12px' }}>
+                  <strong>Cosmétiques ouverts (scellé d&apos;hygiène rompu) :</strong> Conformément à l&apos;article L.221-28 du Code de la consommation, les produits dont le scellé d&apos;hygiène a été ouvert après livraison ne peuvent être ni repris ni échangés.
+                </p>
+                <p style={{ marginBottom: '12px' }}>
+                  <strong>Denrées périssables :</strong> Les denrées alimentaires et produits périssables (gari, hibiscus, gombo, igname, épices, etc.) ne peuvent en aucun cas être ni repris ni échangés, conformément à la réglementation en vigueur. Ce type de produit est exclu du droit de rétractation.
+                </p>
                 <p>
-                  <strong>Produits frais :</strong> En cas de problème, signalez-le sous 24 heures après réception.<br />
-                  <strong>Cosmétiques non ouverts :</strong> Vous disposez de 14 jours pour exercer votre droit de rétractation.<br />
-                  <strong>Denrées périssables :</strong> Ne sont pas reprises conformément à la réglementation en vigueur.
+                  En cas de défaut à la réception (produit endommagé, emballage défectueux), merci de contacter notre service client sous 24 heures avec des photos.
                 </p>
               </section>
 
