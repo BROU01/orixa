@@ -26,10 +26,16 @@ export default function AdminProduitsPage() {
 
   // Charger les données au montage
   useEffect(() => {
-    Promise.all([getProducts(), getCategories(), getMedia()]).then(([p, c, m]) => {
+    Promise.all([getProducts(), getCategories(), getMedia()]).then(([p, c, builtins]) => {
       setProducts(p);
       setCategories(c);
-      setMediaList(m);
+      // Fusionner les builtins avec les médias téléversés depuis localStorage
+      let uploaded: Media[] = [];
+      try {
+        const saved = localStorage.getItem('orixa:media-uploaded');
+        if (saved) uploaded = JSON.parse(saved);
+      } catch { /* ignore */ }
+      setMediaList([...builtins, ...uploaded]);
       setLoaded(true);
     });
   }, []);
