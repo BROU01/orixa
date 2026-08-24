@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import type { Media } from '@/types';
 import { getMedia } from '@/lib/data';
 
@@ -14,9 +14,9 @@ export default function AdminMediasPage() {
   const [loaded, setLoaded] = useState(false);
   const [query, setQuery] = useState('');
 
-  useState(() => {
+  useEffect(() => {
     getMedia().then(m => { setMedia(m); setLoaded(true); });
-  });
+  }, []);
 
   const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
@@ -24,6 +24,26 @@ export default function AdminMediasPage() {
     const q = norm(query);
     return media.filter(m => !q || norm(m.name).includes(q));
   }, [media, query]);
+
+  const handleUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    let done = 0;
+    files.forEach(f => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMedia(prev => [...prev, { src: reader.result as string, name: f.name, builtin: false }]);
+        if (++done === files.length) alert(done + ' fichier(s) ajouté(s).');
+      };
+      reader.readAsDataURL(f);
+    });
+    e.target.value = '';
+  }, []);
+
+  const handleDelete = useCallback((src: string) => {
+    if (!confirm('Supprimer ce média ?')) return;
+    setMedia(prev => prev.filter(m => m.src !== src));
+  }, []);
 
   if (!loaded) return <div className="content"><p className="page-sub">Chargement…</p></div>;
 
@@ -40,7 +60,7 @@ export default function AdminMediasPage() {
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
           Téléverser
-          <input type="file" accept="image/*" multiple style={{ display: 'none' }} />
+          <input type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={handleUpload} />
         </label>
       </div>
 
@@ -86,10 +106,19 @@ export default function AdminMediasPage() {
           <div className="mgrid">
             {filtered.map((m, i) => (
               <div key={i} className="mgrid__i" style={{ position: 'relative' }}>
-                <img src={m.src} alt={m.name} loading="lazy" />
+                <img src={m.src} alt={m.name} loading="lazy" style={{ width: '100%', height: '120px', objectFit: 'cover' }} />
                 <span style={{ padding: '6px 8px', fontSize: '11px', color: 'var(--a-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
                   {m.name}
                 </span>
+                {!m.builtin && (
+                  <button
+                    onClick={() => handleDelete(m.src)}
+                    style={{ position: 'absolute', top: 4, right: 4, width: 22, height: 22, borderRadius: '50%', background: '#fff', border: '1px solid var(--a-line)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 1, color: 'var(--a-muted)' }}
+                    aria-label="Supprimer"
+                  >
+                    &times;
+                  </button>
+                )}
               </div>
             ))}
             {filtered.length === 0 && (

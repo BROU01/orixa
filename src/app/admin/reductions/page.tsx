@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Discount } from '@/types';
 import { getDiscounts } from '@/lib/data';
 
@@ -20,9 +20,9 @@ export default function AdminReductionsPage() {
   const [editing, setEditing] = useState<Discount | null>(null);
   const [form, setForm] = useState({ code: '', type: 'pct', valeur: '10', min: '', limite: '', fin: '', actif: true });
 
-  useState(() => {
+  useEffect(() => {
     getDiscounts().then(d => { setReductions(d); setLoaded(true); });
-  });
+  }, []);
 
   const valeurTxt = (d: Discount) => {
     if (d.type === 'pct') return d.valeur + ' %';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Category, Product } from '@/types';
 import { getCategories, getProducts } from '@/lib/data';
 
@@ -14,13 +14,13 @@ export default function AdminRayonsPage() {
   const [loaded, setLoaded] = useState(false);
   const [query, setQuery] = useState('');
 
-  useState(() => {
+  useEffect(() => {
     Promise.all([getCategories(), getProducts()]).then(([c, p]) => {
       setCategories(c);
       setProducts(p);
       setLoaded(true);
     });
-  });
+  }, []);
 
   const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 

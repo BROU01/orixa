@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Product, Category } from '@/types';
 import { getProducts, getCategories } from '@/lib/data';
 
@@ -23,13 +23,13 @@ export default function AdminProduitsPage() {
   const [form, setForm] = useState({ nom: '', prix: '', stock: '', cat: '', unite: '', origine: '', badge: '', img: '', description: '' });
 
   // Charger les données au montage
-  useState(() => {
+  useEffect(() => {
     Promise.all([getProducts(), getCategories()]).then(([p, c]) => {
       setProducts(p);
       setCategories(c);
       setLoaded(true);
     });
-  });
+  }, []);
 
   const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 

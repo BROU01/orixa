@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Article } from '@/types';
 import { getArticles } from '@/lib/data';
 
@@ -13,9 +13,9 @@ export default function AdminArticlesPage() {
   const [loaded, setLoaded] = useState(false);
   const [query, setQuery] = useState('');
 
-  useState(() => {
+  useEffect(() => {
     getArticles().then(a => { setArticles(a); setLoaded(true); });
-  });
+  }, []);
 
   const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 

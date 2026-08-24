@@ -70,11 +70,36 @@ const DEFAULT_PAGES: Page[] = [
 ];
 
 const DEFAULT_MEDIA: Media[] = [
+  /* ── Cosmétiques ── */
   { src: '/products/cosmetics/beurre-de-karite.jpg', name: 'beurre-de-karite.jpg', builtin: true },
+  { src: '/products/cosmetics/blush.jpg', name: 'blush.jpg', builtin: true },
+  { src: '/products/cosmetics/crayon-a-sourcils-blond.jpg', name: 'crayon-a-sourcils-blond.jpg', builtin: true },
+  { src: '/products/cosmetics/faux-cils.jpg', name: 'faux-cils.jpg', builtin: true },
+  { src: '/products/cosmetics/faux-ongles.jpg', name: 'faux-ongles.jpg', builtin: true },
+  { src: '/products/cosmetics/gel.jpg', name: 'gel.jpg', builtin: true },
+  { src: '/products/cosmetics/mascara.jpg', name: 'mascara.jpg', builtin: true },
+  { src: '/products/cosmetics/masque-facial.jpg', name: 'masque-facial.jpg', builtin: true },
+  { src: '/products/cosmetics/parfum.jpg', name: 'parfum.jpg', builtin: true },
   { src: '/products/cosmetics/pommade.jpg', name: 'pommade.jpg', builtin: true },
+  { src: '/products/cosmetics/rouge-a-levre.jpg', name: 'rouge-a-levre.jpg', builtin: true },
+  { src: '/products/cosmetics/vernis-a-ongles.jpg', name: 'vernis-a-ongles.jpg', builtin: true },
+  /* ── Produits exotiques ── */
+  { src: '/products/exotic/aklui.jpg', name: 'aklui.jpg', builtin: true },
+  { src: '/products/exotic/attieke.jpg', name: 'attieke.jpg', builtin: true },
+  { src: '/products/exotic/aubergine-blanche.jpg', name: 'aubergine-blanche.jpg', builtin: true },
+  { src: '/products/exotic/banane-plantain.jpg', name: 'banane-plantain.jpg', builtin: true },
+  { src: '/products/exotic/cossete-igname.webp', name: 'cossete-igname.webp', builtin: true },
+  { src: '/products/exotic/cube-maggi-poulet.jpg', name: 'cube-maggi-poulet.jpg', builtin: true },
+  { src: '/products/exotic/farine-d-haricot.jpg', name: 'farine-d-haricot.jpg', builtin: true },
   { src: '/products/exotic/gari.jpeg', name: 'gari.jpeg', builtin: true },
-  { src: '/products/exotic/hibiscus.jpg', name: 'hibiscus.jpg', builtin: true },
   { src: '/products/exotic/gombo-moulu.png', name: 'gombo-moulu.png', builtin: true },
+  { src: '/products/exotic/gombo.jpg', name: 'gombo.jpg', builtin: true },
+  { src: '/products/exotic/hibiscus.jpg', name: 'hibiscus.jpg', builtin: true },
+  { src: '/products/exotic/igname.jpg', name: 'igname.jpg', builtin: true },
+  { src: '/products/exotic/koms.jpg', name: 'koms.jpg', builtin: true },
+  { src: '/products/exotic/manioc.jpg', name: 'manioc.jpg', builtin: true },
+  { src: '/products/exotic/piments.jpg', name: 'piments.jpg', builtin: true },
+  { src: '/products/exotic/tapioca.jpeg', name: 'tapioca.jpeg', builtin: true },
 ];
 
 const DEFAULT_USERS: AdminUser[] = [

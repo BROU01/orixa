@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { AdminUser, AdminRole } from '@/types';
 import { getUsers, getRoles } from '@/lib/data';
 
@@ -14,13 +14,13 @@ export default function AdminUtilisateursPage() {
   const [loaded, setLoaded] = useState(false);
   const [query, setQuery] = useState('');
 
-  useState(() => {
+  useEffect(() => {
     Promise.all([getUsers(), getRoles()]).then(([u, r]) => {
       setUsers(u);
       setRoles(r);
       setLoaded(true);
     });
-  });
+  }, []);
 
   const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 

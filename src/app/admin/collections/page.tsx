@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Collection } from '@/types';
 import { getCollections, getProducts } from '@/lib/data';
 
@@ -18,13 +18,13 @@ export default function AdminCollectionsPage() {
   const [editing, setEditing] = useState<Collection | null>(null);
   const [form, setForm] = useState({ label: '', id: '', desc: '' });
 
-  useState(() => {
+  useEffect(() => {
     Promise.all([getCollections(), getProducts()]).then(([c, p]) => {
       setCollections(c);
       setProducts(p);
       setLoaded(true);
     });
-  });
+  }, []);
 
   const countProducts = (slug: string) => products.filter(p => p.cat === slug).length;
 
