@@ -152,7 +152,7 @@ export default function RootLayout({
               },
               contactPoint: {
                 '@type': 'ContactPoint',
-                telephone: '+33-6-6424-16-78',
+                telephone: '+33664241678',
                 email: 'maroquinerie.lagrace@gmail.com',
                 contactType: 'customer service',
                 availableLanguage: 'French',
@@ -186,6 +186,7 @@ export default function RootLayout({
               url: SITE_URL,
               description:
                 'Boutique de cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest.',
+              image: [`${SITE_URL}/logo-maison-la-grace.png`],
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: '23 rue Aimé Césaire',
@@ -194,19 +195,33 @@ export default function RootLayout({
                 addressRegion: 'Normandie',
                 addressCountry: 'FR',
               },
-              telephone: '+33-6-6424-16-78',
-              email: 'maroquinerie.lagrace@gmail.com',
+              telephone: '+33664241678',
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+33664241678',
+                email: 'maroquinerie.lagrace@gmail.com',
+                contactType: 'customer service',
+                availableLanguage: 'French',
+              },
               geo: {
                 '@type': 'GeoCoordinates',
                 latitude: 49.0972,
                 longitude: 1.4856,
               },
-              openingHoursSpecification: {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-                opens: '09:00',
-                closes: '18:00',
-              },
+              openingHoursSpecification: [
+                {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                  opens: '09:00',
+                  closes: '18:00',
+                },
+                {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: ['Saturday'],
+                  opens: '10:00',
+                  closes: '13:00',
+                },
+              ],
               priceRange: '$$',
               areaServed: {
                 '@type': 'Country',
