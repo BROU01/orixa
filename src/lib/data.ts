@@ -46,8 +46,7 @@ const DEFAULT_PRODUCTS: Product[] = [
   { id: 'attieke', nom: 'Attiéké (Garba)', slug: 'attieke', prix: 5.50, img: '/products/exotic/attieke.jpg', cat: 'exotic', unite: 'Sac 500 g', origine: 'Côte d\'Ivoire', stock: 60, badge: '', description: 'Attiéké traditionnel, semoule de manioc fermentée. Accompagne poisson grillé et sauces.', labelImg: '/products/exotic/atieke (Garba) Etiquette.jpeg' },
   { id: 'aubergine-blanche', nom: 'Aubergine blanche séchée', slug: 'aubergine-blanche', prix: 3.80, img: '/products/exotic/aubergine-blanche.jpg', cat: 'exotic', unite: 'Sac 200 g', origine: 'Sénégal', stock: 40, badge: '', description: 'Aubergine blanche séchée, ingrédient essentiel des saucesWest-africaines.' },
   { id: 'banane-plantain', nom: 'Banane plantain séchée', slug: 'banane-plantain', prix: 4.90, img: '/products/exotic/banane-plantain.jpg', cat: 'exotic', unite: 'Sac 300 g', origine: 'Cameroun', stock: 45, badge: '', description: 'Banane plantain séchée, prêt à frire ou à cuire. Snack naturel et nourrissant.' },
-  { id: 'cossete-igname', nom: 'Cossette d\'igname séchée', slug: 'cossette-igname', prix: 5.20, img: '/products/exotic/cossete-igname.webp', cat: 'exotic', unite: 'Sac 250 g', origine: 'Bénin', stock: 35, badge: '', description: 'Cossette d\'igname séchée, alternative pratique à l\'igname fraîche. Idéale pour fufu et pâte.' },
-  { id: 'cube-maggi', nom: 'Cube Maggi poulet', slug: 'cube-maggi-poulet', prix: 2.50, img: '/products/exotic/cube-maggi-poulet.jpg', cat: 'exotic', unite: 'Boîte 50 cubes', origine: 'Côte d\'Ivoire', stock: 80, badge: '', description: 'Cube aromatisant poulet pour rehausser le goût de vos plats et sauces.' },
+  { id: 'cossete-igname', nom: 'Cossette d\'igname séchée', slug: 'cossete-igname', prix: 5.20, img: '/products/exotic/cossete-igname.webp', cat: 'exotic', unite: 'Sac 250 g', origine: 'Bénin', stock: 35, badge: '', description: 'Cossette d\'igname séchée, alternative pratique à l\'igname fraîche. Idéale pour fufu et pâte.', labelImg: '/products/exotic/Cossette de manioc Etiquette.jpeg' },
   { id: 'farine-haricot', nom: 'Farine de haricot', slug: 'farine-haricot', prix: 4.80, img: '/products/exotic/farine-d-haricot.jpg', cat: 'exotic', unite: 'Sac 500 g', origine: 'Bénin', stock: 30, badge: '', description: 'Farine de haricot pour pâte et sauces. Source de protéines végétales.', labelImg: '/products/exotic/Farine de haricot (Étiquette).jpeg' },
   { id: 'gombo', nom: 'Gombo frais séché', slug: 'gombo-frais', prix: 3.50, img: '/products/exotic/gombo.jpg', cat: 'exotic', unite: 'Sac 150 g', origine: 'Cameroun', stock: 50, badge: '', description: 'Gombo frais séché, pour sauces et ragoûts. Texture mucilagineuse caractéristique.' },
   { id: 'igname', nom: 'Igname séchée', slug: 'igname', prix: 6.50, img: '/products/exotic/igname.jpg', cat: 'exotic', unite: 'Sac 300 g', origine: 'Bénin', stock: 40, badge: '', description: 'Igname séchée, féculent noble d\'Afrique de l\'Ouest. Base de fufu et pâte.' },
@@ -230,11 +229,27 @@ async function fetchCms<T>(key: string, fallback: T): Promise<T> {
 export async function getProducts(): Promise<Product[]> {
   const stored = await fetchCms<Product[]>('orixa:products', []);
   // Si Supabase a des produits, fusionner avec les DEFAULT_PRODUCTS
-  // pour que les nouveaux produits apparaissent même si Supabase contient les anciens seuls
+  // en dédoublonnant par nom pour éviter les doublons
   if (stored.length > 0) {
-    const storedIds = new Set(stored.map(p => p.id));
-    const missing = DEFAULT_PRODUCTS.filter(p => !storedIds.has(p.id));
-    return [...stored, ...missing];
+    const seen = new Set<string>();
+    const merged: Product[] = [];
+    // D'abord les produits Supabase
+    for (const p of stored) {
+      const key = p.nom.toLowerCase().trim();
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(p);
+      }
+    }
+    // Puis les DEFAULT_PRODUCTS manquants (par nom)
+    for (const p of DEFAULT_PRODUCTS) {
+      const key = p.nom.toLowerCase().trim();
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(p);
+      }
+    }
+    return merged;
   }
   return DEFAULT_PRODUCTS;
 }
