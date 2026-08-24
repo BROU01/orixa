@@ -5,6 +5,15 @@ export const metadata = {
   title: 'Questions fréquentes — MAISON LA GRACE',
   description: 'FAQ MAISON LA GRACE — Retrouvez les réponses à vos questions sur la livraison, les retours, le paiement, la fidélité et plus encore.',
   keywords: ['FAQ MAISON LA GRACE', 'questions fréquentes', 'aide livraison', 'aide commande', 'fidélité MAISON LA GRACE', 'paiement sécurisé'],
+  openGraph: {
+    title: 'Questions fréquentes — MAISON LA GRACE',
+    description: 'FAQ : livraison, retours, paiement, fidélité. Questions fréquentes MAISON LA GRACE.',
+    url: 'https://maisonlagrace.fr/faq',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/faq' },
 };
 
 const faqs = [

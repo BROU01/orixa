@@ -18,7 +18,12 @@ export const metadata: Metadata = {
     title: 'Produits exotiques — MAISON LA GRACE',
     description:
       'Gari, hibiscus, gombo, igname et épices. Ingrédients authentiques en arrivage direct.',
+    url: 'https://maisonlagrace.fr/exotiques',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
   },
+  alternates: { canonical: 'https://maisonlagrace.fr/exotiques' },
 };
 
 export default async function ExotiquesPage() {

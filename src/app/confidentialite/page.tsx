@@ -5,6 +5,15 @@ export const metadata = {
   title: 'Politique de confidentialité — MAISON LA GRACE',
   description: 'Politique de confidentialité et protection des données personnelles MAISON LA GRACE. RGPD, droits, données collectées.',
   keywords: ['confidentialité MAISON LA GRACE', 'RGPD', 'données personnelles', 'protection données', 'privacy MAISON LA GRACE'],
+  openGraph: {
+    title: 'Politique de confidentialité — MAISON LA GRACE',
+    description: 'RGPD, droits, données collectées. Politique de confidentialité MAISON LA GRACE.',
+    url: 'https://maisonlagrace.fr/confidentialite',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/confidentialite' },
 };
 
 export default function Confidentialite() {

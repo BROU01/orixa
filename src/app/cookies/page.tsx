@@ -3,7 +3,17 @@ import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'Politique de cookies — MAISON LA GRACE',
-  description: 'Politique de cookies du site MAISON LA GRACE.',
+  description: 'Politique de cookies du site MAISON LA GRACE. Cookies essentiels, préférence, analytiques.',
+  keywords: ['cookies MAISON LA GRACE', 'politique cookies', 'traceurs', 'RGPD cookies'],
+  openGraph: {
+    title: 'Politique de cookies — MAISON LA GRACE',
+    description: 'Cookies essentiels, préférence et analytiques sur MAISON LA GRACE.',
+    url: 'https://maisonlagrace.fr/cookies',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/cookies' },
 };
 
 export default function Cookies() {
@@ -70,7 +80,7 @@ export default function Cookies() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Contact</h2>
                 <p>
-                  Pour toute question relative à notre politique de cookies, contactez-nous à contact@maisonlagrace.fr.
+                  Pour toute question relative à notre politique de cookies, contactez-nous à maroquinerie.lagrace@gmail.com.
                 </p>
               </section>
             </div>

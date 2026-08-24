@@ -3,10 +3,20 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Contact & Service Client',
+  title: 'Contact & Service Client — MAISON LA GRACE',
   description:
     'Contactez MAISON LA GRACE : formulaire, e-mail, livraison, retours et FAQ. Service client du lundi au vendredi de 9h à 18h.',
   keywords: ['contact MAISON LA GRACE', 'service client', 'aide', 'livraison', 'retours'],
+  openGraph: {
+    title: 'Contact & Service Client — MAISON LA GRACE',
+    description:
+      'Formulaire de contact, e-mail, livraison, retours. Service client MAISON LA GRACE.',
+    url: 'https://maisonlagrace.fr/contact',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/contact' },
 };
 
 /**

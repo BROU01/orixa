@@ -5,6 +5,16 @@ export const metadata = {
   title: 'Politique de retours — MAISON LA GRACE',
   description: 'Conditions et modalités de retour et de remboursement pour les commandes MAISON LA GRACE. Droit de rétractation 14 jours, retours cosmétiques, denrées périssables.',
   keywords: ['retour MAISON LA GRACE', 'politique de retour', 'remboursement', 'rétractation 14 jours', 'retour cosmétique', 'échange produit'],
+  openGraph: {
+    title: 'Politique de retours — MAISON LA GRACE',
+    description:
+      'Retours, rétractation 14 jours, remboursement. Politique de retours MAISON LA GRACE.',
+    url: 'https://maisonlagrace.fr/retours',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/retours' },
 };
 
 /**

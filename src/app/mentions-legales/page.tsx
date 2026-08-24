@@ -3,7 +3,17 @@ import Footer from '@/components/Footer';
 
 export const metadata = {
   title: 'Mentions légales — MAISON LA GRACE',
-  description: 'Mentions légales du site MAISON LA GRACE.',
+  description: 'Mentions légales du site MAISON LA GRACE. Éditeur, hébergeur, propriété intellectuelle, données personnelles.',
+  keywords: ['mentions légales', 'informations légales', 'MAISON LA GRACE', 'éditeur site', 'hébergeur'],
+  openGraph: {
+    title: 'Mentions légales — MAISON LA GRACE',
+    description: 'Informations légales du site MAISON LA GRACE.',
+    url: 'https://maisonlagrace.fr/mentions-legales',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/mentions-legales' },
 };
 
 export default function MentionsLegales() {

@@ -5,6 +5,15 @@ export const metadata = {
   title: 'Conditions générales de vente — MAISON LA GRACE',
   description: 'Conditions générales de vente du site MAISON LA GRACE. Paiement, livraison, retours, fidélité.',
   keywords: ['CGV MAISON LA GRACE', 'conditions générales vente', 'paiement MAISON LA GRACE', 'livraison MAISON LA GRACE', 'retours MAISON LA GRACE'],
+  openGraph: {
+    title: 'Conditions générales de vente — MAISON LA GRACE',
+    description: 'CGV : paiement, livraison, retours, fidélité.',
+    url: 'https://maisonlagrace.fr/cgv',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/cgv' },
 };
 
 export default function CGV() {

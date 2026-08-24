@@ -7,6 +7,16 @@ export const metadata = {
   description:
     "Découvrez l'histoire d'MAISON LA GRACE : cosmétiques naturels et produits exotiques d'Afrique, circuit court, coopératives éco-responsables.",
   keywords: ['MAISON LA GRACE histoire', 'cosmétiques naturels', 'coopératives Afrique', 'circuit court', 'karité'],
+  openGraph: {
+    title: 'Notre histoire — MAISON LA GRACE',
+    description:
+      'Cosmétiques naturels et produits exotiques d\'Afrique. Circuit court, coopératives éco-responsables.',
+    url: 'https://maisonlagrace.fr/histoire',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/histoire' },
 };
 
 export default async function HistoirePage() {

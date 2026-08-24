@@ -18,7 +18,12 @@ export const metadata: Metadata = {
     title: 'Cosmétiques naturels — MAISON LA GRACE',
     description:
       'Beurre de karité, pommade réparatrice, huiles végétales. Soins naturels sélectionnés en Afrique de l\'Ouest.',
+    url: 'https://maisonlagrace.fr/cosmetiques',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
   },
+  alternates: { canonical: 'https://maisonlagrace.fr/cosmetiques' },
 };
 
 export default async function CosmetiquesPage() {

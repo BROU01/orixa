@@ -2,6 +2,22 @@ import { getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+export const metadata = {
+  title: 'Mentions légales & CGV — MAISON LA GRACE',
+  description:
+    'Mentions légales, conditions générales de vente, RGPD et politique de cookies de MAISON LA GRACE. Informations légales complètes.',
+  keywords: [
+    'mentions légales MAISON LA GRACE', 'CGV', 'conditions générales de vente',
+    'RGPD', 'confidentialité', 'cookies', 'informations légales',
+  ],
+  openGraph: {
+    title: 'Mentions légales & CGV — MAISON LA GRACE',
+    description:
+      'Mentions légales, CGV, RGPD et politique de cookies de MAISON LA GRACE.',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/legal' },
+};
+
 export default async function LegalPage() {
   const [theme, menu] = await Promise.all([getTheme(), getMenu()]);
 

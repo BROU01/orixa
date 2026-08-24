@@ -2,6 +2,22 @@ import { getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+export const metadata = {
+  title: 'Nos valeurs & engagements — MAISON LA GRACE',
+  description:
+    'Découvrez les valeurs de MAISON LA GRACE : sourcing direct, formulation pure, transparence totale, engagement éco-responsable. Cosmétiques naturels d\'Afrique de l\'Ouest.',
+  keywords: [
+    'valeurs MAISON LA GRACE', 'engagements', 'sourcing direct', 'circuit court',
+    'cosmétiques éthiques', 'éco-responsable', 'coopératives Afrique',
+  ],
+  openGraph: {
+    title: 'Nos valeurs & engagements — MAISON LA GRACE',
+    description:
+      'Sourcing direct, formulation pure, transparence. Les engagements éthiques de MAISON LA GRACE.',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/nos-valeurs' },
+};
+
 export default async function NosValeursPage() {
   const [theme, menu] = await Promise.all([getTheme(), getMenu()]);
 

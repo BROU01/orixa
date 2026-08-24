@@ -2,6 +2,22 @@ import { getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+export const metadata = {
+  title: 'Paiements sécurisés — MAISON LA GRACE',
+  description:
+    'Paiement sécurisé SSL/TLS 256 bits sur MAISON LA GRACE. Carte bancaire, PayPal, virement bancaire. Aucune donnée bancaire stockée.',
+  keywords: [
+    'paiement sécurisé', 'carte bancaire', 'PayPal', 'Stripe',
+    'SSL', 'MAISON LA GRACE', 'paiement en ligne',
+  ],
+  openGraph: {
+    title: 'Paiements sécurisés — MAISON LA GRACE',
+    description:
+      'Transactions cryptées SSL/TLS 256 bits. Carte bancaire, PayPal, virement.',
+  },
+  alternates: { canonical: 'https://maisonlagrace.fr/paiements-securises' },
+};
+
 export default async function PaiementsSecurisesPage() {
   const [theme, menu] = await Promise.all([getTheme(), getMenu()]);
 

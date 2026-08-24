@@ -17,6 +17,15 @@ export const metadata = {
     'MAISON LA GRACE', 'cosmétiques naturels', 'produits exotiques', 'beurre de karité',
     'gari', 'hibiscus', 'gombo', 'produits Afrique', 'boutique bio Europe',
   ],
+  openGraph: {
+    title: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques',
+    description:
+      'Beurre de karité, hibiscus, gari, gombo. Cosmétiques et ingrédients d\'Afrique de l\'Ouest, livrés en Europe.',
+    url: 'https://maisonlagrace.fr',
+    siteName: 'MAISON LA GRACE',
+    locale: 'fr_FR',
+    type: 'website',
+  },
   alternates: { canonical: 'https://maisonlagrace.fr' },
 };
 
