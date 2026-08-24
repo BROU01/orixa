@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import type { Product, Category } from '@/types';
-import { getProducts, getCategories } from '@/lib/data';
+import type { Product, Category, Media } from '@/types';
+import { getProducts, getCategories, getMedia } from '@/lib/data';
 
 /**
  * Page admin — Gestion des produits.
@@ -21,12 +21,15 @@ export default function AdminProduitsPage() {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('Nouveau produit');
   const [form, setForm] = useState({ nom: '', prix: '', stock: '', cat: '', unite: '', origine: '', badge: '', img: '', description: '' });
+  const [mediaList, setMediaList] = useState<Media[]>([]);
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
 
   // Charger les données au montage
   useEffect(() => {
-    Promise.all([getProducts(), getCategories()]).then(([p, c]) => {
+    Promise.all([getProducts(), getCategories(), getMedia()]).then(([p, c, m]) => {
       setProducts(p);
       setCategories(c);
+      setMediaList(m);
       setLoaded(true);
     });
   }, []);
@@ -279,6 +282,20 @@ export default function AdminProduitsPage() {
               </div>
             </div>
             <div className="f">
+              <label className="f__label" htmlFor="m-img">Image</label>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                {form.img ? (
+                  <img src={form.img} alt="" style={{ width: '48px', height: '48px', borderRadius: '6px', objectFit: 'cover', border: '1px solid var(--a-line)' }} />
+                ) : (
+                  <div style={{ width: '48px', height: '48px', borderRadius: '6px', border: '1px dashed var(--a-line)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: 'var(--a-muted)' }}>Aucune</div>
+                )}
+                <div style={{ flex: 1 }}>
+                  <input className="f__ctrl" id="m-img" value={form.img} onChange={e => setForm(f => ({ ...f, img: e.target.value }))} placeholder="/products/cosmetics/nom.jpg" style={{ fontSize: '12px' }} />
+                  <button type="button" className="b b--default b--sm" style={{ marginTop: '6px' }} onClick={() => setShowMediaPicker(true)}>Choisir une image</button>
+                </div>
+              </div>
+            </div>
+            <div className="f">
               <label className="f__label" htmlFor="m-desc">Description</label>
               <textarea className="f__ctrl" id="m-desc" rows={4} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
             </div>
@@ -286,6 +303,37 @@ export default function AdminProduitsPage() {
           <div style={{ padding: '16px 20px', borderTop: '1px solid var(--a-line)', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
             <button className="b b--default" onClick={() => setShowModal(false)}>Annuler</button>
             <button className="b b--primary" onClick={saveProduct}>Enregistrer</button>
+          </div>
+        </dialog>
+      )}
+
+      {/* Media Picker Dialog */}
+      {showMediaPicker && (
+        <dialog open style={{ width: 'min(640px, 94vw)', padding: 0, border: 'none', borderRadius: 'var(--a-r)', position: 'fixed', inset: 0, zIndex: 1000 }}>
+          <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--a-line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={{ fontSize: '15px', fontWeight: 600 }}>Choisir une image</h2>
+            <button className="b b--ghost b--sm" onClick={() => setShowMediaPicker(false)}>Fermer</button>
+          </div>
+          <div style={{ padding: '16px 20px', maxHeight: '60vh', overflow: 'auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))', gap: '8px' }}>
+              {mediaList.map((m, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => { setForm(f => ({ ...f, img: m.src })); setShowMediaPicker(false); }}
+                  style={{ padding: 0, border: '2px solid var(--a-line)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', background: 'var(--a-surface)', textAlign: 'left' }}
+                >
+                  <img src={m.src} alt="" loading="lazy" style={{ width: '100%', height: '70px', objectFit: 'cover', display: 'block' }} />
+                  <span style={{ padding: '4px 6px', fontSize: '10px', color: 'var(--a-muted)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
+                </button>
+              ))}
+            </div>
+            {mediaList.length === 0 && (
+              <p style={{ textAlign: 'center', color: 'var(--a-muted)', fontSize: '13px', padding: '32px' }}>Aucun média disponible. Téléversez des images dans <a href="/admin/medias">Médiathèque</a>.</p>
+            )}
+          </div>
+          <div style={{ padding: '12px 20px', borderTop: '1px solid var(--a-line)', display: 'flex', justifyContent: 'flex-end' }}>
+            <a href="/admin/medias" className="b b--default b--sm">Gérer la médiathèque</a>
           </div>
         </dialog>
       )}

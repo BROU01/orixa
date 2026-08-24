@@ -19,6 +19,9 @@ export default function AdminReglagesPage() {
     devise: 'EUR',
     maintenance: false,
     maintenanceMsg: 'Site en maintenance. Nous serons de retour très rapidement.',
+    seoTitle: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques',
+    seoDesc: 'Cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest : beurre de karité, hibiscus, gari, gombo. Livraison offerte dès 80 € partout en Europe.',
+    seoKeywords: 'cosmétiques naturels, produits exotiques, beurre de karité, hibiscus, gari, gombo',
   });
 
   const update = (field: string, value: string | boolean) => {
@@ -106,6 +109,29 @@ export default function AdminReglagesPage() {
 
       <div className="card" style={{ marginBottom: '20px' }}>
         <div className="card__head">
+          <h3 className="card__title">SEO — Référencement</h3>
+        </div>
+        <div className="card__body">
+          <div className="f">
+            <label className="f__label">Titre du site (title tag)</label>
+            <input type="text" value={settings.seoTitle} onChange={e => update('seoTitle', e.target.value)} className="f__ctrl" />
+            <p className="f__hint">Affiché dans les résultats de recherche Google. 50-60 caractères recommandés.</p>
+          </div>
+          <div className="f">
+            <label className="f__label">Meta description</label>
+            <textarea rows={3} value={settings.seoDesc} onChange={e => update('seoDesc', e.target.value)} className="f__ctrl" />
+            <p className="f__hint">Description affichée sous le titre dans Google. 150-160 caractères recommandés.</p>
+          </div>
+          <div className="f">
+            <label className="f__label">Mots-clés</label>
+            <input type="text" value={settings.seoKeywords} onChange={e => update('seoKeywords', e.target.value)} className="f__ctrl" placeholder="mot-clé 1, mot-clé 2, mot-clé 3" />
+            <p className="f__hint">Séparés par des virgules. Utilisés dans les meta keywords.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="card" style={{ marginBottom: '20px' }}>
+        <div className="card__head">
           <h3 className="card__title">Maintenance</h3>
         </div>
         <div className="card__body">
@@ -132,6 +158,9 @@ export default function AdminReglagesPage() {
           adresse: 'Paris, France', livraisonBase: '5.90', livraisonGratuit: '80',
           devise: 'EUR', maintenance: false,
           maintenanceMsg: 'Site en maintenance. Nous serons de retour très rapidement.',
+          seoTitle: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques',
+          seoDesc: 'Cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest : beurre de karité, hibiscus, gari, gombo. Livraison offerte dès 80 € partout en Europe.',
+          seoKeywords: 'cosmétiques naturels, produits exotiques, beurre de karité, hibiscus, gari, gombo',
         })}>Annuler</button>
         <button className="b b--primary" onClick={saveSettings}>Enregistrer les réglages</button>
       </div>

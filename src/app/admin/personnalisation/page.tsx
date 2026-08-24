@@ -207,13 +207,13 @@ export default function AdminPersonnalisationPage() {
           <span style={{ marginLeft: 'auto', fontSize: '12px', color: 'var(--a-muted)' }}>À jour</span>
         </div>
         <div className="ed__frame-wrap">
-          <div className="ed__frame" data-vp="desktop">
-            <div style={{ padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--a-muted)' }}>
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: '16px', fontWeight: 600, marginBottom: '8px' }}>Aperçu de la boutique</p>
-                <p style={{ fontSize: '13px' }}>L&apos;aperçu se chargera après avoir connecté le thème au site.</p>
-              </div>
-            </div>
+          <div className="ed__frame" data-vp="desktop" style={{ width: '100%', height: '100%', border: 'none' }}>
+            <iframe
+              src="/"
+              title="Aperçu de la boutique"
+              style={{ width: '100%', height: '100%', border: 'none' }}
+              sandbox="allow-same-origin allow-scripts"
+            />
           </div>
         </div>
       </div>
