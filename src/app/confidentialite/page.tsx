@@ -2,8 +2,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Politique de confidentialité — ORIXA',
-  description: 'Politique de confidentialité et protection des données personnelles ORIXA.',
+  title: 'Politique de confidentialité — MAISON LA GRACE',
+  description: 'Politique de confidentialité et protection des données personnelles MAISON LA GRACE. RGPD, droits, données collectées.',
+  keywords: ['confidentialité MAISON LA GRACE', 'RGPD', 'données personnelles', 'protection données', 'privacy MAISON LA GRACE'],
 };
 
 export default function Confidentialite() {
@@ -24,8 +25,8 @@ export default function Confidentialite() {
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>1. Responsable du traitement</h2>
                 <p>
                   Le responsable du traitement des données personnelles est :<br />
-                  <strong>ORIXA</strong> — Bè-Kpota, Lomé, Togo<br />
-                  Contact : bonjour@orixa.tg
+                  <strong>MAISON LA GRACE</strong> — Maison MAISON LA GRACE, France<br />
+                  Contact : contact@maisonlagrace.fr
                 </p>
               </section>
 
@@ -70,7 +71,7 @@ export default function Confidentialite() {
                   <li><strong>Droit d&apos;opposition</strong> : vous opposer au traitement de vos données</li>
                 </ul>
                 <p style={{ marginTop: '12px' }}>
-                  Pour exercer vos droits, contactez-nous à bonjour@orixa.tg.
+                  Pour exercer vos droits, contactez-nous à contact@maisonlagrace.fr.
                 </p>
               </section>
 

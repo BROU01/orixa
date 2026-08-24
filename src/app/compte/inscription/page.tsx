@@ -63,8 +63,8 @@ export default function InscriptionPage() {
   return (
     <div className="auth-body" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header className="auth-top">
-        <a href="/" className="brand" aria-label="ORIXA, accueil">
-          <span className="brand__mark" style={{ fontSize: '24px', fontFamily: 'var(--f-display)', color: '#FBFAF6' }}>ORIXA</span>
+        <a href="/" className="brand" aria-label="MAISON LA GRACE, accueil">
+          <span className="brand__mark" style={{ fontSize: '24px', fontFamily: 'var(--f-display)', color: '#FBFAF6' }}>MAISON LA GRACE</span>
         </a>
         <a href="/compte" className="auth-top__back">
           <span>← Se connecter</span>
@@ -73,9 +73,9 @@ export default function InscriptionPage() {
 
       <main className="auth-center" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div className="glass">
-          <span className="glass__eyebrow">Maison ORIXA</span>
+          <span className="glass__eyebrow">Maison MAISON LA GRACE</span>
           <h1 className="glass__title">Créer un compte</h1>
-          <p className="glass__sub">Rejoignez la communauté ORIXA et cumulez vos points de fidélité.</p>
+          <p className="glass__sub">Rejoignez la communauté MAISON LA GRACE et cumulez vos points de fidélité.</p>
 
           {error && (
             <div
@@ -176,7 +176,7 @@ export default function InscriptionPage() {
       </main>
 
       <footer className="auth-bottom" style={{ padding: '16px', textAlign: 'center', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-        <p>© {new Date().getFullYear()} ORIXA — Tous droits réservés</p>
+        <p>© {new Date().getFullYear()} MAISON LA GRACE — Tous droits réservés</p>
       </footer>
     </div>
   );

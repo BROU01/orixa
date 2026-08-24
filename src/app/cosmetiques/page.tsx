@@ -3,6 +3,23 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
 import type { Product } from '@/types';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Cosmétiques naturels — Beurre de karité, soins bio',
+  description:
+    'Découvrez nos cosmétiques naturels : beurre de karité pur, pommade réparatrice, huiles végétales et soins capillaires biologiques. Ingrédients 100 % purs, livraison Europe.',
+  keywords: [
+    'cosmétiques naturels', 'beurre de karité', 'karité pur', 'pommade karité',
+    'soins bio peau', 'huile végétale', 'soins capillaires', 'cosmétiques bio',
+    'produits naturels', 'MAISON LA GRACE', 'coiffe karité', 'beurre karité brut',
+  ],
+  openGraph: {
+    title: 'Cosmétiques naturels — MAISON LA GRACE',
+    description:
+      'Beurre de karité, pommade réparatrice, huiles végétales. Soins naturels sélectionnés en Afrique de l\'Ouest.',
+  },
+};
 
 export default async function CosmetiquesPage() {
   const [products, theme, menu] = await Promise.all([
@@ -11,7 +28,10 @@ export default async function CosmetiquesPage() {
     getMenu(),
   ]);
 
-  const cosmeticsProducts = products.filter((p: Product) => p.cat === 'cosmetics');
+  const EXCLUDED_IDS = ['p1786996224386'];
+  const cosmeticsProducts = products.filter((p: Product) =>
+    (p.cat === 'cosmetiques' || p.cat === 'cosmetics') && !EXCLUDED_IDS.includes(p.id)
+  );
 
   return (
     <div style={{ background: 'var(--paper)', color: 'var(--ink)' }}>
@@ -20,8 +40,6 @@ export default async function CosmetiquesPage() {
       <div className="wrap">
         <nav className="crumb">
           <a href="/">Accueil</a>
-          <span>/</span>
-          <a href="/boutique">Boutique</a>
           <span>/</span>
           <span aria-current="page">Cosmétiques</span>
         </nav>
@@ -40,8 +58,8 @@ export default async function CosmetiquesPage() {
           <div className="empty">
             <h2 className="empty__title">Aucun produit cosmétique pour le moment</h2>
             <p className="empty__text">Nous préparons de nouvelles arrivées. Revenez bientôt ou découvrez l&apos;ensemble du catalogue.</p>
-            <a href="/boutique" className="btn btn--primary">
-              Parcourir la boutique
+            <a href="/exotiques" className="btn btn--primary">
+              Voir les produits exotiques
             </a>
           </div>
         ) : (
@@ -49,7 +67,9 @@ export default async function CosmetiquesPage() {
             {cosmeticsProducts.map((product: Product) => (
               <div key={product.id} className="prod-card">
                 <div className="prod-card__media">
-                  <img src={product.img} alt={product.nom} loading="lazy" />
+                  <a href={`/produit?id=${product.id}`} aria-label={product.nom}>
+                    <img src={product.img} alt={product.nom} loading="lazy" />
+                  </a>
                   {product.badge && (
                     <span className={`prod-card__badge badge ${product.badge === 'Nouveau' ? 'badge--new' : 'badge--promo'}`}>
                       {product.badge}
@@ -61,7 +81,7 @@ export default async function CosmetiquesPage() {
                   <h3 className="prod-card__name">
                     <a href={`/produit?id=${product.id}`}>{product.nom}</a>
                   </h3>
-                  <p className="prod-card__meta">{product.unite}</p>
+                  {/* Pas de prod-card__meta (unite) pour les cosmétiques */}
                   <div className="prod-card__foot">
                     <PriceTag amount={product.prix} className="prod-card__price" />
                     <a href={`/produit?id=${product.id}`} className="btn btn--primary btn--sm">

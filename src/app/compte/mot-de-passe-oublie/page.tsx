@@ -46,8 +46,8 @@ export default function MotDePasseOubliePage() {
   return (
     <div className="auth-body" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <header className="auth-top">
-        <a href="/" className="brand" aria-label="ORIXA, accueil">
-          <span className="brand__mark" style={{ fontSize: '24px', fontFamily: 'var(--f-display)', color: '#FBFAF6' }}>ORIXA</span>
+        <a href="/" className="brand" aria-label="MAISON LA GRACE, accueil">
+          <span className="brand__mark" style={{ fontSize: '24px', fontFamily: 'var(--f-display)', color: '#FBFAF6' }}>MAISON LA GRACE</span>
         </a>
         <a href="/compte" className="auth-top__back">
           <span>← Se connecter</span>
@@ -105,7 +105,7 @@ export default function MotDePasseOubliePage() {
       </main>
 
       <footer className="auth-bottom" style={{ padding: '16px', textAlign: 'center', fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-        <p>© {new Date().getFullYear()} ORIXA — Tous droits réservés</p>
+        <p>© {new Date().getFullYear()} MAISON LA GRACE — Tous droits réservés</p>
       </footer>
     </div>
   );

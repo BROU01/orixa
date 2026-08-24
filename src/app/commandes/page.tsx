@@ -28,7 +28,7 @@ interface Order {
 }
 
 // Liste des catégories périssables (denrées alimentaires)
-const PERISHABLE_CATEGORIES = ['exotic'];
+const PERISHABLE_CATEGORIES = ['exotic', 'exotiques'];
 
 // Mots-clés indicatifs de produits périssables
 const PERISHABLE_KEYWORDS = [
@@ -177,7 +177,7 @@ export default function CommandesPage() {
           <div className="empty">
             <h2 className="empty__title">Aucune commande enregistrée</h2>
             <p className="empty__text">Vos commandes passées apparaîtront ici avec leur numéro de suivi et récapitulatif.</p>
-            <a href="/boutique" className="btn btn--primary">
+            <a href="/cosmetiques" className="btn btn--primary">
               Passer ma première commande
             </a>
           </div>

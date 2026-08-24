@@ -2,8 +2,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Conditions générales de vente — ORIXA',
-  description: 'Conditions générales de vente du site ORIXA.',
+  title: 'Conditions générales de vente — MAISON LA GRACE',
+  description: 'Conditions générales de vente du site MAISON LA GRACE. Paiement, livraison, retours, fidélité.',
+  keywords: ['CGV MAISON LA GRACE', 'conditions générales vente', 'paiement MAISON LA GRACE', 'livraison MAISON LA GRACE', 'retours MAISON LA GRACE'],
 };
 
 export default function CGV() {
@@ -23,21 +24,21 @@ export default function CGV() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 1 — Objet</h2>
                 <p>
-                  Les présentes conditions générales de vente (CGV) régissent les relations contractuelles entre ORIXA et tout client effectuant un achat sur le site orixa.tg.
+                  Les présentes conditions générales de vente (CGV) régissent les relations contractuelles entre MAISON LA GRACE et tout client effectuant un achat sur le site maisonlagrace.fr.
                 </p>
               </section>
 
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 2 — Produits</h2>
                 <p>
-                  Les produits proposés à la vente sont ceux figurant sur le site orixa.tg. Chaque produit est présenté avec une description détaillée incluant ses caractéristiques essentielles. Les photographies des produits sont aussi fidèles que possible mais ne sauraient garantir une similitude parfaite avec le produit réel.
+                  Les produits proposés à la vente sont ceux figurant sur le site maisonlagrace.fr. Chaque produit est présenté avec une description détaillée incluant ses caractéristiques essentielles. Les photographies des produits sont aussi fidèles que possible mais ne sauraient garantir une similitude parfaite avec le produit réel.
                 </p>
               </section>
 
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 3 — Prix</h2>
                 <p>
-                  Les prix sont indiqués en FCFA (franc CFA) toutes taxes comprises. ORIXA se réserve le droit de modifier ses prix à tout moment, étant entendu que le prix applicable est celui en vigueur au moment de la validation de la commande.
+                  Les prix sont indiqués en euros (€) toutes taxes comprises. MAISON LA GRACE se réserve le droit de modifier ses prix à tout moment, étant entendu que le prix applicable est celui en vigueur au moment de la validation de la commande.
                 </p>
               </section>
 
@@ -52,9 +53,12 @@ export default function CGV() {
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 5 — Paiement</h2>
                 <p>Le paiement peut être effectué par :</p>
                 <ul style={{ marginTop: '8px', paddingLeft: '20px', listStyle: 'disc' }}>
-                  <li>T-Money</li>
-                  <li>Flooz</li>
-                  <li>Carte bancaire</li>
+                  <li>                  Carte bancaire (Visa, Mastercard)
+                  </li>
+                  <li>PayPal
+                  </li>
+                  <li>Virement bancaire
+                  </li>
                   <li>Espèces à la livraison</li>
                 </ul>
               </section>
@@ -62,9 +66,9 @@ export default function CGV() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Article 6 — Livraison</h2>
                 <p>
-                  <strong>Lomé :</strong> 24 à 48h — 1 500 FCFA (offerte dès 25 000 FCFA)<br />
-                  <strong>Intérieur du pays :</strong> 3 à 5 jours — 3 000 FCFA<br />
-                  <strong>Retrait boutique :</strong> Gratuit — Bè-Kpota, Lomé
+                  <strong>Mondial Relay :</strong> 3 à 5 jours ouvrés (Livraison offerte dès 80 €)<br />
+                  <strong>Colissimo Domicile :</strong> 48h à 72h ouvrées avec numéro de suivi<br />
+                  <strong>Retrait atelier :</strong> Gratuit — Maison MAISON LA GRACE, France
                 </p>
               </section>
 

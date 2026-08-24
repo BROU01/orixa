@@ -1,0 +1,30 @@
+# ─── MAISON LA GRACE — Robots.txt ───────────────────────────────
+# https://orixa.fr
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /compte/
+Disallow: /commandes/
+Disallow: /commande/
+Disallow: /favoris/
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /compte/
+Disallow: /commandes/
+Disallow: /commande/
+Disallow: /favoris/
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://orixa.fr/sitemap.xml

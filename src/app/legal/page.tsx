@@ -28,10 +28,10 @@ export default async function LegalPage() {
           {/* Mentions Légales */}
           <section id="mentions" className="p-6 rounded-xl border border-[var(--line)] bg-white">
             <h2 className="h-display h2 mb-4" style={{ fontSize: '24px' }}>1. Mentions Légales</h2>
-            <p className="mb-2"><strong>Nom de la boutique :</strong> ORIXA</p>
-            <p className="mb-2"><strong>Propriétaire & Exploitant :</strong> Maison ORIXA (Mme Kalipé G.)</p>
+            <p className="mb-2"><strong>Nom de la boutique :</strong> MAISON LA GRACE</p>
+            <p className="mb-2"><strong>Propriétaire & Exploitant :</strong> Maison MAISON LA GRACE (Mme Kalipé G.)</p>
             <p className="mb-2"><strong>Siège social :</strong> France</p>
-            <p className="mb-2"><strong>Contact :</strong> contact@orixa.fr</p>
+            <p className="mb-2"><strong>Contact :</strong> contact@maisonlagrace.fr</p>
             <p className="mb-2"><strong>Hébergeur du site :</strong> Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA.</p>
           </section>
 
@@ -40,7 +40,7 @@ export default async function LegalPage() {
             <h2 className="h-display h2 mb-4" style={{ fontSize: '24px' }}>2. Conditions Générales de Vente (CGV)</h2>
             <h3 className="font-bold mb-1">2.1 Produits et Prix</h3>
             <p className="mb-4">
-              Les prix de nos produits sont indiqués en Euros (€) toutes taxes comprises (TTC). ORIXA se réserve le droit de modifier ses prix à tout moment. Les produits demeurent la propriété d&apos;ORIXA jusqu&apos;au paiement complet du prix.
+              Les prix de nos produits sont indiqués en Euros (€) toutes taxes comprises (TTC). MAISON LA GRACE se réserve le droit de modifier ses prix à tout moment. Les produits demeurent la propriété de MAISON LA GRACE jusqu&apos;au paiement complet du prix.
             </p>
 
             <h3 className="font-bold mb-1">2.2 Commande et Paiement</h3>
@@ -61,10 +61,10 @@ export default async function LegalPage() {
           <section id="rgpd" className="p-6 rounded-xl border border-[var(--line)] bg-white">
             <h2 className="h-display h2 mb-4" style={{ fontSize: '24px' }}>3. Protection des Données Personnelles (RGPD)</h2>
             <p className="mb-3">
-              ORIXA s&apos;engage à préserver la confidentialité des informations fournies par l&apos;acheteur. Les données collectées (nom, adresse, e-mail, téléphone) sont strictement réservées au traitement et à l&apos;expédition de vos commandes.
+              MAISON LA GRACE s&apos;engage à préserver la confidentialité des informations fournies par l&apos;acheteur. Les données collectées (nom, adresse, e-mail, téléphone) sont strictement réservées au traitement et à l&apos;expédition de vos commandes.
             </p>
             <p>
-              Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données personnelles sur simple demande à contact@orixa.fr.
+              Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données personnelles sur simple demande à contact@maisonlagrace.fr.
             </p>
           </section>
 
@@ -72,7 +72,7 @@ export default async function LegalPage() {
           <section id="cookies" className="p-6 rounded-xl border border-[var(--line)] bg-white">
             <h2 className="h-display h2 mb-4" style={{ fontSize: '24px' }}>4. Politique de Cookies</h2>
             <p>
-              Le site ORIXA utilise uniquement des cookies strictement nécessaires au fonctionnement de la boutique (gestion de la session panier, devises et favoris). Aucun cookie de traçage tiers n&apos;est revendu à des régies publicitaires.
+              Le site MAISON LA GRACE utilise uniquement des cookies strictement nécessaires au fonctionnement de la boutique (gestion de la session panier, devises et favoris). Aucun cookie de traçage tiers n&apos;est revendu à des régies publicitaires.
             </p>
           </section>
 

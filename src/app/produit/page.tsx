@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
 
 /**
- * Page produit détaillée ORIXA:
+ * Page produit détaillée MAISON LA GRACE:
  * - Diapo automatique 2s (photo seule -> auto-collant badge -> combo photo + prix)
  * - Indicateurs cliquables
  * - Synchronisation directe du panier & favoris (dispatchEvent)
@@ -111,7 +111,7 @@ export default function ProduitPage() {
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--paper)]">
-        <p className="text-sm font-medium text-[var(--muted)]">Chargement de la fiche produit ORIXA…</p>
+        <p className="text-sm font-medium text-[var(--muted)]">Chargement de la fiche produit MAISON LA GRACE…</p>
       </div>
     );
   }
@@ -127,7 +127,7 @@ export default function ProduitPage() {
       <img src={product.img} alt={product.nom} className="w-full h-full object-cover opacity-80" />
       <div className="absolute inset-0 flex items-center justify-center bg-black/30">
         <div className="px-6 py-3 rounded-2xl shadow-2xl text-lg font-bold rotate-[-4deg] bg-[var(--accent)] text-[var(--brand)] border-2 border-white">
-          {product.badge || 'Sélection ORIXA'}
+          {product.badge || 'Sélection MAISON LA GRACE'}
         </div>
       </div>
     </div>,
@@ -156,10 +156,9 @@ export default function ProduitPage() {
         <nav className="text-xs uppercase tracking-wider text-[var(--muted)] flex items-center gap-2">
           <a href="/" className="hover:text-[var(--accent)]">Accueil</a>
           <span>/</span>
-          <a href="/boutique" className="hover:text-[var(--accent)]">Boutique</a>
-          <span>/</span>
-          <a href={`/${product.cat}`} className="hover:text-[var(--accent)]">
-            {product.cat === 'cosmetics' ? 'Cosmétiques' : 'Produits exotiques'}
+
+          <a href={`/${product.cat === 'cosmetiques' ? 'cosmetiques' : 'exotiques'}`} className="hover:text-[var(--accent)]">
+            {product.cat === 'cosmetiques' ? 'Cosmétiques' : 'Produits exotiques'}
           </a>
           <span>/</span>
           <span className="text-[var(--brand)] font-semibold">{product.nom}</span>
@@ -209,7 +208,7 @@ export default function ProduitPage() {
             </div>
 
             <p className="text-sm text-[var(--text)]/80 leading-relaxed border-t border-b border-[var(--line)] py-4">
-              {product.description || 'Produit d\'exception d\'origine naturelle certifiée. Sélectionné avec exigence par la Maison ORIXA.'}
+              {product.description || 'Produit d\'exception d\'origine naturelle certifiée. Sélectionné avec exigence par la Maison MAISON LA GRACE.'}
             </p>
 
             {/* Loyalty points notification */}
@@ -218,7 +217,7 @@ export default function ProduitPage() {
                 <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21.2l7.7-7.8 1.1-1a5.5 5.5 0 0 0 0-7.8z" />
               </svg>
               <div>
-                <p className="font-bold" style={{ color: 'var(--ink)' }}>Programme Fidélité ORIXA</p>
+                <p className="font-bold" style={{ color: 'var(--ink)' }}>Programme Fidélité MAISON LA GRACE</p>
                 <p style={{ color: 'var(--ink-2)' }}>
                   Cet achat vous rapporte <strong>{product.prix.toFixed(2)} €</strong> de fidélité (100 € cumulés = bon de 10 €).
                 </p>
@@ -274,7 +273,7 @@ export default function ProduitPage() {
               <p style={{ marginBottom: '8px' }}>
                 Livraison en 3 à 5 jours. Livraison offerte dès 80 € d&apos;achat.
               </p>
-              {product.cat === 'exotic' ? (
+              {product.cat === 'exotiques' || product.cat === 'exotic' ? (
                 <p style={{ color: 'var(--brick)', fontWeight: 600 }}>
                   Denrée périssable : non reprise ni échange conformément à la réglementation en vigueur.
                 </p>

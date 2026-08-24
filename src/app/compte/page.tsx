@@ -180,7 +180,7 @@ function CompteLoginForm() {
           </button>
         </div>
 
-        <p className="gfoot">Nouveau sur ORIXA&nbsp;? <a href="/compte/inscription">Créer un compte</a></p>
+        <p className="gfoot">Nouveau sur MAISON LA GRACE&nbsp;? <a href="/compte/inscription">Créer un compte</a></p>
       </form>
     </div>
   );
@@ -190,8 +190,8 @@ export default function ComptePage() {
   return (
     <div className="auth-body">
       <header className="auth-top">
-        <a href="/" className="brand" aria-label="ORIXA, accueil">
-          <span className="brand__mark">ORIXA</span>
+        <a href="/" className="brand" aria-label="MAISON LA GRACE, accueil">
+          <span className="brand__mark">MLG</span>
         </a>
         <a href="/" className="auth-top__back">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -210,7 +210,7 @@ export default function ComptePage() {
       </main>
 
       <footer className="auth-foot">
-        <p>&copy; {new Date().getFullYear()} ORIXA</p>
+        <p>&copy; {new Date().getFullYear()} MAISON LA GRACE</p>
         <nav aria-label="Liens légaux">
           <a href="/contact">Aide</a>
           <a href="/confidentialite">Confidentialité</a>

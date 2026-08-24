@@ -2,8 +2,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Mentions légales — ORIXA',
-  description: 'Mentions légales du site ORIXA.',
+  title: 'Mentions légales — MAISON LA GRACE',
+  description: 'Mentions légales du site MAISON LA GRACE.',
 };
 
 export default function MentionsLegales() {
@@ -23,11 +23,10 @@ export default function MentionsLegales() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>1. Éditeur du site</h2>
                 <p>
-                  <strong>ORIXA</strong><br />
+                  <strong>MAISON LA GRACE</strong><br />
                   Épicerie et cosmétiques d&apos;Afrique de l&apos;Ouest<br />
-                  Adresse : Bè-Kpota, Lomé, Togo<br />
-                  Téléphone : +228 90 00 00 00<br />
-                  E-mail : bonjour@orixa.tg
+                  Adresse : Maison MAISON LA GRACE, France<br />
+                  E-mail : contact@maisonlagrace.fr
                 </p>
               </section>
 
@@ -43,14 +42,14 @@ export default function MentionsLegales() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>3. Propriété intellectuelle</h2>
                 <p>
-                  L&apos;ensemble du contenu de ce site (textes, images, vidéos, graphismes, logos, marques) est la propriété exclusive d&apos;ORIXA ou de ses partenaires. Toute reproduction, représentation, modification ou adaptation, totale ou partielle, est interdite sans autorisation préalable écrite.
+                  L&apos;ensemble du contenu de ce site (textes, images, vidéos, graphismes, logos, marques) est la propriété exclusive de MAISON LA GRACE ou de ses partenaires. Toute reproduction, représentation, modification ou adaptation, totale ou partielle, est interdite sans autorisation préalable écrite.
                 </p>
               </section>
 
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>4. Données personnelles</h2>
                 <p>
-                  Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi togolaise sur la protection des données personnelles, vous disposez de droits sur vos données. Pour toute demande, contactez-nous à bonjour@orixa.tg.
+                  Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez de droits sur vos données. Pour toute demande, contactez-nous à contact@maisonlagrace.fr.
                 </p>
                 <p style={{ marginTop: '12px' }}>
                   Pour plus d&apos;informations, consultez notre{' '}

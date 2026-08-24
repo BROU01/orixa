@@ -2,6 +2,13 @@ import { getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+export const metadata = {
+  title: 'Notre histoire — Maison MAISON LA GRACE',
+  description:
+    "Découvrez l'histoire d'MAISON LA GRACE : cosmétiques naturels et produits exotiques d'Afrique, circuit court, coopératives éco-responsables.",
+  keywords: ['MAISON LA GRACE histoire', 'cosmétiques naturels', 'coopératives Afrique', 'circuit court', 'karité'],
+};
+
 export default async function HistoirePage() {
   const [theme, menu] = await Promise.all([getTheme(), getMenu()]);
 
@@ -18,14 +25,14 @@ export default async function HistoirePage() {
       </div>
 
       <main id="main" className="wrap section--tight" style={{ maxWidth: '800px', paddingBottom: '96px' }}>
-        <span className="eyebrow" id="valeurs">La Maison ORIXA</span>
+        <span className="eyebrow" id="valeurs">La Maison MAISON LA GRACE</span>
         <h1 className="h-display h1" style={{ marginTop: '8px', marginBottom: '24px' }}>
           Une Histoire de Transmission & d&apos;Excellence
         </h1>
 
         <div className="prose" style={{ fontSize: '16.5px', lineHeight: '1.7', color: 'var(--ink-2)' }}>
           <p className="lede" style={{ marginBottom: '24px', fontSize: '18px', color: 'var(--ink)' }}>
-            ORIXA est née d&apos;une vocation profonde : sublimer les rituels de beauté et les saveurs de terroir authentiques d&apos;Afrique de l&apos;Ouest et les transmettre avec exigence en France et dans toute l&apos;Europe.
+            MAISON LA GRACE est née d&apos;une vocation profonde : sublimer les rituels de beauté et les saveurs de terroir authentiques d&apos;Afrique de l&apos;Ouest et les transmettre avec exigence en France et dans toute l&apos;Europe.
           </p>
 
           <h2 className="h-display h2" style={{ marginTop: '40px', marginBottom: '16px' }} id="producteurs">
@@ -47,7 +54,7 @@ export default async function HistoirePage() {
           </p>
 
           <div className="p-6 my-8 rounded-xl border border-[var(--line)]" style={{ background: 'var(--paper-2)' }}>
-            <h3 className="h-display h3" style={{ marginBottom: '8px' }}>L&apos;Engagement Qualité ORIXA</h3>
+            <h3 className="h-display h3" style={{ marginBottom: '8px' }}>L&apos;Engagement Qualité MAISON LA GRACE</h3>
             <ul className="space-y-2 text-sm" style={{ listStyle: 'disc', paddingLeft: '20px' }}>
               <li>100% Ingrédients bruts d&apos;origine contrôlée</li>
               <li>Traçabilité totale du producteur au flacon</li>

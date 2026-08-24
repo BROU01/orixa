@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { MenuItem } from '@/types';
 
 const DEFAULT_MENU: MenuItem[] = [
-  { label: 'Boutique', url: '/boutique', on: true, children: [
+  { label: 'Boutique', url: '/cosmetiques', on: true, children: [
     { label: 'Cosmétiques', url: '/cosmetiques', on: true },
     { label: 'Produits exotiques', url: '/exotiques', on: true },
     { label: 'Nouveautés', url: '/nouveautes', on: true },
@@ -15,7 +15,7 @@ const DEFAULT_MENU: MenuItem[] = [
 
 /**
  * Page admin — Éditeur de menus de navigation.
- * Protégée par le middleware (server-side).
+ * Fidèle au projet orixa-site-complet original.
  */
 export default function AdminMenusPage() {
   const [menu, setMenu] = useState<MenuItem[]>(DEFAULT_MENU);
@@ -61,107 +61,87 @@ export default function AdminMenusPage() {
   };
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="content">
+      <div className="page-head">
         <div>
-          <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Menus
-          </h1>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            Navigation principale de la boutique.
-          </p>
+          <h2 className="page-title">Menus</h2>
+          <p className="page-sub">Navigation principale de la boutique.</p>
         </div>
-        <div className="flex gap-2">
-          <button className="btn btn--secondary btn--sm">Rétablir</button>
-          <button className="btn btn--primary btn--sm">Enregistrer</button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button className="b b--default">Rétablir</button>
+          <button className="b b--primary">Enregistrer</button>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        {/* Menu items editor */}
+      <div className="grid-2">
+        {/* Éditeur */}
         <div className="card">
-          <div className="p-4 border-b flex items-center justify-between" style={{ borderColor: 'var(--line)' }}>
-            <h2 className="font-semibold text-sm">Entrées du menu</h2>
-            <button className="btn btn--secondary btn--sm" onClick={addItem}>
-              + Ajouter
-            </button>
+          <div className="card__head">
+            <h3 className="card__title">Entrées du menu</h3>
+            <button className="b b--default b--sm" onClick={addItem}>+ Ajouter</button>
           </div>
-          <div className="p-4 space-y-3">
+          <div className="card__body" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {menu.map((item, i) => (
-              <div key={i} className="flex items-center gap-2 p-3 rounded-lg" style={{ background: 'var(--bg)' }}>
-                <label className="relative inline-flex items-center cursor-pointer">
+              <div key={i} className="mitem">
+                <div className="mitem__h">
+                  <label className="switch" style={{ flex: 'none' }}>
+                    <input
+                      type="checkbox"
+                      checked={item.on !== false}
+                      onChange={() => toggleItem(i)}
+                    />
+                    <span className="switch__track"></span>
+                  </label>
                   <input
-                    type="checkbox"
-                    checked={item.on !== false}
-                    onChange={() => toggleItem(i)}
-                    className="sr-only peer"
+                    className="f__ctrl"
+                    style={{ flex: 1 }}
+                    value={item.label}
+                    onChange={e => updateLabel(i, e.target.value)}
+                    aria-label="Libellé"
                   />
-                  <div className="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:bg-green-500 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full" />
-                </label>
-                <input
-                  className="flex-1 px-2 py-1 text-sm border rounded"
-                  style={{ borderColor: 'var(--line)' }}
-                  value={item.label}
-                  onChange={e => updateLabel(i, e.target.value)}
-                  aria-label="Libellé"
-                />
-                <input
-                  className="flex-1 px-2 py-1 text-sm border rounded"
-                  style={{ borderColor: 'var(--line)' }}
-                  value={item.url}
-                  onChange={e => updateUrl(i, e.target.value)}
-                  aria-label="Lien"
-                />
-                <button
-                  className="btn btn--ghost btn--sm p-1"
-                  onClick={() => moveUp(i)}
-                  disabled={i === 0}
-                  aria-label="Monter"
-                >↑</button>
-                <button
-                  className="btn btn--ghost btn--sm p-1"
-                  onClick={() => moveDown(i)}
-                  disabled={i === menu.length - 1}
-                  aria-label="Descendre"
-                >↓</button>
-                <button
-                  className="btn btn--ghost btn--sm p-1 text-red-500"
-                  onClick={() => removeItem(i)}
-                  aria-label="Supprimer"
-                >×</button>
+                  <input
+                    className="f__ctrl"
+                    style={{ flex: 1 }}
+                    value={item.url}
+                    onChange={e => updateUrl(i, e.target.value)}
+                    aria-label="Lien"
+                  />
+                  <button className="ibtn" onClick={() => moveUp(i)} disabled={i === 0} aria-label="Monter">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg>
+                  </button>
+                  <button className="ibtn" onClick={() => moveDown(i)} disabled={i === menu.length - 1} aria-label="Descendre">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+                  </button>
+                  <button className="ibtn ibtn--danger" onClick={() => removeItem(i)} aria-label="Supprimer">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Preview */}
+        {/* Aperçu */}
         <div className="card">
-          <div className="p-4 border-b" style={{ borderColor: 'var(--line)' }}>
-            <h2 className="font-semibold text-sm">Aperçu</h2>
+          <div className="card__head">
+            <h3 className="card__title">Aperçu</h3>
           </div>
-          <div className="p-4">
-            <div className="flex flex-wrap gap-2">
+          <div className="card__body">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {menu.filter(m => m.on !== false).map((item, i) => (
-                <div key={i} className="relative group">
-                  <span className="px-3 py-1.5 text-sm rounded-lg" style={{ background: 'var(--bg)' }}>
-                    {item.label}
-                  </span>
-                  {item.children && item.children.length > 0 && (
-                    <div className="absolute top-full left-0 mt-1 hidden group-hover:block z-10">
-                      <div className="bg-white rounded-lg shadow-lg border p-2 min-w-[160px]" style={{ borderColor: 'var(--line)' }}>
-                        {item.children.filter(c => c.on !== false).map((child, j) => (
-                          <div key={j} className="px-3 py-1.5 text-sm hover:bg-gray-50 rounded">
-                            {child.label}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <span key={i} style={{
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  background: 'var(--a-bg)',
+                  border: '1px solid var(--a-line)',
+                }}>
+                  {item.label}
+                </span>
               ))}
             </div>
-            <p className="text-xs mt-4" style={{ color: 'var(--muted)' }}>
+            <p style={{ fontSize: '12px', color: 'var(--a-muted)', marginTop: '16px' }}>
               Les sous-entrées apparaissent dans un menu déroulant au survol de leur parent.
             </p>
           </div>

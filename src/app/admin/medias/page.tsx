@@ -1,88 +1,103 @@
-import { getMedia } from '@/lib/data';
+'use client';
+
+import { useState, useMemo } from 'react';
 import type { Media } from '@/types';
+import { getMedia } from '@/lib/data';
 
 /**
- * Page admin — Médiathèque (gestion des images).
- * Protégée par le middleware (server-side).
+ * Page admin — Médiathèque.
+ * Fidèle au projet orixa-site-complet original.
+ * Recherche, grille, upload.
  */
-export default async function AdminMediasPage() {
-  const media = await getMedia();
+export default function AdminMediasPage() {
+  const [media, setMedia] = useState<Media[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [query, setQuery] = useState('');
+
+  useState(() => {
+    getMedia().then(m => { setMedia(m); setLoaded(true); });
+  });
+
+  const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+  const filtered = useMemo(() => {
+    const q = norm(query);
+    return media.filter(m => !q || norm(m.name).includes(q));
+  }, [media, query]);
+
+  if (!loaded) return <div className="content"><p className="page-sub">Chargement…</p></div>;
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="content">
+      <div className="page-head">
         <div>
-          <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Médiathèque
-          </h1>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            <span>{media.length}</span> fichiers disponibles.
-          </p>
+          <h2 className="page-title">Médiathèque</h2>
+          <p className="page-sub">{media.length} fichiers disponibles.</p>
         </div>
-        <label className="btn btn--primary btn--sm cursor-pointer">
-          + Téléverser
-          <input type="file" accept="image/*" multiple className="hidden" />
+        <label className="b b--primary" style={{ cursor: 'pointer' }}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Téléverser
+          <input type="file" accept="image/*" multiple style={{ display: 'none' }} />
         </label>
       </div>
 
-      {/* Info note */}
-      <div className="card p-4 mb-6" style={{ background: 'rgba(201,168,76,0.06)', borderLeft: '3px solid var(--accent)' }}>
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>
-          Les images téléversées sont encodées dans le stockage du navigateur (limite pratique ~4 Mo au total).
+      <div className="note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+          <path d="M10.3 3.9 1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span>
+          Les images téléversées sont encodées dans le stockage du navigateur (limite ~4 Mo).
           En production, elles iraient sur un espace de stockage serveur.
+        </span>
+      </div>
+
+      <div style={{
+        border: '2px dashed var(--a-line-2)',
+        borderRadius: 'var(--a-r)',
+        padding: '32px',
+        textAlign: 'center',
+        marginBottom: '20px',
+      }}>
+        <p style={{ fontSize: '13.5px', color: 'var(--a-muted)' }}>
+          Glissez vos images ici ou cliquez sur &laquo; Téléverser &raquo;
         </p>
       </div>
 
-      {/* Dropzone */}
-      <div
-        className="border-2 border-dashed rounded-xl p-8 text-center mb-6 transition-colors hover:border-green-400"
-        style={{ borderColor: 'var(--line)' }}
-      >
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>
-          Glissez vos images ici ou cliquez sur « Téléverser »
-        </p>
+      <div className="card" style={{ marginBottom: '20px' }}>
+        <div className="toolbar">
+          <div className="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <label className="visually-hidden" htmlFor="qm">Rechercher</label>
+            <input className="f__ctrl" id="qm" type="search" placeholder="Rechercher par nom de fichier…" value={query} onChange={e => setQuery(e.target.value)} />
+          </div>
+        </div>
       </div>
 
-      {/* Search */}
-      <div className="card p-4 mb-6">
-        <input
-          type="search"
-          placeholder="Rechercher par nom de fichier…"
-          className="w-full px-3 py-2 text-sm border rounded-lg"
-          style={{ borderColor: 'var(--line)' }}
-        />
-      </div>
-
-      {/* Media grid */}
-      <div className="card p-4">
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {media.map((m: Media, i: number) => (
-            <div key={i} className="relative group">
-              <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
-                <img
-                  src={m.src}
-                  alt={m.name}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+      <div className="card">
+        <div className="card__body">
+          <div className="mgrid">
+            {filtered.map((m, i) => (
+              <div key={i} className="mgrid__i" style={{ position: 'relative' }}>
+                <img src={m.src} alt={m.name} loading="lazy" />
+                <span style={{ padding: '6px 8px', fontSize: '11px', color: 'var(--a-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
+                  {m.name}
+                </span>
               </div>
-              <p className="text-xs mt-1 truncate" style={{ color: 'var(--muted)' }}>{m.name}</p>
-              {!m.builtin && (
-                <button
-                  className="absolute top-1 right-1 w-6 h-6 rounded-full bg-white shadow flex items-center justify-center text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                  aria-label={`Supprimer ${m.name}`}
-                >
-                  ×
-                </button>
-              )}
-            </div>
-          ))}
-          {media.length === 0 && (
-            <div className="col-span-full p-8 text-center text-sm" style={{ color: 'var(--muted)' }}>
-              Aucun fichier. Glissez ou téléversez des images.
-            </div>
-          )}
+            ))}
+            {filtered.length === 0 && (
+              <div style={{ gridColumn: '1 / -1', padding: '32px', textAlign: 'center', color: 'var(--a-muted)', fontSize: '13.5px' }}>
+                Aucun fichier. Glissez ou téléversez des images.
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ export default async function PaiementsSecurisesPage() {
 
         <div style={{ fontSize: '16.5px', lineHeight: '1.7', color: 'var(--ink-2)' }}>
           <p style={{ fontSize: '18px', color: 'var(--ink)', marginBottom: '24px' }}>
-            Toutes les transactions sur ORIXA sont protégées par un cryptage SSL/TLS 256 bits. Vos données bancaires ne sont jamais stockées sur nos serveurs.
+            Toutes les transactions sur MAISON LA GRACE sont protégées par un cryptage SSL/TLS 256 bits. Vos données bancaires ne sont jamais stockées sur nos serveurs.
           </p>
 
           <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>

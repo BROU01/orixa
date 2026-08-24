@@ -4,6 +4,13 @@ import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
 import type { Product } from '@/types';
 
+export const metadata = {
+  title: 'Nouveautés — Dernières arrivées MAISON LA GRACE',
+  description:
+    'Découvrez les dernières nouveautés MAISON LA GRACE : cosmétiques naturels et produits exotiques fraîchement arrivés de nos coopératives africaines.',
+  keywords: ['nouveautés MAISON LA GRACE', 'nouveaux produits', 'dernières arrivées', 'cosmétiques neufs', 'exotiques'],
+};
+
 export default async function NouveautesPage() {
   const [products, theme, menu] = await Promise.all([
     getProducts(),
@@ -20,8 +27,6 @@ export default async function NouveautesPage() {
       <div className="wrap">
         <nav className="crumb">
           <a href="/">Accueil</a>
-          <span>/</span>
-          <a href="/boutique">Boutique</a>
           <span>/</span>
           <span aria-current="page">Nouveautés</span>
         </nav>
@@ -40,8 +45,8 @@ export default async function NouveautesPage() {
           <div className="empty">
             <h2 className="empty__title">Aucune nouveauté pour le moment</h2>
             <p className="empty__text">De nouveaux produits arrivent bientôt. Revenez bientôt ou découvrez l&apos;ensemble du catalogue.</p>
-            <a href="/boutique" className="btn btn--primary">
-              Parcourir la boutique
+            <a href="/cosmetiques" className="btn btn--primary">
+              Parcourir nos produits
             </a>
           </div>
         ) : (

@@ -6,9 +6,20 @@ import ScrollRevealObserver from '@/components/ScrollRevealObserver';
 import type { Product, Category, Section } from '@/types';
 
 /**
- * Landing Page ORIXA — Port Next.js fidèle à 100% au design original.
+ * Landing Page MAISON LA GRACE — Port Next.js fidèle à 100% au design original.
  * Structure HTML & classes CSS de l'ancien frontend + animations Parallaxe et Scroll Reveal.
  */
+export const metadata = {
+  title: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques d\'Afrique',
+  description:
+    'Découvrez MAISON LA GRACE : cosmétiques naturels (beurre de karité, pommade, huiles) et produits exotiques (gari, hibiscus, gombo) d\'Afrique de l\'Ouest. Livraison offerte dès 80 € en Europe.',
+  keywords: [
+    'MAISON LA GRACE', 'cosmétiques naturels', 'produits exotiques', 'beurre de karité',
+    'gari', 'hibiscus', 'gombo', 'produits Afrique', 'boutique bio Europe',
+  ],
+  alternates: { canonical: 'https://maisonlagrace.fr' },
+};
+
 export default async function HomePage() {
   const [products, categories, theme, sections, menu] = await Promise.all([
     getProducts(),
@@ -45,14 +56,14 @@ export default async function HomePage() {
             Maison Française · Produits d'Excellence
           </span>
           <h1 className="h-display hero__title">
-            {heroSection?.title || 'ORIXA'}
+            {heroSection?.title || 'MAISON LA GRACE'}
           </h1>
           <p className="hero__text">
             {heroSection?.subtitle || 'L\'alliance précieuse des soins naturels et des trésors exotiques authentiques.'}
           </p>
           <div className="hero__cta">
-            <a href="/boutique" className="btn btn--light">
-              Voir la boutique
+            <a href="/cosmetiques" className="btn btn--light">
+              Découvrir nos cosmétiques
             </a>
             <a href="/histoire" className="btn btn--outline-light">
               Notre histoire
@@ -92,9 +103,10 @@ export default async function HomePage() {
             <span className="eyebrow">Sélection d'exception</span>
             <h2 className="h-display h2">Nos produits phares</h2>
           </div>
-          <a href="/boutique" className="sec-head__link">
-            Tout le catalogue →
-          </a>
+          <div className="sec-head__links">
+            <a href="/cosmetiques" className="sec-head__link">Cosmétiques →</a>
+            <a href="/exotiques" className="sec-head__link">Exotiques →</a>
+          </div>
         </div>
 
         <div className="prod-grid">
@@ -164,12 +176,12 @@ export default async function HomePage() {
       {/* Section Histoire Éditoriale */}
       <section className="section" style={{ background: 'var(--paper-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
         <div className="wrap text-center reveal" style={{ maxWidth: '720px', marginInline: 'auto' }}>
-          <span className="eyebrow" style={{ marginBottom: '12px' }}>Philosophie ORIXA</span>
+          <span className="eyebrow" style={{ marginBottom: '12px' }}>Philosophie MAISON LA GRACE</span>
           <h2 className="h-display h2" style={{ marginBottom: '20px' }}>
             Une Histoire de Passion & d'Authenticité
           </h2>
           <p className="lede" style={{ marginInline: 'auto', marginBottom: '32px' }}>
-            Imaginée en France et nourrie par la tradition familiale de Kalipé (« La Grâce »), la maison ORIXA sélectionne directement auprès des producteurs locaux les matières brutes les plus nobles.
+            Imaginée en France et nourrie par la tradition familiale de Kalipé (« La Grâce »), la maison MAISON LA GRACE sélectionne directement auprès des producteurs locaux les matières brutes les plus nobles.
           </p>
           <a href="/histoire" className="btn btn--primary">
             En savoir plus sur la Maison

@@ -13,7 +13,7 @@ const SOCIAL_LINKS: Array<{
   {
     name: 'Instagram',
     url: 'https://instagram.com/orixa',
-    label: 'ORIXA sur Instagram',
+    label: 'MAISON LA GRACE sur Instagram',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -25,7 +25,7 @@ const SOCIAL_LINKS: Array<{
   {
     name: 'Facebook',
     url: 'https://facebook.com/orixa',
-    label: 'ORIXA sur Facebook',
+    label: 'MAISON LA GRACE sur Facebook',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
@@ -35,7 +35,7 @@ const SOCIAL_LINKS: Array<{
   {
     name: 'TikTok',
     url: 'https://tiktok.com/@orixa',
-    label: 'ORIXA sur TikTok',
+    label: 'MAISON LA GRACE sur TikTok',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
@@ -49,7 +49,7 @@ interface FooterProps {
 }
 
 /**
- * Composant Footer sémantique ORIXA.
+ * Composant Footer sémantique MAISON LA GRACE.
  * - 5 liens uniques dans « Informations » (pas de doublons)
  * - Sous-footer : copyright + logos paiement uniquement
  * - Réseaux sociaux en SVG monochromes avec aria-label
@@ -63,7 +63,9 @@ export default function Footer({ theme }: FooterProps) {
 
           {/* Brand Col + Socials */}
           <div className="site-footer__brand">
-            <span className="brand__mark">ORIXA</span>
+            <a href="/" aria-label="MAISON LA GRACE">
+              <img src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" style={{ height: '40px', width: 'auto' }} />
+            </a>
             <p className="site-footer__about" data-footer-about>
               {theme?.footerAbout || 'Cosmétiques naturels et produits exotiques sélectionnés avec soin, livrés partout en Europe depuis notre atelier.'}
             </p>
@@ -112,7 +114,7 @@ export default function Footer({ theme }: FooterProps) {
               <li><a href="/contact">Contact</a></li>
               <li><a href="/faq">FAQ</a></li>
               <li><a href="/contact#livraison">Livraison</a></li>
-              <li><a href="/contact#retours">Retours</a></li>
+              <li><a href="/retours">Retours</a></li>
             </ul>
           </nav>
 
@@ -180,7 +182,7 @@ export default function Footer({ theme }: FooterProps) {
 
         {/* Bas de page — copyright uniquement (pas de doublons de liens) */}
         <div className="site-footer__legal">
-          <p>&copy; {new Date().getFullYear()} ORIXA — Tous droits réservés</p>
+          <p>&copy; {new Date().getFullYear()} MAISON LA GRACE — Tous droits réservés</p>
         </div>
       </div>
     </footer>

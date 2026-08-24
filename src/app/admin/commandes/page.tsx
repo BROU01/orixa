@@ -1,130 +1,129 @@
+'use client';
+
+import { useState, useMemo } from 'react';
+
 /**
  * Page admin — Gestion des commandes.
- * Données de démonstration statiques (pas de backend réel pour les commandes).
+ * Fidèle au projet orixa-site-complet original.
+ * Recherche, filtres, changement de statut, export CSV.
  */
 const DEMO_ORDERS = [
-  { id: 'ORX-2418', date: '30 juil. 2026', client: 'Camille Durand', ville: 'Paris', total: 184.00, paiement: 'Stripe', statut: 'Payée' },
-  { id: 'ORX-2417', date: '30 juil. 2026', client: 'Nicolas Lefèvre', ville: 'Lyon', total: 72.00, paiement: 'PayPal', statut: 'À préparer' },
-  { id: 'ORX-2416', date: '29 juil. 2026', client: 'Awa Diallo', ville: 'Bordeaux', total: 312.00, paiement: 'Wero', statut: 'Expédiée' },
-  { id: 'ORX-2415', date: '29 juil. 2026', client: 'Hugo Bernard', ville: 'Nantes', total: 53.00, paiement: 'Virement', statut: 'Paiement refusé' },
-  { id: 'ORX-2414', date: '28 juil. 2026', client: 'Sofia Rossi', ville: 'Marseille', total: 127.50, paiement: 'Stripe', statut: 'Livrée' },
+  { n: 'ORX-2418', d: '30 juil. 2026', c: 'Camille Durand', q: 'Paris', tel: '06 12 34 56 78', pay: 'Stripe', st: 'Payée', items: 3, t: 184.00 },
+  { n: 'ORX-2417', d: '30 juil. 2026', c: 'Nicolas Lefèvre', q: 'Lyon', tel: '06 98 76 54 32', pay: 'PayPal', st: 'À préparer', items: 1, t: 72.00 },
+  { n: 'ORX-2416', d: '29 juil. 2026', c: 'Awa Diallo', q: 'Bordeaux', tel: '05 56 78 90 12', pay: 'Wero', st: 'Expédiée', items: 5, t: 312.00 },
+  { n: 'ORX-2415', d: '29 juil. 2026', c: 'Hugo Bernard', q: 'Nantes', tel: '02 40 60 80 10', pay: 'Virement', st: 'Paiement refusé', items: 1, t: 53.00 },
+  { n: 'ORX-2414', d: '28 juil. 2026', c: 'Sofia Rossi', q: 'Marseille', tel: '04 91 23 45 67', pay: 'Stripe', st: 'Livrée', items: 2, t: 127.50 },
 ];
 
-function getStatutPill(statut: string): string {
-  switch (statut) {
-    case 'Payée':
-    case 'Expédiée':
-    case 'Livrée':
-      return 'pill--ok';
-    case 'À préparer':
-      return 'pill--warn';
-    case 'Paiement refusé':
-    case 'Annulée':
-      return 'pill--danger';
-    default:
-      return 'pill--neutral';
-  }
-}
+const STATUTS = ['À préparer', 'Payée', 'Expédiée', 'Livrée', 'Paiement refusé'];
+const PILL: Record<string, string> = { 'Payée': 'pill--ok', 'Expédiée': 'pill--ok', 'À préparer': 'pill--warn', 'Paiement refusé': 'pill--danger', 'Livrée': 'pill--neutral' };
+const fmt = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 2 }) + ' €';
 
 export default function AdminCommandesPage() {
+  const [orders, setOrders] = useState(DEMO_ORDERS);
+  const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+
+  const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+  const filtered = useMemo(() => {
+    const q = norm(query);
+    return orders.filter(o => {
+      if (statusFilter && o.st !== statusFilter) return false;
+      if (q && !norm(o.n + ' ' + o.c + ' ' + o.q + ' ' + o.tel).includes(q)) return false;
+      return true;
+    });
+  }, [orders, query, statusFilter]);
+
+  const changeStatus = (orderNum: string, newStatus: string) => {
+    setOrders(prev => prev.map(o => o.n === orderNum ? { ...o, st: newStatus } : o));
+  };
+
+  const exportCSV = () => {
+    const header = 'numero,date,client,ville,telephone,paiement,statut,total';
+    const rows = orders.map(o => [o.n, o.d, o.c, o.q, o.tel, o.pay, o.st, o.t].join(','));
+    const blob = new Blob([header + '\n' + rows.join('\n')], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'orixa-commandes.csv';
+    a.click();
+  };
+
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="content">
+      <div className="page-head">
         <div>
-          <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Commandes
-          </h1>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            {DEMO_ORDERS.length} commandes
-          </p>
+          <h2 className="page-title">Commandes</h2>
+          <p className="page-sub">Suivi, préparation et changement de statut.</p>
         </div>
-        <button className="btn btn--secondary btn--sm">
-          Exporter CSV
-        </button>
+        <button className="b b--default" onClick={exportCSV}>Exporter en CSV</button>
       </div>
 
-      {/* Note */}
-      <div
-        className="mb-6 p-4 rounded-xl text-sm flex items-start gap-3"
-        style={{
-          background: 'rgba(201,168,76,0.08)',
-          border: '1px solid rgba(201,168,76,0.3)',
-        }}
-      >
-        <span className="text-lg">⚠️</span>
-        <p>
-          Les commandes sont des données de démonstration statiques.
-          En production, elles seront gérées via Supabase.
-        </p>
-      </div>
-
-      {/* Filters */}
-      <div className="card p-4 mb-6">
-        <div className="flex flex-wrap gap-4 items-center">
-          <div className="flex-1 min-w-[200px]">
-            <input
-              type="search"
-              placeholder="Rechercher par numéro ou client..."
-              className="w-full px-3 py-2 text-sm border rounded-lg"
-              style={{ borderColor: 'var(--line)' }}
-            />
+      <section className="card">
+        <div className="toolbar">
+          <div className="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <label className="visually-hidden" htmlFor="qc">Rechercher</label>
+            <input className="f__ctrl" id="qc" type="search" placeholder="Numéro, client, quartier ou téléphone" value={query} onChange={e => setQuery(e.target.value)} />
           </div>
-          <select
-            className="px-3 py-2 text-sm border rounded-lg"
-            style={{ borderColor: 'var(--line)' }}
-          >
+          <label className="visually-hidden" htmlFor="fst">Filtrer par statut</label>
+          <select className="f__ctrl" id="fst" style={{ width: 'auto' }} value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
             <option value="">Tous les statuts</option>
-            <option value="payee">Payée</option>
-            <option value="preparer">À préparer</option>
-            <option value="expediee">Expédiée</option>
-            <option value="livree">Livrée</option>
-            <option value="annulee">Annulée</option>
+            {STATUTS.map(s => <option key={s}>{s}</option>)}
           </select>
         </div>
-      </div>
 
-      {/* Orders table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="tbl-wrap">
+          <table className="tbl">
             <thead>
-              <tr style={{ borderBottom: '1px solid var(--line)' }}>
-                <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Commande</th>
-                <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Client</th>
-                <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Paiement</th>
-                <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Statut</th>
-                <th className="text-right p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Total</th>
+              <tr>
+                <th>Commande</th>
+                <th>Date</th>
+                <th>Client</th>
+                <th>Paiement</th>
+                <th>Statut</th>
+                <th className="tbl__num">Total</th>
               </tr>
             </thead>
             <tbody>
-              {DEMO_ORDERS.map((order) => (
-                <tr
-                  key={order.id}
-                  className="hover:bg-gray-50 transition-colors"
-                  style={{ borderBottom: '1px solid var(--line)' }}
-                >
-                  <td className="p-3">
-                    <p className="font-semibold">#{order.id}</p>
-                    <p className="text-xs" style={{ color: 'var(--muted)' }}>{order.date}</p>
+              {filtered.map(o => (
+                <tr key={o.n}>
+                  <td>
+                    <strong>#{o.n}</strong>
+                    <br />
+                    <span style={{ fontSize: '12px', color: 'var(--a-muted)' }}>{o.items} articles</span>
                   </td>
-                  <td className="p-3">
-                    <p>{order.client}</p>
-                    <p className="text-xs" style={{ color: 'var(--muted)' }}>{order.ville}</p>
+                  <td>{o.d}</td>
+                  <td>
+                    {o.c}
+                    <br />
+                    <span style={{ fontSize: '12px', color: 'var(--a-muted)' }}>{o.q} · {o.tel}</span>
                   </td>
-                  <td className="p-3">{order.paiement}</td>
-                  <td className="p-3">
-                    <span className={`pill ${getStatutPill(order.statut)}`}>
-                      {order.statut}
-                    </span>
+                  <td>{o.pay}</td>
+                  <td>
+                    <span className={'pill ' + (PILL[o.st] || 'pill--neutral')} style={{ marginBottom: '5px' }}>{o.st}</span>
+                    <br />
+                    <select
+                      className="f__ctrl"
+                      style={{ minHeight: '28px', fontSize: '12px', padding: '2px 24px 2px 8px' }}
+                      value={o.st}
+                      onChange={e => changeStatus(o.n, e.target.value)}
+                      aria-label={'Statut de la commande ' + o.n}
+                    >
+                      {STATUTS.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
                   </td>
-                  <td className="p-3 text-right font-medium">{order.total.toFixed(2)} €</td>
+                  <td className="tbl__num">{fmt(o.t)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+        {filtered.length === 0 && <div className="empty-a">Aucune commande ne correspond.</div>}
+      </section>
     </div>
   );
 }

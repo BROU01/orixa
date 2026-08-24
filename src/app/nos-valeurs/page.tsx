@@ -25,7 +25,7 @@ export default async function NosValeursPage() {
 
         <div style={{ fontSize: '16.5px', lineHeight: '1.7', color: 'var(--ink-2)' }}>
           <p style={{ fontSize: '18px', color: 'var(--ink)', marginBottom: '24px' }}>
-            Chaque produit ORIXA incarne des valeurs précises que nous défendons au quotidien, de la récolte à la livraison.
+            Chaque produit MAISON LA GRACE incarne des valeurs précises que nous défendons au quotidien, de la récolte à la livraison.
           </p>
 
           <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>

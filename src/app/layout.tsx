@@ -1,19 +1,90 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
+const SITE_URL = 'https://maisonlagrace.fr';
+
 export const metadata: Metadata = {
-  title: 'ORIXA — Cosmétiques naturels & produits exotiques',
-  description: 'Cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest, livrés partout en Europe.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques d\'Afrique',
+    template: '%s — MAISON LA GRACE',
+  },
+  description:
+    'Cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest : beurre de karité, hibiscus, gari, gombo. Livraison offerte dès 80 € partout en Europe. Maison française, ingrédients 100 % purs.',
+  keywords: [
+    'cosmétiques naturels',
+    'produits exotiques',
+    'beurre de karité',
+    'karité pur',
+    'hibiscus séché',
+    'gari précuit',
+    'gombo moulu',
+    'produits Afrique',
+    'cosmétiques bio',
+    'soins naturels peau',
+    'boutique africaine Europe',
+    'MAISON LA GRACE',
+    'produits bio',
+    'ingrédients naturels',
+    'livraison Europe',
+    'cosmétiques français',
+    'pommade karité',
+    'coiffe karité',
+    'igname',
+    'épices africaines',
+  ],
+  authors: [{ name: 'MAISON LA GRACE' }],
+  creator: 'MAISON LA GRACE',
+  publisher: 'MAISON LA GRACE',
+  formatDetection: { telephone: false },
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: SITE_URL,
+    siteName: 'MAISON LA GRACE',
+    title: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques d\'Afrique',
+    description:
+      'Beurre de karité, hibiscus, gari, gombo et cosmétiques naturels. Livraison offerte dès 80 € partout en Europe.',
+    images: [
+      {
+        url: '/img/hero-poster.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques',
+    description:
+      'Beurre de karité, hibiscus, gari, gombo. Livraison offerte dès 80 €.',
+    images: ['/img/hero-poster.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
   icons: {
     icon: '/favicon.png',
     shortcut: '/favicon.png',
     apple: '/favicon.png',
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
 };
+
+const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION || '';
 
 export default function RootLayout({
   children,
@@ -30,7 +101,119 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* ── Google Search Console Verification ── */}
+        {GSC_VERIFICATION && (
+          <meta name="google-site-verification" content={GSC_VERIFICATION} />
+        )}
+        {/* ── Google Analytics (GA4) ── */}
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
+        {/* ── JSON-LD Structured Data (Organization + WebSite) ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'MAISON LA GRACE',
+              url: SITE_URL,
+              logo: `${SITE_URL}/logo-maison-la-grace.svg`,
+              description:
+                'Cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest, livrés partout en Europe.',
+              sameAs: [
+                'https://instagram.com/orixa',
+                'https://facebook.com/orixa',
+                'https://tiktok.com/@orixa',
+              ],
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'FR',
+              },
+              contactPoint: {
+                '@type': 'ContactPoint',
+                email: 'contact@maisonlagrace.fr',
+                contactType: 'customer service',
+                availableLanguage: 'French',
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'MAISON LA GRACE',
+              url: SITE_URL,
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: `${SITE_URL}/cosmetiques?q={search_term_string}`,
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: 'MAISON LA GRACE',
+              url: SITE_URL,
+              description:
+                'Boutique de cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest.',
+              address: {
+                '@type': 'PostalAddress',
+                addressCountry: 'FR',
+              },
+              geo: {
+                '@type': 'GeoCoordinates',
+                addressCountry: 'FR',
+              },
+              openingHoursSpecification: {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                opens: '09:00',
+                closes: '18:00',
+              },
+              priceRange: '$$',
+              areaServed: {
+                '@type': 'Country',
+                name: 'France',
+              },
+              hasOfferCatalog: {
+                '@type': 'OfferCatalog',
+                name: 'Cosmétiques & Produits exotiques',
+                itemListElement: [
+                  { '@type': 'Offer', 'itemOffered': { '@type': 'Product', name: 'Beurre de karité' } },
+                  { '@type': 'Offer', 'itemOffered': { '@type': 'Product', name: 'Hibiscus séché' } },
+                  { '@type': 'Offer', 'itemOffered': { '@type': 'Product', name: 'Gari précuit' } },
+                ],
+              },
+            }),
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,85 +1,114 @@
-import { getUsers, getRoles } from '@/lib/data';
+'use client';
+
+import { useState, useMemo } from 'react';
 import type { AdminUser, AdminRole } from '@/types';
+import { getUsers, getRoles } from '@/lib/data';
 
 /**
  * Page admin — Gestion des utilisateurs et rôles.
- * Protégée par le middleware (server-side).
+ * Fidèle au projet orixa-site-complet original.
  */
-export default async function AdminUtilisateursPage() {
-  const [users, roles] = await Promise.all([
-    getUsers(),
-    getRoles(),
-  ]);
+export default function AdminUtilisateursPage() {
+  const [users, setUsers] = useState<AdminUser[]>([]);
+  const [roles, setRoles] = useState<AdminRole[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [query, setQuery] = useState('');
 
-  const getRoleLabel = (roleId: string): string => {
-    const role = roles.find((r: AdminRole) => r.id === roleId);
-    return role ? role.label : roleId;
-  };
+  useState(() => {
+    Promise.all([getUsers(), getRoles()]).then(([u, r]) => {
+      setUsers(u);
+      setRoles(r);
+      setLoaded(true);
+    });
+  });
+
+  const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+  const filtered = useMemo(() => {
+    const q = norm(query);
+    return users.filter(u => !q || norm(u.nom + ' ' + u.email).includes(q));
+  }, [users, query]);
+
+  const roleLabel = (roleId: string) => roles.find(r => r.id === roleId)?.label || roleId;
+
+  if (!loaded) return <div className="content"><p className="page-sub">Chargement…</p></div>;
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="content">
+      <div className="page-head">
         <div>
-          <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Utilisateurs
-          </h1>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            Qui accède au back-office et avec quels droits.
-          </p>
+          <h2 className="page-title">Utilisateurs</h2>
+          <p className="page-sub">Qui accède au back-office et avec quels droits.</p>
         </div>
-        <button className="btn btn--primary btn--sm">
-          + Inviter un utilisateur
+        <button className="b b--primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Inviter un utilisateur
         </button>
       </div>
 
-      {/* Info note */}
-      <div className="card p-4 mb-6" style={{ background: 'rgba(201,168,76,0.06)', borderLeft: '3px solid var(--accent)' }}>
-        <p className="text-sm" style={{ color: 'var(--muted)' }}>
+      <div className="note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+          <path d="M10.3 3.9 1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span>
           Les rôles décrits ici sont un modèle de permissions. Ils doivent être appliqués
           côté serveur : masquer un écran dans le navigateur ne protège rien.
-        </p>
+        </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        {/* Users table */}
-        <div className="card overflow-hidden">
-          <div className="p-4 border-b" style={{ borderColor: 'var(--line)' }}>
-            <h2 className="font-semibold text-sm">Comptes</h2>
+      <div className="card" style={{ marginBottom: '20px' }}>
+        <div className="toolbar">
+          <div className="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <label className="visually-hidden" htmlFor="qu">Rechercher</label>
+            <input className="f__ctrl" id="qu" type="search" placeholder="Nom ou email" value={query} onChange={e => setQuery(e.target.value)} />
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+        </div>
+      </div>
+
+      <div className="grid-2">
+        <div className="card">
+          <div className="card__head">
+            <h3 className="card__title">Comptes</h3>
+          </div>
+          <div className="tbl-wrap">
+            <table className="tbl">
               <thead>
-                <tr style={{ borderBottom: '1px solid var(--line)' }}>
-                  <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Utilisateur</th>
-                  <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Rôle</th>
-                  <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Dernière visite</th>
-                  <th className="text-center p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>État</th>
-                  <th className="text-right p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Actions</th>
+                <tr>
+                  <th>Utilisateur</th>
+                  <th>Rôle</th>
+                  <th>Dernière visite</th>
+                  <th style={{ textAlign: 'center' }}>État</th>
+                  <th className="tbl__num">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user: AdminUser) => (
-                  <tr
-                    key={user.id}
-                    className="hover:bg-gray-50 transition-colors"
-                    style={{ borderBottom: '1px solid var(--line)' }}
-                  >
-                    <td className="p-3">
-                      <p className="font-medium">{user.nom}</p>
-                      <p className="text-xs" style={{ color: 'var(--muted)' }}>{user.email}</p>
+                {filtered.map(user => (
+                  <tr key={user.id}>
+                    <td>
+                      <strong>{user.nom}</strong>
+                      <br />
+                      <span style={{ fontSize: '12px', color: 'var(--a-muted)' }}>{user.email}</span>
                     </td>
-                    <td className="p-3 text-xs">{getRoleLabel(user.role)}</td>
-                    <td className="p-3 text-xs" style={{ color: 'var(--muted)' }}>
+                    <td style={{ fontSize: '12px' }}>{roleLabel(user.role)}</td>
+                    <td style={{ fontSize: '12px', color: 'var(--a-muted)' }}>
                       {user.derniereVisite || '—'}
                     </td>
-                    <td className="p-3 text-center">
-                      <span className={`pill ${user.actif ? 'pill--ok' : 'pill--danger'}`}>
+                    <td style={{ textAlign: 'center' }}>
+                      <span className={'pill ' + (user.actif ? 'pill--ok' : 'pill--danger')}>
                         {user.actif ? 'Actif' : 'Inactif'}
                       </span>
                     </td>
-                    <td className="p-3 text-right">
-                      <button className="btn btn--secondary btn--sm">Modifier</button>
+                    <td className="tbl__num">
+                      <button className="b b--default b--sm">Modifier</button>
                     </td>
                   </tr>
                 ))}
@@ -88,20 +117,17 @@ export default async function AdminUtilisateursPage() {
           </div>
         </div>
 
-        {/* Roles */}
         <div className="card">
-          <div className="p-4 border-b" style={{ borderColor: 'var(--line)' }}>
-            <h2 className="font-semibold text-sm">Rôles disponibles</h2>
+          <div className="card__head">
+            <h3 className="card__title">Rôles disponibles</h3>
           </div>
-          <div className="p-4 space-y-4">
-            {roles.map((role: AdminRole) => (
-              <div key={role.id} className="p-3 rounded-lg" style={{ background: 'var(--bg)' }}>
-                <p className="font-medium text-sm mb-1">{role.label}</p>
-                <div className="flex flex-wrap gap-1">
+          <div className="card__body" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {roles.map(role => (
+              <div key={role.id} style={{ padding: '12px', borderRadius: '8px', background: 'var(--a-bg)' }}>
+                <p style={{ fontWeight: 600, fontSize: '13px', marginBottom: '6px' }}>{role.label}</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                   {role.permissions.map((perm, i) => (
-                    <span key={i} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(201,168,76,0.1)', color: 'var(--accent)' }}>
-                      {perm}
-                    </span>
+                    <span key={i} className="pill pill--ok" style={{ fontSize: '11px' }}>{perm}</span>
                   ))}
                 </div>
               </div>

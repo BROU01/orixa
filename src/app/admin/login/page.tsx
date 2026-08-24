@@ -1,11 +1,26 @@
 'use client';
 
 import { useState, FormEvent, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
+/**
+ * Vérifie si Supabase est correctement configuré.
+ * Retourne false si les variables d'environnement sont absentes
+ * ou si le client utilise les placeholders.
+ */
+function isSupabaseConfigured(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  return (
+    url.length > 0 &&
+    key.length > 0 &&
+    !url.includes('placeholder') &&
+    !key.includes('placeholder')
+  );
+}
+
 function AdminLoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get('next') || '/admin';
 
@@ -26,6 +41,32 @@ function AdminLoginForm() {
       return;
     }
 
+    // ── Mode démo : pas de Supabase configuré ──
+    // Auth via API route serveur (pas de mot de passe côté client)
+    if (!isSupabaseConfigured()) {
+      try {
+        const res = await fetch('/api/auth/admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          window.location.href = next;
+          return;
+        }
+
+        setError(data.error || 'Identifiants incorrects.');
+        setLoading(false);
+      } catch {
+        setError('Impossible de contacter le serveur.');
+        setLoading(false);
+      }
+      return;
+    }
+
+    // ── Mode Supabase ──
     try {
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
@@ -47,8 +88,12 @@ function AdminLoginForm() {
         return;
       }
 
-      // Succès → rediriger vers /admin (ou l'URL demandée)
-      router.push(next);
+      // Succès → Utiliser window.location.href (pas router.push)
+      // pour forcer un rechargement complet. Le middleware côté serveur
+      // doit pouvoir lire les cookies httpOnly posés par @supabase/ssr.
+      // router.push déclenche une navigation client-side qui peut
+      // devancer la propagation des cookies → boucle infinie vers /admin/login.
+      window.location.href = next;
     } catch {
       setError('Une erreur inattendue s\'est produite.');
       setLoading(false);
@@ -79,7 +124,7 @@ function AdminLoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="admin@orixa.fr"
+            placeholder="admin@maisonlagrace.fr"
           />
         </div>
 
@@ -148,8 +193,8 @@ export default function AdminLoginPage() {
   return (
     <div className="auth-body">
       <header className="auth-top">
-        <a href="/" className="brand" aria-label="ORIXA, accueil">
-          <span className="brand__mark">ORIXA</span>
+        <a href="/" className="brand" aria-label="MAISON LA GRACE, accueil">
+          <span className="brand__mark">MLG</span>
         </a>
         <a href="/" className="auth-top__back">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -168,7 +213,7 @@ export default function AdminLoginPage() {
       </main>
 
       <footer className="auth-foot">
-        <p>&copy; {new Date().getFullYear()} ORIXA</p>
+        <p>&copy; {new Date().getFullYear()} MAISON LA GRACE</p>
         <nav aria-label="Liens légaux">
           <a href="/contact">Aide</a>
           <a href="/confidentialite">Confidentialité</a>
@@ -183,6 +228,8 @@ function mapError(msg: string): string {
   if (/invalid login credentials/i.test(msg)) return 'Identifiants incorrects.';
   if (/rate limit|too many/i.test(msg)) return 'Trop de tentatives. Réessayez dans quelques minutes.';
   if (/email not confirmed/i.test(msg)) return 'Confirmez d\'abord votre adresse e-mail.';
-  if (/network|failed to fetch/i.test(msg)) return 'Connexion au serveur impossible.';
+  if (/network|failed to fetch/i.test(msg)) {
+    return 'Impossible de contacter le serveur d\'authentification. Vérifiez la configuration Supabase.';
+  }
   return 'Identifiants incorrects.';
 }

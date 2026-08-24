@@ -2,18 +2,19 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Questions fréquentes — ORIXA',
-  description: 'FAQ ORIXA — Retrouvez les réponses à vos questions sur la livraison, les retours, le paiement et plus encore.',
+  title: 'Questions fréquentes — MAISON LA GRACE',
+  description: 'FAQ MAISON LA GRACE — Retrouvez les réponses à vos questions sur la livraison, les retours, le paiement, la fidélité et plus encore.',
+  keywords: ['FAQ MAISON LA GRACE', 'questions fréquentes', 'aide livraison', 'aide commande', 'fidélité MAISON LA GRACE', 'paiement sécurisé'],
 };
 
 const faqs = [
   {
-    q: 'Livrez-vous en dehors du Togo ?',
-    a: 'Oui, nous livrons dans toute l\'Europe. Les délais varient de 3 à 7 jours selon la destination. Les frais de livraison sont calculés lors de la validation de votre commande.',
+    q: 'Livrez-vous en Europe ?',
+    a: 'Oui, nous livrons en France, en Belgique, en Suisse et dans toute l\'Europe. Les délais varient de 3 à 7 jours selon la destination. Les frais de livraison sont calculés lors de la validation de votre commande.',
   },
   {
     q: 'Quels moyens de paiement acceptez-vous ?',
-    a: 'Nous acceptons T-Money, Flooz, les cartes bancaires (Visa, Mastercard) et les espèces à la livraison pour les commandes passées au Togo.',
+    a: 'Nous acceptons les cartes bancaires (Visa, Mastercard), PayPal, les virements bancaires et les espèces à la livraison.',
   },
   {
     q: 'Les produits frais voyagent-ils bien ?',
@@ -25,7 +26,7 @@ const faqs = [
   },
   {
     q: 'Y a-t-il une commande minimum ?',
-    a: 'Non, aucune commande minimum n\'est requise. Cependant, la livraison est offerte à Lomé à partir de 25 000 FCFA.',
+    a: 'Non, aucune commande minimum n\'est requise. La livraison est offerte en France dès 80 € d\'achat.',
   },
   {
     q: 'Comment utiliser mon bon de fidélité ?',

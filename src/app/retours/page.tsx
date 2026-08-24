@@ -1,84 +1,176 @@
-import { getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-export default async function RetoursPage() {
-  const [theme, menu] = await Promise.all([getTheme(), getMenu()]);
+export const metadata = {
+  title: 'Politique de retours — MAISON LA GRACE',
+  description: 'Conditions et modalités de retour et de remboursement pour les commandes MAISON LA GRACE. Droit de rétractation 14 jours, retours cosmétiques, denrées périssables.',
+  keywords: ['retour MAISON LA GRACE', 'politique de retour', 'remboursement', 'rétractation 14 jours', 'retour cosmétique', 'échange produit'],
+};
 
+/**
+ * Page dédiée — Politique de retours & rétractation.
+ * Contenu complet sur les retours, sans rediriger vers /contact.
+ */
+export default function RetoursPage() {
   return (
-    <div style={{ background: 'var(--paper)', color: 'var(--ink)' }}>
-      <Header menu={menu} theme={theme} />
+    <>
+      <Header menu={[]} />
+      <main id="main" style={{ flex: 1 }}>
+        <section className="section section--tight">
+          <div className="wrap" style={{ maxWidth: '720px' }}>
+            <span className="eyebrow eyebrow--muted">Service client</span>
+            <h1 className="h-display h1" style={{ marginTop: '8px', marginBottom: '12px' }}>
+              Politique de retours
+            </h1>
+            <p className="lede" style={{ marginTop: '0', marginBottom: '48px' }}>
+              Nous voulons que vous soyez entièrement satisfait. Voici comment retourner un article.
+            </p>
 
-      <div className="wrap">
-        <nav className="crumb">
-          <a href="/">Accueil</a>
-          <span>/</span>
-          <span aria-current="page">Retours & remboursements</span>
-        </nav>
-      </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', fontSize: '15px', color: 'var(--ink-2)', lineHeight: 1.7 }}>
 
-      <main id="main" className="wrap section--tight" style={{ maxWidth: '800px', paddingBottom: '96px' }}>
-        <span className="eyebrow">Politique de retour</span>
-        <h1 className="h-display h1" style={{ marginTop: '8px', marginBottom: '24px' }}>
-          Retours & remboursements
-        </h1>
+              {/* Résumé rapide */}
+              <div style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--line)',
+                borderRadius: 'var(--r-md)',
+                padding: 'var(--s5)',
+              }}>
+                <h2 className="h-display h3" style={{ marginBottom: '16px' }}>En résumé</h2>
+                <div style={{ borderTop: '1px solid var(--line)' }}>
+                  <div className="spec__row" style={{ fontSize: '13px' }}>
+                    <span className="spec__key">Cosmétiques non ouverts</span>
+                    <span className="spec__val">Retour possible sous 14 jours</span>
+                  </div>
+                  <div className="spec__row" style={{ fontSize: '13px' }}>
+                    <span className="spec__key">Cosmétiques ouverts</span>
+                    <span className="spec__val">Non repris (scellé d&apos;hygiène)</span>
+                  </div>
+                  <div className="spec__row" style={{ fontSize: '13px' }}>
+                    <span className="spec__key">Denrées périssables</span>
+                    <span className="spec__val">Non reprises</span>
+                  </div>
+                  <div className="spec__row" style={{ fontSize: '13px' }}>
+                    <span className="spec__key">Défaut à la réception</span>
+                    <span className="spec__val">Signalement sous 24 h</span>
+                  </div>
+                  <div className="spec__row" style={{ fontSize: '13px' }}>
+                    <span className="spec__key">Remboursement</span>
+                    <span className="spec__val">Sous 7 jours ouvrés</span>
+                  </div>
+                </div>
+              </div>
 
-        <div style={{ fontSize: '16.5px', lineHeight: '1.7', color: 'var(--ink-2)' }}>
-          <p style={{ fontSize: '18px', color: 'var(--ink)', marginBottom: '24px' }}>
-            Nous souhaitons que vous soyez entièrement satisfait de votre achat. Si ce n&apos;est pas le cas, voici les conditions de retour applicables.
-          </p>
+              {/* Droit de rétractation */}
+              <section>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Droit de rétractation — 14 jours
+                </h2>
+                <p style={{ marginBottom: '12px' }}>
+                  Conformément à l&apos;article L.221-18 du Code de la consommation, vous disposez d&apos;un délai de <strong>14 jours</strong> à compter de la réception de votre commande pour exercer votre droit de rétractation, sans avoir à motiver votre décision.
+                </p>
+                <p>
+                  Le produit doit être retourné dans son <strong>emballage d&apos;origine, non ouvert et en parfait état</strong>. L&apos;emballage d&apos;origine doit être intact, avec le scellé d&apos;hygiène conservé. Nous nous réservons le droit de refuser un retour si le produit ne respecte pas ces conditions.
+                </p>
+              </section>
 
-          <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>
-            Cosmétiques non ouverts
-          </h2>
-          <p style={{ marginBottom: '20px' }}>
-            Vous disposez de <strong>14 jours</strong> à compter de la réception de votre commande pour exercer votre droit de rétractation. Le produit doit être retourné dans son emballage d&apos;origine, non ouvert et en parfait état.
-          </p>
+              {/* Cosmétiques ouverts */}
+              <section>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Cosmétiques ouverts — Scellé d&apos;hygiène
+                </h2>
+                <p>
+                  Conformément à l&apos;article L.221-28 du Code de la consommation, les produits dont le <strong>scellé d&apos;hygiène a été ouvert après livraison</strong> ne peuvent être ni repris ni échangés. Ce type de produit est exclu du droit de rétractation. Veuillez vérifier soigneusement votre commande avant d&apos;ouvrir les emballages.
+                </p>
+              </section>
 
-          <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>
-            Cosmétiques ouverts (scellé d&apos;hygiène rompu)
-          </h2>
-          <p style={{ marginBottom: '20px' }}>
-            Conformément à l&apos;article L.221-28 du Code de la consommation, les produits cosmétiques dont le <strong>scellé d&apos;hygiène a été ouvert après livraison</strong> ne peuvent être ni repris ni échangés.
-          </p>
+              {/* Denrées périssables */}
+              <section>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Denrées périssables &amp; produits frais
+                </h2>
+                <p>
+                  Les denrées alimentaires et produits périssables (gari, hibiscus, gombo, igname, épices, etc.) ne peuvent en aucun cas être ni repris ni échangés, conformément à la réglementation en vigueur. Ce type de produit est exclu du droit de rétractation pour des raisons d&apos;hygiène et de sécurité alimentaire.
+                </p>
+              </section>
 
-          <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>
-            Denrées périssables
-          </h2>
-          <p style={{ marginBottom: '20px' }}>
-            Les denrées alimentaires et produits périssables (gari, hibiscus, gombo, igname, épices, etc.) <strong>ne peuvent en aucun cas être ni repris ni échangés</strong>, conformément à la réglementation en vigueur. Ce type de produit est exclu du droit de rétractation.
-          </p>
-          <p style={{ marginBottom: '20px' }}>
-            Si vous constatez un défaut à la réception (produit endommagé, emballage défectueux), merci de nous contacter sous <strong>24 heures</strong> avec des photos pour que nous puissions traiter votre demande.
-          </p>
+              {/* Défaut à la réception */}
+              <section>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Défaut à la réception
+                </h2>
+                <p style={{ marginBottom: '12px' }}>
+                  En cas de défaut constaté à la réception (produit endommagé, emballage défectueux, produit non conforme à la commande), merci de contacter notre service client <strong>sous 24 heures</strong> en joignant des photos du produit et de l&apos;emballage.
+                </p>
+                <p>
+                  Nous traiterons votre demande dans les meilleurs délais et vous proposerons un remplacement ou un remboursement selon la situation.
+                </p>
+              </section>
 
-          <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>
-            Procédure de retour
-          </h2>
-          <ol style={{ paddingLeft: '20px', marginBottom: '20px', listStyle: 'decimal' }}>
-            <li style={{ marginBottom: '8px' }}>Contactez notre service client via la <a href="/contact" style={{ color: 'var(--brand-hover)', textDecoration: 'underline' }}>page de contact</a>.</li>
-            <li style={{ marginBottom: '8px' }}>Indiquez votre numéro de commande et le motif du retour.</li>
-            <li style={{ marginBottom: '8px' }}>Nous vous confirmerons l&apos;éligibilité du retour et vous enverrons les instructions.</li>
-            <li style={{ marginBottom: '8px' }}>Expédiez le produit à l&apos;adresse indiquée, dans son emballage d&apos;origine.</li>
-          </ol>
+              {/* Comment effectuer un retour */}
+              <section>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Comment effectuer un retour ?
+                </h2>
+                <ol style={{ marginTop: '8px', paddingLeft: '20px', listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <li>
+                    <strong>Contactez-nous</strong> via notre{' '}
+                    <a href="/contact" style={{ color: 'var(--brand)', textDecoration: 'underline' }}>
+                      page de contact
+                    </a>{' '}
+                    en indiquant votre numéro de commande et le motif du retour.
+                  </li>
+                  <li>
+                    <strong>Préparez le colis</strong> : remettez le produit dans son emballage d&apos;origine, avec le scellé intact si applicable.
+                  </li>
+                  <li>
+                    <strong>Renvoyez le colis</strong> : nous vous communiquerons l&apos;adresse de retour et les instructions d&apos;expédition. Les frais de retour sont à la charge du client, sauf en cas de défaut de notre part.
+                  </li>
+                  <li>
+                    <strong>Remboursement</strong> : nous procéderons au remboursement sous 7 jours ouvrés après réception et vérification du produit retourné.
+                  </li>
+                </ol>
+              </section>
 
-          <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>
-            Délai de remboursement
-          </h2>
-          <p style={{ marginBottom: '20px' }}>
-            Le remboursement est effectué sous <strong>7 jours ouvrés</strong> après réception et vérification du produit retourné. Le remboursement s&apos;effectue par le même moyen de paiement que celui utilisé lors de l&apos;achat.
-          </p>
+              {/* Remboursement */}
+              <section>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Délai de remboursement
+                </h2>
+                <p>
+                  Le remboursement est effectué <strong>sous 7 jours ouvrés</strong> après réception du produit retourné ou du signalement validé. Le remboursement s&apos;effectue par le même moyen de paiement que celui utilisé lors de la commande initiale, sauf accord contraire.
+                </p>
+              </section>
 
-          <h2 className="h-display h3" style={{ marginTop: '40px', marginBottom: '16px' }}>
-            Frais de retour
-          </h2>
-          <p style={{ marginBottom: '20px' }}>
-            Les frais de retour sont à la charge du client, sauf en cas de produit défectueux ou d&apos;erreur de notre part.
-          </p>
-        </div>
+              {/* Contact */}
+              <section style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--line)',
+                borderRadius: 'var(--r-md)',
+                padding: 'var(--s5)',
+              }}>
+                <h2 className="h-display h3" style={{ marginBottom: '12px' }}>
+                  Une question sur un retour ?
+                </h2>
+                <p style={{ marginBottom: '16px' }}>
+                  Notre équipe est disponible du lundi au vendredi, de 9 h à 18 h.
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
+                  <p><strong>E-mail :</strong> contact@maisonlagrace.fr</p>
+                  <p><strong>Atelier :</strong> Maison MAISON LA GRACE, France</p>
+                  <p><strong>Délai de réponse :</strong> Sous 24h ouvrées</p>
+                </div>
+                <div style={{ marginTop: '16px' }}>
+                  <a href="/contact" className="btn btn--primary">
+                    Contacter le service client
+                  </a>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </section>
       </main>
-
-      <Footer theme={theme} />
-    </div>
+      <Footer />
+    </>
   );
 }

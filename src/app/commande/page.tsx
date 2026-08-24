@@ -357,8 +357,8 @@ export default function CommandeCheckoutPage() {
           <div className="empty">
             <h2 className="empty__title">Votre panier est vide</h2>
             <p className="empty__text">Sélectionnez vos cosmétiques et produits exotiques préférés.</p>
-            <a href="/boutique" className="btn btn--primary">
-              Parcourir la boutique
+            <a href="/cosmetiques" className="btn btn--primary">
+              Parcourir nos produits
             </a>
           </div>
         ) : (
@@ -585,7 +585,7 @@ export default function CommandeCheckoutPage() {
                   <form onSubmit={handleApplyVoucher} className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="Bon de fidélité (ex: ORIXA-BON-XXXX)"
+                      placeholder="Bon de fidélité (ex: MLG-BON-XXXX)"
                       value={voucherCode}
                       onChange={(e) => setVoucherCode(e.target.value)}
                       disabled={!canUseVoucher}

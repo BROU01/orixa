@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { Section } from '@/types';
 
 const DEFAULT_SECTIONS: Section[] = [
-  { id: 'hero', type: 'hero', title: 'Bienvenue chez ORIXA', subtitle: 'Cosmétiques naturels & produits exotiques' },
+  { id: 'hero', type: 'hero', title: 'Bienvenue chez MAISON LA GRACE', subtitle: 'Cosmétiques naturels & produits exotiques' },
   { id: 'featured', type: 'products', title: 'Nos best-sellers', productIds: ['karite', 'gari', 'hibiscus'] },
 ];
 
@@ -17,8 +17,8 @@ const SECTION_TYPES = [
 ] as const;
 
 /**
- * Page admin — Personnalisation de la boutique (sections d'accueil, thème).
- * Protégée par le middleware (server-side).
+ * Page admin — Personnalisation de la boutique.
+ * Fidèle au projet orixa-site-complet original.
  */
 export default function AdminPersonnalisationPage() {
   const [sections, setSections] = useState<Section[]>(DEFAULT_SECTIONS);
@@ -66,178 +66,152 @@ export default function AdminPersonnalisationPage() {
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Left panel — Editor */}
-      <div className="w-96 flex-shrink-0 flex flex-col border-r overflow-hidden" style={{ borderColor: 'var(--line)', background: 'white' }}>
-        {/* Header */}
-        <div className="p-4 border-b" style={{ borderColor: 'var(--line)' }}>
-          <h1 className="text-lg font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Personnalisation
-          </h1>
-          <p className="text-xs" style={{ color: 'var(--muted)' }}>
-            Configurez l&apos;apparence et les sections de la boutique.
-          </p>
+    <div className="ed">
+      {/* Panel gauche — Éditeur */}
+      <div className="ed__panel">
+        <div className="ed__head">
+          <a className="ed__back" href="/admin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+            Retour
+          </a>
+          <span className="ed__title">Personnalisation</span>
         </div>
 
-        {/* Panel content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-6">
-          {/* Theme colors */}
-          <section>
-            <h2 className="font-semibold text-sm mb-3">Thème</h2>
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs font-medium block mb-1">Couleur principale</label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={theme.brand}
-                    onChange={e => setTheme(prev => ({ ...prev, brand: e.target.value }))}
-                    className="w-8 h-8 rounded border cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={theme.brand}
-                    onChange={e => setTheme(prev => ({ ...prev, brand: e.target.value }))}
-                    className="flex-1 px-2 py-1 text-sm border rounded font-mono"
-                    style={{ borderColor: 'var(--line)' }}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-xs font-medium block mb-1">Couleur d&apos;accent</label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="color"
-                    value={theme.accent}
-                    onChange={e => setTheme(prev => ({ ...prev, accent: e.target.value }))}
-                    className="w-8 h-8 rounded border cursor-pointer"
-                  />
-                  <input
-                    type="text"
-                    value={theme.accent}
-                    onChange={e => setTheme(prev => ({ ...prev, accent: e.target.value }))}
-                    className="flex-1 px-2 py-1 text-sm border rounded font-mono"
-                    style={{ borderColor: 'var(--line)' }}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
+        <div className="ed__block">
+          <p className="ed__eyebrow">Thème</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div>
+              <label className="f__label">Couleur principale</label>
+              <div className="color-row">
                 <input
-                  type="checkbox"
-                  checked={theme.announceOn}
-                  onChange={e => setTheme(prev => ({ ...prev, announceOn: e.target.checked }))}
-                  className="rounded"
+                  type="color"
+                  value={theme.brand}
+                  onChange={e => setTheme(prev => ({ ...prev, brand: e.target.value }))}
                 />
-                <label className="text-xs">Bandeau d&apos;annonce actif</label>
+                <input
+                  type="text"
+                  value={theme.brand}
+                  onChange={e => setTheme(prev => ({ ...prev, brand: e.target.value }))}
+                  className="f__ctrl"
+                />
               </div>
+            </div>
+            <div>
+              <label className="f__label">Couleur d&apos;accent</label>
+              <div className="color-row">
+                <input
+                  type="color"
+                  value={theme.accent}
+                  onChange={e => setTheme(prev => ({ ...prev, accent: e.target.value }))}
+                />
+                <input
+                  type="text"
+                  value={theme.accent}
+                  onChange={e => setTheme(prev => ({ ...prev, accent: e.target.value }))}
+                  className="f__ctrl"
+                />
+              </div>
+            </div>
+            <label className="switch">
               <input
-                type="text"
-                value={theme.announce}
-                onChange={e => setTheme(prev => ({ ...prev, announce: e.target.value }))}
-                className="w-full px-2 py-1 text-sm border rounded"
-                style={{ borderColor: 'var(--line)' }}
-                placeholder="Texte du bandeau"
+                type="checkbox"
+                checked={theme.announceOn}
+                onChange={e => setTheme(prev => ({ ...prev, announceOn: e.target.checked }))}
               />
-            </div>
-          </section>
-
-          {/* Sections */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-semibold text-sm">Sections de la page d&apos;accueil</h2>
-              <button className="btn btn--secondary btn--sm" onClick={addSection}>
-                + Section
-              </button>
-            </div>
-            <div className="space-y-3">
-              {sections.map((section, i) => (
-                <div key={section.id} className="p-3 rounded-lg border" style={{ borderColor: 'var(--line)' }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <select
-                      value={section.type}
-                      onChange={e => updateSection(section.id, 'type', e.target.value)}
-                      className="text-xs px-2 py-1 border rounded"
-                      style={{ borderColor: 'var(--line)' }}
-                    >
-                      {SECTION_TYPES.map(t => (
-                        <option key={t.value} value={t.value}>{t.label}</option>
-                      ))}
-                    </select>
-                    <div className="flex gap-1">
-                      <button
-                        className="btn btn--ghost btn--sm p-1 text-xs"
-                        onClick={() => moveUp(i)}
-                        disabled={i === 0}
-                      >↑</button>
-                      <button
-                        className="btn btn--ghost btn--sm p-1 text-xs"
-                        onClick={() => moveDown(i)}
-                        disabled={i === sections.length - 1}
-                      >↓</button>
-                      <button
-                        className="btn btn--ghost btn--sm p-1 text-xs text-red-500"
-                        onClick={() => removeSection(section.id)}
-                      >×</button>
-                    </div>
-                  </div>
-                  <input
-                    type="text"
-                    value={section.title || ''}
-                    onChange={e => updateSection(section.id, 'title', e.target.value)}
-                    className="w-full px-2 py-1 text-sm border rounded mb-1"
-                    style={{ borderColor: 'var(--line)' }}
-                    placeholder="Titre de la section"
-                  />
-                  <input
-                    type="text"
-                    value={section.subtitle || ''}
-                    onChange={e => updateSection(section.id, 'subtitle', e.target.value)}
-                    className="w-full px-2 py-1 text-xs border rounded"
-                    style={{ borderColor: 'var(--line)' }}
-                    placeholder="Sous-titre"
-                  />
-                </div>
-              ))}
-            </div>
-          </section>
+              <span className="switch__track"></span>
+              <span>Bandeau d&apos;annonce actif</span>
+            </label>
+            <input
+              type="text"
+              value={theme.announce}
+              onChange={e => setTheme(prev => ({ ...prev, announce: e.target.value }))}
+              className="f__ctrl"
+              placeholder="Texte du bandeau"
+            />
+          </div>
         </div>
 
-        {/* Actions */}
-        <div className="p-4 border-t space-y-2" style={{ borderColor: 'var(--line)' }}>
-          <button className="btn btn--primary btn--sm w-full">
-            Enregistrer et publier
+        <div className="ed__block" style={{ flex: 1 }}>
+          <div className="ed__eyebrow">
+            Sections
+            <span className="ed__count">{sections.length}</span>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {sections.map((section, i) => (
+              <div key={section.id} className="sec" style={{ border: '1px solid var(--a-line)', borderRadius: '7px', padding: '10px', background: 'var(--a-surface)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1 }}>
+                  <select
+                    value={section.type}
+                    onChange={e => updateSection(section.id, 'type', e.target.value)}
+                    className="f__ctrl"
+                    style={{ width: 'auto', minWidth: '120px', fontSize: '12px', padding: '4px 8px', minHeight: '30px' }}
+                  >
+                    {SECTION_TYPES.map(t => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
+                  </select>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <input
+                      type="text"
+                      value={section.title || ''}
+                      onChange={e => updateSection(section.id, 'title', e.target.value)}
+                      className="f__ctrl"
+                      style={{ fontSize: '13px', padding: '4px 8px', minHeight: '30px', marginBottom: '4px' }}
+                      placeholder="Titre"
+                    />
+                    <input
+                      type="text"
+                      value={section.subtitle || ''}
+                      onChange={e => updateSection(section.id, 'subtitle', e.target.value)}
+                      className="f__ctrl"
+                      style={{ fontSize: '12px', padding: '4px 8px', minHeight: '28px' }}
+                      placeholder="Sous-titre"
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '2px', flex: 'none' }}>
+                    <button className="ibtn" onClick={() => moveUp(i)} disabled={i === 0} aria-label="Monter">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15" /></svg>
+                    </button>
+                    <button className="ibtn" onClick={() => moveDown(i)} disabled={i === sections.length - 1} aria-label="Descendre">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+                    </button>
+                    <button className="ibtn ibtn--dz" onClick={() => removeSection(section.id)} aria-label="Supprimer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button className="b b--default b--block" style={{ marginTop: '10px' }} onClick={addSection}>
+            + Ajouter une section
           </button>
-          <button className="btn btn--secondary btn--sm w-full">
-            Rétablir le thème d&apos;origine
-          </button>
+        </div>
+
+        <div className="card__foot" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <button className="b b--primary b--block">Enregistrer et publier</button>
+          <button className="b b--default b--block">Rétablir le thème d&apos;origine</button>
         </div>
       </div>
 
-      {/* Right panel — Preview */}
-      <div className="flex-1 flex flex-col">
-        {/* Preview bar */}
-        <div className="p-2 border-b flex items-center gap-2" style={{ borderColor: 'var(--line)', background: 'var(--bg)' }}>
-          <div className="flex gap-1">
-            <button className="px-2 py-1 text-xs rounded font-medium" style={{ background: 'var(--accent)', color: 'white' }}>
-              Ordinateur
-            </button>
-            <button className="px-2 py-1 text-xs rounded" style={{ background: 'white', border: '1px solid var(--line)' }}>
-              Tablette
-            </button>
-            <button className="px-2 py-1 text-xs rounded" style={{ background: 'white', border: '1px solid var(--line)' }}>
-              Mobile
-            </button>
+      {/* Panneau droit — Aperçu */}
+      <div className="ed__preview">
+        <div className="ed__bar">
+          <div className="vp-group">
+            <button aria-pressed="true">Desktop</button>
+            <button aria-pressed="false">Tablette</button>
+            <button aria-pressed="false">Mobile</button>
           </div>
-          <span className="ml-auto text-xs" style={{ color: 'var(--muted)' }}>À jour</span>
+          <span style={{ marginLeft: 'auto', fontSize: '12px', color: 'var(--a-muted)' }}>À jour</span>
         </div>
-
-        {/* Iframe preview placeholder */}
-        <div className="flex-1 flex items-center justify-center" style={{ background: '#e5e5e0' }}>
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden" style={{ width: '80%', maxWidth: '1200px', aspectRatio: '16/10' }}>
-            <div className="h-full flex items-center justify-center" style={{ color: 'var(--muted)' }}>
-              <div className="text-center">
-                <p className="text-lg font-medium mb-2">Aperçu de la boutique</p>
-                <p className="text-sm">L&apos;aperçu se chargera après avoir connecté le thème au site.</p>
+        <div className="ed__frame-wrap">
+          <div className="ed__frame" data-vp="desktop">
+            <div style={{ padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--a-muted)' }}>
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ fontSize: '16px', fontWeight: 600, marginBottom: '8px' }}>Aperçu de la boutique</p>
+                <p style={{ fontSize: '13px' }}>L&apos;aperçu se chargera après avoir connecté le thème au site.</p>
               </div>
             </div>
           </div>

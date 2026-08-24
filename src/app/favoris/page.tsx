@@ -84,8 +84,8 @@ export default function FavorisPage() {
             <h2 className="empty__title">Aucun produit favori</h2>
             <p className="empty__text">Parcourez le catalogue et cliquez sur le cœur ♡ pour ajouter des articles à vos coups de cœur.</p>
 
-            <a href="/boutique" className="btn btn--primary">
-              Découvrir la boutique
+            <a href="/cosmetiques" className="btn btn--primary">
+              Découvrir nos cosmétiques
             </a>
           </div>
         ) : (

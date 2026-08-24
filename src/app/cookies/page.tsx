@@ -2,8 +2,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Politique de cookies — ORIXA',
-  description: 'Politique de cookies du site ORIXA.',
+  title: 'Politique de cookies — MAISON LA GRACE',
+  description: 'Politique de cookies du site MAISON LA GRACE.',
 };
 
 export default function Cookies() {
@@ -70,7 +70,7 @@ export default function Cookies() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>Contact</h2>
                 <p>
-                  Pour toute question relative à notre politique de cookies, contactez-nous à bonjour@orixa.tg.
+                  Pour toute question relative à notre politique de cookies, contactez-nous à contact@maisonlagrace.fr.
                 </p>
               </section>
             </div>

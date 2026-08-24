@@ -94,8 +94,8 @@ export default function HeaderClient({ menu, theme }: HeaderClientProps) {
         <div className="header__bar">
           
           {/* Logo Original */}
-          <a href="/" className="brand__mark">
-            ORIXA
+          <a href="/" className="brand__mark" aria-label="MAISON LA GRACE, accueil">
+            <img src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" style={{ height: '40px', width: 'auto' }} />
           </a>
 
           {/* Navigation principale */}

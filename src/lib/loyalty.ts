@@ -28,7 +28,7 @@ function generateId(): string {
 
 function generateVoucherCode(): string {
   const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `ORIXA-BON-${suffix}`;
+  return `MLG-BON-${suffix}`;
 }
 
 function addMonths(date: Date, months: number): Date {

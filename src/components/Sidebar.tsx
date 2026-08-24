@@ -1,143 +1,146 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-
-interface NavItem {
-  label: string;
-  href: string;
-}
-
-interface NavGroup {
-  group: string;
-  items: NavItem[];
-}
-
-const NAV_ITEMS: NavGroup[] = [
-  { group: 'Pilotage', items: [
-    { label: 'Tableau de bord', href: '/admin' },
-    { label: 'Commandes', href: '/admin/commandes' },
-    { label: 'Clients', href: '/admin/clients' },
-  ]},
-  { group: 'Catalogue', items: [
-    { label: 'Produits', href: '/admin/produits' },
-    { label: 'Rayons', href: '/admin/rayons' },
-    { label: 'Collections', href: '/admin/collections' },
-    { label: 'Réductions', href: '/admin/reductions' },
-  ]},
-  { group: 'Boutique en ligne', items: [
-    { label: 'Personnalisation', href: '/admin/personnalisation' },
-    { label: 'Menus', href: '/admin/menus' },
-    { label: 'Médiathèque', href: '/admin/medias' },
-    { label: 'Articles', href: '/admin/articles' },
-    { label: 'Pages', href: '/admin/pages' },
-  ]},
-  { group: 'Administration', items: [
-    { label: 'Utilisateurs', href: '/admin/utilisateurs' },
-    { label: 'Réglages', href: '/admin/reglages' },
-  ]},
-];
-
-const ICONS: Record<string, JSX.Element> = {
-  grid: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
-  'file-text': <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
-  users: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-  'shopping-bag': <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
-  layers: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
-  percent: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><circle cx="9" cy="9" r="2"/><circle cx="15" cy="15" r="2"/><line x1="5" y1="19" x2="19" y2="5"/></svg>,
-  palette: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="12" r="1.5" fill="currentColor"/><circle cx="16" cy="10" r="1.5" fill="currentColor"/></svg>,
-  menu: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="13" y2="18"/></svg>,
-  image: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>,
-  book: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
-  file: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
-  user: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
-  settings: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-};
-
-const ICON_MAP: Record<string, string> = {
-  '/admin': 'grid',
-  '/admin/commandes': 'file-text',
-  '/admin/clients': 'users',
-  '/admin/produits': 'shopping-bag',
-  '/admin/rayons': 'grid',
-  '/admin/collections': 'layers',
-  '/admin/reductions': 'percent',
-  '/admin/personnalisation': 'palette',
-  '/admin/menus': 'menu',
-  '/admin/medias': 'image',
-  '/admin/articles': 'book',
-  '/admin/pages': 'file',
-  '/admin/utilisateurs': 'user',
-  '/admin/reglages': 'settings',
-};
+import { useCallback } from 'react';
 
 /**
- * Composant Sidebar admin réutilisable.
- * Affiche la navigation latérale du back-office.
+ * Sidebar admin — navigation complète fidèle au projet orixa-site-complet.
  */
 export default function Sidebar() {
   const pathname = usePathname();
 
+  const isActive = (href: string) =>
+    pathname === href || pathname === href + '/';
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch { /* ignore */ }
+    window.location.href = '/admin/login';
+  }, []);
+
   return (
-    <aside
-      className="w-64 flex-shrink-0 flex flex-col"
-      style={{ background: 'var(--brand)', color: 'var(--paper)' }}
-    >
-      {/* Brand */}
-      <div className="p-4 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
-        <a href="/admin" className="text-lg font-bold block" style={{ fontFamily: 'var(--f-display)' }}>
-          ORIXA
-        </a>
-        <span className="text-xs opacity-60">Administration</span>
+    <aside className="side">
+      <div className="side__brand">
+        <span className="side__mark">MLG</span>
+        <span className="side__role">Administration</span>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3">
-        {NAV_ITEMS.map((group) => (
-          <div key={group.group} className="mb-4">
-            <p className="text-xs font-semibold uppercase tracking-wider px-3 mb-2 opacity-50">
-              {group.group}
-            </p>
-            {group.items.map((item) => {
-              const active = pathname === item.href || pathname === item.href + '/';
-              const iconName = ICON_MAP[item.href] || 'grid';
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors mb-0.5"
-                  style={{
-                    background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
-                    color: active ? 'var(--accent)' : 'rgba(255,255,255,0.75)',
-                    fontWeight: active ? 600 : 400,
-                  }}
-                >
-                  <span className="w-4 h-4 opacity-70">
-                    {ICONS[iconName] || ICONS.grid}
-                  </span>
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
-        ))}
+      <nav className="side__nav" aria-label="Navigation du back-office">
+        {/* ── Pilotage ── */}
+        <p className="side__group">Pilotage</p>
+        <a className="side__link" href="/admin" aria-current={isActive('/admin') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><rect x="3" y="3" width="7" height="9" /><rect x="14" y="3" width="7" height="5" /><rect x="14" y="12" width="7" height="9" /><rect x="3" y="16" width="7" height="5" /></svg>
+          <span>Tableau de bord</span>
+        </a>
+        <a className="side__link" href="/admin/statistiques" aria-current={isActive('/admin/statistiques') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>
+          <span>Statistiques</span>
+        </a>
+        <a className="side__link" href="/admin/notifications" aria-current={isActive('/admin/notifications') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+          <span>Notifications</span>
+        </a>
+
+        {/* ── Ventes ── */}
+        <p className="side__group">Ventes</p>
+        <a className="side__link" href="/admin/commandes" aria-current={isActive('/admin/commandes') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
+          <span>Commandes</span>
+        </a>
+        <a className="side__link" href="/admin/clients" aria-current={isActive('/admin/clients') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /></svg>
+          <span>Clients</span>
+        </a>
+        <a className="side__link" href="/admin/avis" aria-current={isActive('/admin/avis') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+          <span>Avis clients</span>
+        </a>
+        <a className="side__link" href="/admin/rapports" aria-current={isActive('/admin/rapports') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
+          <span>Rapports</span>
+        </a>
+
+        {/* ── Catalogue ── */}
+        <p className="side__group">Catalogue</p>
+        <a className="side__link" href="/admin/produits" aria-current={isActive('/admin/produits') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+          <span>Produits</span>
+        </a>
+        <a className="side__link" href="/admin/collections" aria-current={isActive('/admin/collections') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /></svg>
+          <span>Collections</span>
+        </a>
+        <a className="side__link" href="/admin/inventaire" aria-current={isActive('/admin/inventaire') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg>
+          <span>Inventaire</span>
+        </a>
+        <a className="side__link" href="/admin/fournisseurs" aria-current={isActive('/admin/fournisseurs') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
+          <span>Fournisseurs</span>
+        </a>
+        <a className="side__link" href="/admin/reductions" aria-current={isActive('/admin/reductions') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M20.6 13.4 12 22l-9-9V3h10z" /><circle cx="7.5" cy="7.5" r="1.2" /></svg>
+          <span>Réductions</span>
+        </a>
+
+        {/* ── Boutique en ligne ── */}
+        <p className="side__group">Boutique en ligne</p>
+        <a className="side__link" href="/admin/personnalisation" aria-current={isActive('/admin/personnalisation') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><circle cx="13.5" cy="6.5" r=".6" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".6" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".6" fill="currentColor" /><circle cx="6.5" cy="12.5" r=".6" fill="currentColor" /><path d="M12 2a10 10 0 0 0 0 20 2.5 2.5 0 0 0 2-4 2.5 2.5 0 0 1 2-4h2a4 4 0 0 0 4-4 10 10 0 0 0-10-8z" /></svg>
+          <span>Personnalisation</span>
+        </a>
+        <a className="side__link" href="/admin/pages" aria-current={isActive('/admin/pages') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>
+          <span>Pages</span>
+        </a>
+        <a className="side__link" href="/admin/menus" aria-current={isActive('/admin/menus') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><line x1="8" y1="6" x2="21" y2="6" /><line x1="8" y1="12" x2="21" y2="12" /><line x1="8" y1="18" x2="21" y2="18" /><line x1="3" y1="6" x2="3.01" y2="6" /><line x1="3" y1="12" x2="3.01" y2="12" /><line x1="3" y1="18" x2="3.01" y2="18" /></svg>
+          <span>Navigation</span>
+        </a>
+        <a className="side__link" href="/admin/medias" aria-current={isActive('/admin/medias') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
+          <span>Médias</span>
+        </a>
+
+        {/* ── Administration ── */}
+        <p className="side__group">Administration</p>
+        <a className="side__link" href="/admin/utilisateurs" aria-current={isActive('/admin/utilisateurs') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+          <span>Utilisateurs & rôles</span>
+        </a>
+        <a className="side__link" href="/admin/journal" aria-current={isActive('/admin/journal') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+          <span>Journal d&apos;activité</span>
+        </a>
+        <a className="side__link" href="/admin/integrations" aria-current={isActive('/admin/integrations') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
+          <span>Intégrations</span>
+        </a>
+        <a className="side__link" href="/admin/reglages" aria-current={isActive('/admin/reglages') ? 'page' : undefined}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
+          <span>Réglages</span>
+        </a>
       </nav>
 
-      {/* Footer sidebar */}
-      <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
-        <div className="flex items-center gap-2 mb-2">
-          <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: 'var(--accent)', color: 'var(--brand)' }}>
-            KG
+      <div className="side__foot">
+        <div className="side__user">
+          <span className="side__avatar">KC</span>
+          <span>
+            <strong style={{ display: 'block', color: '#fff', fontSize: '12.5px' }}>KALIPE Constance</strong>
+            <span style={{ fontSize: '11.5px', opacity: '.75' }}>Propriétaire</span>
           </span>
-          <span className="text-xs opacity-75">Kalipé G.</span>
         </div>
-        <a
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-xs opacity-60 hover:opacity-100 transition-opacity"
-        >
-          Voir la boutique →
-        </a>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px' }}>
+          <a className="side__view" href="/" target="_blank" rel="noopener noreferrer">
+            Voir la boutique{' '}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+          </a>
+          <button className="side__view" onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" style={{ marginRight: '6px', verticalAlign: 'middle' }}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+            Déconnexion
+          </button>
+        </div>
       </div>
     </aside>
   );

@@ -58,8 +58,6 @@ export default function RayonDynamicPage() {
         <nav className="crumb">
           <a href="/">Accueil</a>
           <span>/</span>
-          <a href="/boutique">Boutique</a>
-          <span>/</span>
           <span aria-current="page">{category?.label || 'Rayon'}</span>
         </nav>
       </div>
@@ -82,7 +80,7 @@ export default function RayonDynamicPage() {
           <>
             <span className="eyebrow">Rayon spécialisé</span>
             <h1 className="h-display h1" style={{ marginTop: '8px' }}>
-              {category?.label || 'Rayon ORIXA'}
+              {category?.label || 'Rayon MAISON LA GRACE'}
             </h1>
             <p className="lede" style={{ marginTop: '8px' }}>
               {category?.desc || 'Sélection exclusive d\'articles authentiques.'}
@@ -93,7 +91,8 @@ export default function RayonDynamicPage() {
 
       <div className="wrap mb-6 flex items-center justify-between gap-4 flex-wrap">
         <div className="cat-pills">
-          <a href="/boutique" className="cat-pill">Tous</a>
+          <a href="/cosmetiques" className="cat-pill">Cosmétiques</a>
+          <a href="/exotiques" className="cat-pill">Exotiques</a>
           {categories.map((c) => (
             <a
               key={c.id}

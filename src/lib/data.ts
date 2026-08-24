@@ -29,11 +29,11 @@ const DEFAULT_THEME: Theme = {
   accent: '#C9A84C',
   announce: 'Livraison offerte dès 80 € d\'achat',
   announceOn: true,
-  footerAbout: 'ORIXA — Cosmétiques naturels et produits exotiques. Maison française, livraison partout en Europe.',
+  footerAbout: 'MAISON LA GRACE — Cosmétiques naturels et produits exotiques. Maison française, livraison partout en Europe.',
 };
 
 const DEFAULT_MENU: MenuItem[] = [
-  { label: 'Boutique', url: '/boutique', on: true, children: [
+  { label: 'Boutique', url: '/cosmetiques', on: true, children: [
     { label: 'Cosmétiques', url: '/cosmetiques', on: true },
     { label: 'Produits exotiques', url: '/exotiques', on: true },
     { label: 'Nouveautés', url: '/nouveautes', on: true },
@@ -43,7 +43,7 @@ const DEFAULT_MENU: MenuItem[] = [
 ];
 
 const DEFAULT_SECTIONS: Section[] = [
-  { id: 'hero', type: 'hero', title: 'Bienvenue chez ORIXA', subtitle: 'Cosmétiques naturels & produits exotiques' },
+  { id: 'hero', type: 'hero', title: 'Bienvenue chez MAISON LA GRACE', subtitle: 'Cosmétiques naturels & produits exotiques' },
   { id: 'featured', type: 'products', title: 'Nos best-sellers', productIds: ['karite', 'gari', 'hibiscus'] },
 ];
 
@@ -56,15 +56,15 @@ const DEFAULT_COLLECTIONS: Collection[] = [
 const DEFAULT_DISCOUNTS: Discount[] = [
   { id: 'red-1', code: 'BIENVENUE10', type: 'pct', valeur: 10, min: 30, actif: true, usages: 24, limite: 0, fin: '' },
   { id: 'red-2', code: 'LIVRAISON', type: 'liv', valeur: 0, min: 80, actif: true, usages: 156, limite: 0, fin: '' },
-  { id: 'red-3', code: 'ORIXA15', type: 'pct', valeur: 15, min: 60, actif: true, usages: 0, limite: 0, fin: '' },
+  { id: 'red-3', code: 'MLG15', type: 'pct', valeur: 15, min: 60, actif: true, usages: 0, limite: 0, fin: '' },
 ];
 
 const DEFAULT_ARTICLES: Article[] = [
-  { id: 'art-1', titre: 'Bienvenue chez ORIXA', slug: 'bienvenue', statut: 'publie', date: '2026-01-15', extrait: 'Découvrez notre histoire et nos engagements.', image: '', contenu: '<p>ORIXA est née de la passion pour les trésors naturels d\'Afrique.</p>' },
+  { id: 'art-1', titre: 'Bienvenue chez MAISON LA GRACE', slug: 'bienvenue', statut: 'publie', date: '2026-01-15', extrait: 'Découvrez notre histoire et nos engagements.', image: '', contenu: '<p>MAISON LA GRACE est née de la passion pour les trésors naturels d\'Afrique.</p>' },
 ];
 
 const DEFAULT_PAGES: Page[] = [
-  { id: 'histoire', titre: 'Notre histoire', slug: 'histoire', statut: 'publie', contenu: '<p>ORIXA — une histoire de passion et de transmission.</p>' },
+  { id: 'histoire', titre: 'Notre histoire', slug: 'histoire', statut: 'publie', contenu: '<p>MAISON LA GRACE — une histoire de passion et de transmission.</p>' },
   { id: 'contact', titre: 'Contact', slug: 'contact', statut: 'publie', contenu: '<p>Nous sommes à votre écoute.</p>' },
   { id: 'legal', titre: 'Informations légales', slug: 'legal', statut: 'publie', contenu: '<p>Mentions légales et CGV.</p>' },
 ];

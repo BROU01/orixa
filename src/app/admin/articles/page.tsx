@@ -1,70 +1,94 @@
-import { getArticles } from '@/lib/data';
+'use client';
+
+import { useState, useMemo } from 'react';
 import type { Article } from '@/types';
+import { getArticles } from '@/lib/data';
 
 /**
- * Page admin — Gestion des articles (blog/journal).
- * Protégée par le middleware (server-side).
+ * Page admin — Gestion des articles.
+ * Fidèle au projet orixa-site-complet original.
  */
-export default async function AdminArticlesPage() {
-  const articles = await getArticles();
+export default function AdminArticlesPage() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [query, setQuery] = useState('');
+
+  useState(() => {
+    getArticles().then(a => { setArticles(a); setLoaded(true); });
+  });
+
+  const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+  const filtered = useMemo(() => {
+    const q = norm(query);
+    return articles.filter(a => !q || norm(a.titre + ' ' + (a.extrait || '')).includes(q));
+  }, [articles, query]);
+
+  if (!loaded) return <div className="content"><p className="page-sub">Chargement…</p></div>;
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="content">
+      <div className="page-head">
         <div>
-          <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Articles
-          </h1>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            Journal de la boutique.
-          </p>
+          <h2 className="page-title">Articles</h2>
+          <p className="page-sub">Journal de la boutique.</p>
         </div>
-        <button className="btn btn--primary btn--sm">
-          + Nouvel article
+        <button className="b b--primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Nouvel article
         </button>
       </div>
 
-      {/* Table */}
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+      <div className="card" style={{ marginBottom: '20px' }}>
+        <div className="toolbar">
+          <div className="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <label className="visually-hidden" htmlFor="qa">Rechercher</label>
+            <input className="f__ctrl" id="qa" type="search" placeholder="Titre ou extrait" value={query} onChange={e => setQuery(e.target.value)} />
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="tbl-wrap">
+          <table className="tbl">
             <thead>
-              <tr style={{ borderBottom: '1px solid var(--line)' }}>
-                <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Article</th>
-                <th className="text-left p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Date</th>
-                <th className="text-center p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Statut</th>
-                <th className="text-right p-3 font-semibold text-xs uppercase" style={{ color: 'var(--muted)' }}>Actions</th>
+              <tr>
+                <th>Article</th>
+                <th>Date</th>
+                <th style={{ textAlign: 'center' }}>Statut</th>
+                <th className="tbl__num">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {articles.map((art: Article) => (
-                <tr
-                  key={art.id}
-                  className="hover:bg-gray-50 transition-colors"
-                  style={{ borderBottom: '1px solid var(--line)' }}
-                >
-                  <td className="p-3">
-                    <p className="font-medium">{art.titre}</p>
-                    <p className="text-xs truncate max-w-[300px]" style={{ color: 'var(--muted)' }}>
+              {filtered.map(art => (
+                <tr key={art.id}>
+                  <td>
+                    <strong>{art.titre}</strong>
+                    <br />
+                    <span style={{ fontSize: '12px', color: 'var(--a-muted)', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
                       {art.extrait || '—'}
-                    </p>
+                    </span>
                   </td>
-                  <td className="p-3 text-xs" style={{ color: 'var(--muted)' }}>
-                    {art.date}
-                  </td>
-                  <td className="p-3 text-center">
-                    <span className={`pill ${art.statut === 'publie' ? 'pill--ok' : 'pill--warn'}`}>
+                  <td style={{ fontSize: '12px', color: 'var(--a-muted)' }}>{art.date}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <span className={'pill ' + (art.statut === 'publie' ? 'pill--ok' : 'pill--warn')}>
                       {art.statut === 'publie' ? 'Publié' : 'Brouillon'}
                     </span>
                   </td>
-                  <td className="p-3 text-right">
-                    <button className="btn btn--secondary btn--sm">Modifier</button>
+                  <td className="tbl__num">
+                    <button className="b b--default b--sm">Modifier</button>
                   </td>
                 </tr>
               ))}
-              {articles.length === 0 && (
-                <tr><td colSpan={4} className="p-6 text-center text-sm" style={{ color: 'var(--muted)' }}>
+              {filtered.length === 0 && (
+                <tr><td colSpan={4} style={{ padding: '32px', textAlign: 'center', color: 'var(--a-muted)', fontSize: '13.5px' }}>
                   Aucun article.
                 </td></tr>
               )}

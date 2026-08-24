@@ -10,15 +10,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Le panier est vide.' }, { status: 400 });
     }
 
+    // Limite : max 50 articles par commande
+    if (items.length > 50) {
+      return NextResponse.json({ error: 'Trop d\'articles dans le panier.' }, { status: 400 });
+    }
+
     const allProducts = await getProducts();
     let totalEUR = 0;
     const validatedItems = [];
 
     for (const item of items) {
+      // Valider chaque item
+      if (!item.id || typeof item.id !== 'string') continue;
+
       const dbProduct = allProducts.find((p) => p.id === item.id);
       if (!dbProduct) continue;
 
-      const qty = Math.max(1, parseInt(item.qty || item.qte || 1, 10));
+      // Quantité : entier positif, max 99
+      const rawQty = parseInt(item.qty || item.qte || '1', 10);
+      const qty = Math.min(99, Math.max(1, isNaN(rawQty) ? 1 : rawQty));
       const lineTotal = dbProduct.prix * qty;
       totalEUR += lineTotal;
 

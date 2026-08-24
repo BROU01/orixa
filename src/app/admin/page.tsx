@@ -2,7 +2,7 @@ import { getProducts, getCategories } from '@/lib/data';
 
 /**
  * Tableau de bord admin — Vue d'ensemble.
- * Les KPI sont calculés côté serveur.
+ * Fidèle au projet orixa-site-complet original.
  */
 export default async function AdminDashboard() {
   const [products, categories] = await Promise.all([
@@ -15,128 +15,144 @@ export default async function AdminDashboard() {
   const lowStock = products.filter((p) => p.stock > 0 && p.stock < 35).length;
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="content">
+      <div className="page-head">
         <div>
-          <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--f-display)' }}>
-            Tableau de bord
-          </h1>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            Vue d&apos;ensemble des 30 derniers jours.
-          </p>
+          <h2 className="page-title">Tableau de bord</h2>
+          <p className="page-sub">Vue d&apos;ensemble des 30 derniers jours.</p>
         </div>
-        <a href="/admin/produits" className="btn btn--primary btn--sm">
-          + Ajouter un produit
+        <a className="b b--primary" href="/admin/produits">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Ajouter un produit
         </a>
       </div>
 
       {/* Note */}
-      <div
-        className="mb-6 p-4 rounded-xl text-sm flex items-start gap-3"
-        style={{
-          background: 'rgba(201,168,76,0.08)',
-          border: '1px solid rgba(201,168,76,0.3)',
-        }}
-      >
-        <span className="text-lg">⚠️</span>
-        <p>
-          Chiffre d&apos;affaires, commandes et clients sont des données de démonstration statiques.
-          Le catalogue, le thème et les contenus sont réellement modifiables.
-        </p>
+      <div className="note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
+          <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span>
+          Le chiffre d&apos;affaires, les commandes et les clients sont des données de démonstration.
+          Le catalogue, les contenus et le thème sont réels et modifiables.
+        </span>
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="card p-4">
-          <p className="text-sm mb-1" style={{ color: 'var(--muted)' }}>Références au catalogue</p>
-          <p className="text-2xl font-semibold">{totalProducts}</p>
-          <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>
-            {outOfStock === 0 ? 'Aucune rupture' : `${outOfStock} en rupture`}
+      <div className="kpis">
+        <div className="kpi">
+          <p className="kpi__label">Références au catalogue</p>
+          <p className="kpi__value">{totalProducts}</p>
+          <p className="kpi__delta" style={{ color: 'var(--a-muted)' }}>
+            <span className="kpi__note">
+              {outOfStock === 0 ? 'Aucune rupture' : `${outOfStock} en rupture`}
+            </span>
           </p>
         </div>
-        <div className="card p-4">
-          <p className="text-sm mb-1" style={{ color: 'var(--muted)' }}>Stock faible</p>
-          <p className="text-2xl font-semibold">{lowStock}</p>
-          <p className="text-xs mt-1" style={{ color: 'var(--warning)' }}>
-            produits sous 35 unités
+        <div className="kpi">
+          <p className="kpi__label">Stock faible</p>
+          <p className="kpi__value">{lowStock}</p>
+          <p className="kpi__delta kpi__delta--down">
+            <span className="kpi__note">produits sous 35 unités</span>
           </p>
         </div>
-        <div className="card p-4">
-          <p className="text-sm mb-1" style={{ color: 'var(--muted)' }}>Catégories</p>
-          <p className="text-2xl font-semibold">{categories.length}</p>
-          <p className="text-xs mt-1" style={{ color: 'var(--muted)' }}>
-            rayons actifs
+        <div className="kpi">
+          <p className="kpi__label">Catégories</p>
+          <p className="kpi__value">{categories.length}</p>
+          <p className="kpi__delta" style={{ color: 'var(--a-muted)' }}>
+            <span className="kpi__note">rayons actifs</span>
           </p>
         </div>
-        <div className="card p-4">
-          <p className="text-sm mb-1" style={{ color: 'var(--muted)' }}>Ruptures</p>
-          <p className="text-2xl font-semibold">{outOfStock}</p>
-          <p className="text-xs mt-1" style={{ color: outOfStock > 0 ? 'var(--danger)' : 'var(--success)' }}>
-            {outOfStock > 0 ? 'à réapprovisionner' : 'tout est en stock'}
+        <div className="kpi">
+          <p className="kpi__label">Ruptures</p>
+          <p className="kpi__value">{outOfStock}</p>
+          <p className="kpi__delta" style={{ color: outOfStock > 0 ? 'var(--a-danger)' : 'var(--a-ok)' }}>
+            <span className="kpi__note">
+              {outOfStock > 0 ? 'à réapprovisionner' : 'tout est en stock'}
+            </span>
           </p>
         </div>
       </div>
 
-      {/* Produits par catégorie */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card p-6">
-          <h3 className="font-medium mb-4" style={{ fontFamily: 'var(--f-display)' }}>
-            Répartition par rayon
-          </h3>
-          <div className="space-y-3">
-            {categories.map((cat) => {
-              const count = products.filter((p) => p.cat === cat.id).length;
-              const pct = totalProducts ? Math.round((count / totalProducts) * 100) : 0;
-              return (
-                <div key={cat.id}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>{cat.label}</span>
-                    <span style={{ color: 'var(--muted)' }}>{count} · {pct}%</span>
-                  </div>
-                  <div className="h-2 rounded-full" style={{ background: 'var(--line)' }}>
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{ width: `${pct}%`, background: cat.color || 'var(--accent)' }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+      {/* Grid 2 colonnes */}
+      <div className="grid-2">
+        {/* Répartition par rayon */}
+        <section className="card">
+          <div className="card__head">
+            <h3 className="card__title">Répartition par rayon</h3>
           </div>
-        </div>
-
-        <div className="card p-6">
-          <h3 className="font-medium mb-4" style={{ fontFamily: 'var(--f-display)' }}>
-            Stock faible
-          </h3>
-          <div className="space-y-3">
-            {products
-              .filter((p) => p.stock <= 35)
-              .sort((a, b) => a.stock - b.stock)
-              .slice(0, 6)
-              .map((p) => (
-                <div key={p.id} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={p.img}
-                      alt=""
-                      className="w-10 h-10 rounded-lg object-cover"
-                    />
-                    <div>
-                      <p className="text-sm font-medium">{p.nom}</p>
-                      <p className="text-xs" style={{ color: 'var(--muted)' }}>{p.unite}</p>
+          <div className="card__body">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {categories.map((cat) => {
+                const count = products.filter((p) => p.cat === cat.id).length;
+                const pct = totalProducts ? Math.round((count / totalProducts) * 100) : 0;
+                return (
+                  <div key={cat.id}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13.5px', marginBottom: '4px' }}>
+                      <span>{cat.label}</span>
+                      <span style={{ color: 'var(--a-muted)' }}>{count} · {pct}%</span>
+                    </div>
+                    <div style={{ height: '8px', borderRadius: '999px', background: 'var(--a-line)' }}>
+                      <div
+                        style={{
+                          height: '100%',
+                          borderRadius: '999px',
+                          width: `${pct}%`,
+                          background: cat.color || 'var(--a-brand)',
+                          transition: 'width .3s ease',
+                        }}
+                      />
                     </div>
                   </div>
-                  <span
-                    className={`pill ${p.stock <= 0 ? 'pill--danger' : 'pill--warn'}`}
-                  >
-                    {p.stock <= 0 ? 'Rupture' : `${p.stock} unités`}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* Stock faible */}
+        <section className="card">
+          <div className="card__head">
+            <h3 className="card__title">Stock faible</h3>
+            <a className="b b--default b--sm" href="/admin/produits">Gérer</a>
+          </div>
+          <div className="tbl-wrap">
+            <table className="tbl">
+              <tbody>
+                {products
+                  .filter((p) => p.stock <= 35)
+                  .sort((a, b) => a.stock - b.stock)
+                  .slice(0, 6)
+                  .map((p) => {
+                    const cls = p.stock <= 0 ? 'pill--danger' : 'pill--warn';
+                    return (
+                      <tr key={p.id}>
+                        <td>
+                          <div className="cell-prod">
+                            <img className="thumb" src={p.img} alt={p.nom} />
+                            <div>
+                              <div className="cell-prod__name">{p.nom}</div>
+                              <div className="cell-prod__meta">{p.unite}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="tbl__num">
+                          <span className={`pill ${cls}`}>
+                            {p.stock <= 0 ? 'Rupture' : `${p.stock} u.`}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </div>
   );

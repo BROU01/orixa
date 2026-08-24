@@ -3,6 +3,23 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
 import type { Product } from '@/types';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Produits exotiques — Gari, hibiscus, gombo, igname',
+  description:
+    'Ingrédients et épices d\'Afrique de l\'Ouest : gari précuit, fleurs d\'hibiscus, gombo moulu, igname et épices de terroir. Arrivage direct producteurs, livraison Europe.',
+  keywords: [
+    'produits exotiques', 'gari', 'gari précuit', 'hibiscus', 'fleurs hibiscus',
+    'gombo', 'gombo moulu', 'igname', 'épices africaines', 'épices terroir',
+    'produits Afrique', 'boutique africaine', 'MAISON LA GRACE', 'cuisine africaine',
+  ],
+  openGraph: {
+    title: 'Produits exotiques — MAISON LA GRACE',
+    description:
+      'Gari, hibiscus, gombo, igname et épices. Ingrédients authentiques en arrivage direct.',
+  },
+};
 
 export default async function ExotiquesPage() {
   const [products, theme, menu] = await Promise.all([
@@ -11,7 +28,7 @@ export default async function ExotiquesPage() {
     getMenu(),
   ]);
 
-  const exoticProducts = products.filter((p: Product) => p.cat === 'exotic');
+  const exoticProducts = products.filter((p: Product) => p.cat === 'exotiques' || p.cat === 'exotic');
 
   return (
     <div style={{ background: 'var(--paper)', color: 'var(--ink)' }}>
@@ -20,8 +37,6 @@ export default async function ExotiquesPage() {
       <div className="wrap">
         <nav className="crumb">
           <a href="/">Accueil</a>
-          <span>/</span>
-          <a href="/boutique">Boutique</a>
           <span>/</span>
           <span aria-current="page">Produits exotiques</span>
         </nav>
@@ -40,8 +55,8 @@ export default async function ExotiquesPage() {
           <div className="empty">
             <h2 className="empty__title">Aucun produit exotique pour le moment</h2>
             <p className="empty__text">Nous préparons de nouvelles arrivées. Revenez bientôt ou découvrez l&apos;ensemble du catalogue.</p>
-            <a href="/boutique" className="btn btn--primary">
-              Parcourir la boutique
+            <a href="/cosmetiques" className="btn btn--primary">
+              Voir les cosmétiques
             </a>
           </div>
         ) : (
