@@ -123,7 +123,12 @@ async function fetchCms<T>(key: string, fallback: T): Promise<T> {
       .single();
 
     if (error || !data?.value) return fallback;
-    return data.value as T;
+    // Si la valeur stockée est un tableau vide, utiliser le fallback
+    const val = data.value as T;
+    if (Array.isArray(val) && val.length === 0 && Array.isArray(fallback) && fallback.length > 0) {
+      return fallback;
+    }
+    return val;
   } catch {
     return fallback;
   }
