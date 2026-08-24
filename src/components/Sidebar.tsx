@@ -22,7 +22,9 @@ export default function Sidebar() {
   return (
     <aside className="side">
       <div className="side__brand">
-        <span className="side__mark">MLG</span>
+        <a href="/" style={{ display: 'block', lineHeight: 0 }}>
+          <img src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" style={{ height: '42px', width: 'auto', filter: 'brightness(0) invert(1)' }} />
+        </a>
         <span className="side__role">Administration</span>
       </div>
 

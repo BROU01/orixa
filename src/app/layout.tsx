@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import CookieConsent from '@/components/CookieConsent';
 import './globals.css';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
@@ -240,6 +241,7 @@ export default function RootLayout({
           }}
         />
         {children}
+        <CookieConsent />
       </body>
     </html>
   );
