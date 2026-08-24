@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { Section } from '@/types';
 
 const DEFAULT_SECTIONS: Section[] = [
@@ -22,6 +22,8 @@ const SECTION_TYPES = [
  */
 export default function AdminPersonnalisationPage() {
   const [sections, setSections] = useState<Section[]>(DEFAULT_SECTIONS);
+  const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const frameRef = useRef<HTMLIFrameElement>(null);
   const [theme, setTheme] = useState({
     brand: '#111110',
     paper: '#FBFAF6',
@@ -196,19 +198,49 @@ export default function AdminPersonnalisationPage() {
         </div>
       </div>
 
-      {/* Panneau droit — Aperçu */}
+      {/* Panneau droit — Aperçu live */}
       <div className="ed__preview">
         <div className="ed__bar">
-          <div className="vp-group">
-            <button aria-pressed="true">Desktop</button>
-            <button aria-pressed="false">Tablette</button>
-            <button aria-pressed="false">Mobile</button>
+          <div className="vp-group" role="group" aria-label="Largeur d'aperçu">
+            <button
+              type="button"
+              aria-pressed={viewport === 'desktop'}
+              onClick={() => setViewport('desktop')}
+            >Ordinateur</button>
+            <button
+              type="button"
+              aria-pressed={viewport === 'tablet'}
+              onClick={() => setViewport('tablet')}
+            >Tablette</button>
+            <button
+              type="button"
+              aria-pressed={viewport === 'mobile'}
+              onClick={() => setViewport('mobile')}
+            >Mobile</button>
           </div>
+          <button
+            className="b b--default b--sm"
+            onClick={() => window.open('/', '_blank')}
+          >
+            Ouvrir dans un onglet
+          </button>
           <span style={{ marginLeft: 'auto', fontSize: '12px', color: 'var(--a-muted)' }}>À jour</span>
         </div>
         <div className="ed__frame-wrap">
-          <div className="ed__frame" data-vp="desktop" style={{ width: '100%', height: '100%', border: 'none' }}>
+          <div
+            className="ed__frame"
+            style={{
+              width: viewport === 'desktop' ? '100%' : viewport === 'tablet' ? '768px' : '375px',
+              maxWidth: '100%',
+              height: '100%',
+              margin: '0 auto',
+              transition: 'width 0.3s ease',
+              border: viewport !== 'desktop' ? '1px solid var(--a-line)' : 'none',
+              borderRadius: viewport === 'mobile' ? '12px' : viewport === 'tablet' ? '8px' : '0',
+            }}
+          >
             <iframe
+              ref={frameRef}
               src="/"
               title="Aperçu de la boutique"
               style={{ width: '100%', height: '100%', border: 'none' }}
