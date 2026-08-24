@@ -68,7 +68,7 @@ export default function CGV() {
                 <p>
                   <strong>Mondial Relay :</strong> 3 à 5 jours ouvrés (Livraison offerte dès 80 €)<br />
                   <strong>Colissimo Domicile :</strong> 48h à 72h ouvrées avec numéro de suivi<br />
-                  <strong>Retrait atelier :</strong> Gratuit — Maison MAISON LA GRACE, France
+                  <strong>Retrait atelier :</strong> Gratuit — 23 rue Aimé Césaire, 27200 Vernon, Normandie, France
                 </p>
               </section>
 

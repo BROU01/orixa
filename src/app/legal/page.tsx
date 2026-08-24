@@ -29,9 +29,10 @@ export default async function LegalPage() {
           <section id="mentions" className="p-6 rounded-xl border border-[var(--line)] bg-white">
             <h2 className="h-display h2 mb-4" style={{ fontSize: '24px' }}>1. Mentions Légales</h2>
             <p className="mb-2"><strong>Nom de la boutique :</strong> MAISON LA GRACE</p>
-            <p className="mb-2"><strong>Propriétaire & Exploitant :</strong> Maison MAISON LA GRACE (Mme Kalipé G.)</p>
-            <p className="mb-2"><strong>Siège social :</strong> France</p>
-            <p className="mb-2"><strong>Contact :</strong> contact@maisonlagrace.fr</p>
+            <p className="mb-2"><strong>Propriétaire & Exploitant :</strong> KALIPE Constance</p>
+            <p className="mb-2"><strong>Adresse :</strong> 23 rue Aimé Césaire, 27200 Vernon, Normandie, France</p>
+            <p className="mb-2"><strong>Tél. :</strong> +33 6 6424 16 78</p>
+            <p className="mb-2"><strong>Contact :</strong> maroquinerie.lagrace@gmail.com</p>
             <p className="mb-2"><strong>Hébergeur du site :</strong> Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA.</p>
           </section>
 
@@ -64,7 +65,7 @@ export default async function LegalPage() {
               MAISON LA GRACE s&apos;engage à préserver la confidentialité des informations fournies par l&apos;acheteur. Les données collectées (nom, adresse, e-mail, téléphone) sont strictement réservées au traitement et à l&apos;expédition de vos commandes.
             </p>
             <p>
-              Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données personnelles sur simple demande à contact@maisonlagrace.fr.
+              Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression de vos données personnelles sur simple demande à maroquinerie.lagrace@gmail.com.
             </p>
           </section>
 

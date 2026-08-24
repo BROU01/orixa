@@ -11,9 +11,9 @@ export default function AdminReglagesPage() {
   const [saved, setSaved] = useState(false);
   const [settings, setSettings] = useState({
     nom: 'MAISON LA GRACE',
-    email: 'contact@maisonlagrace.fr',
-    tel: '+33 1 23 45 67 89',
-    adresse: 'Paris, France',
+    email: 'maroquinerie.lagrace@gmail.com',
+    tel: '+33 6 6424 16 78',
+    adresse: '23 rue Aimé Césaire, 27200 Vernon, Normandie, France',
     livraisonBase: '5.90',
     livraisonGratuit: '80',
     devise: 'EUR',
@@ -154,8 +154,8 @@ export default function AdminReglagesPage() {
 
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
         <button className="b b--default" onClick={() => setSettings({
-          nom: 'MAISON LA GRACE', email: 'contact@maisonlagrace.fr', tel: '+33 1 23 45 67 89',
-          adresse: 'Paris, France', livraisonBase: '5.90', livraisonGratuit: '80',
+          nom: 'MAISON LA GRACE', email: 'maroquinerie.lagrace@gmail.com', tel: '+33 6 6424 16 78',
+          adresse: '23 rue Aimé Césaire, 27200 Vernon, Normandie, France', livraisonBase: '5.90', livraisonGratuit: '80',
           devise: 'EUR', maintenance: false,
           maintenanceMsg: 'Site en maintenance. Nous serons de retour très rapidement.',
           seoTitle: 'MAISON LA GRACE — Cosmétiques naturels & produits exotiques',

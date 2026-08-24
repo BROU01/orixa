@@ -221,14 +221,15 @@ export default async function ContactPage() {
               padding: 'var(--s5)',
             }}>
               <h3 className="h-display h3" style={{ marginBottom: '12px' }}>
-                Maison MAISON LA GRACE (France)
+                MAISON LA GRACE — Vernon, Normandie
               </h3>
               <p style={{ fontSize: '14px', color: 'var(--muted)', marginBottom: '16px' }}>
-                Service client basé en France, disponible du lundi au vendredi de 9h à 18h.
+                Service client basé en Normandie, disponible du lundi au vendredi de 9h à 18h.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
-                <p><strong>E-mail :</strong> contact@maisonlagrace.fr</p>
-                <p><strong>Atelier :</strong> Maison MAISON LA GRACE, France</p>
+                <p><strong>Adresse :</strong> 23 rue Aimé Césaire, 27200 Vernon, Normandie, France</p>
+                <p><strong>Tél. :</strong> +33 6 6424 16 78</p>
+                <p><strong>E-mail :</strong> maroquinerie.lagrace@gmail.com</p>
                 <p><strong>Délai de réponse :</strong> Sous 24h ouvrées</p>
               </div>
             </div>
@@ -335,7 +336,7 @@ export default async function ContactPage() {
                 Proposez-vous des tarifs pour les professionnels / revendeurs ?
               </summary>
               <div className="faq__a">
-                Absolument. Contactez notre équipe commerciale à l&apos;adresse contact@maisonlagrace.fr avec votre numéro SIRET pour obtenir notre catalogue grossiste.
+                Absolument. Contactez notre équipe commerciale à l&apos;adresse maroquinerie.lagrace@gmail.com avec votre numéro SIRET pour obtenir notre catalogue grossiste.
               </div>
             </details>
           </div>

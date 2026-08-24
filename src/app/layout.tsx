@@ -138,17 +138,22 @@ export default function RootLayout({
               description:
                 'Cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest, livrés partout en Europe.',
               sameAs: [
-                'https://instagram.com/orixa',
-                'https://facebook.com/orixa',
-                'https://tiktok.com/@orixa',
+                'https://instagram.com/kalipe.constance',
+                'https://facebook.com/laGrace',
+                'https://tiktok.com/@kalipe.constance',
               ],
               address: {
                 '@type': 'PostalAddress',
+                streetAddress: '23 rue Aimé Césaire',
+                addressLocality: 'Vernon',
+                postalCode: '27200',
+                addressRegion: 'Normandie',
                 addressCountry: 'FR',
               },
               contactPoint: {
                 '@type': 'ContactPoint',
-                email: 'contact@maisonlagrace.fr',
+                telephone: '+33-6-6424-16-78',
+                email: 'maroquinerie.lagrace@gmail.com',
                 contactType: 'customer service',
                 availableLanguage: 'French',
               },
@@ -183,11 +188,18 @@ export default function RootLayout({
                 'Boutique de cosmétiques naturels et produits exotiques d\'Afrique de l\'Ouest.',
               address: {
                 '@type': 'PostalAddress',
+                streetAddress: '23 rue Aimé Césaire',
+                addressLocality: 'Vernon',
+                postalCode: '27200',
+                addressRegion: 'Normandie',
                 addressCountry: 'FR',
               },
+              telephone: '+33-6-6424-16-78',
+              email: 'maroquinerie.lagrace@gmail.com',
               geo: {
                 '@type': 'GeoCoordinates',
-                addressCountry: 'FR',
+                latitude: 49.0972,
+                longitude: 1.4856,
               },
               openingHoursSpecification: {
                 '@type': 'OpeningHoursSpecification',

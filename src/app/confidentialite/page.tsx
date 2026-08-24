@@ -25,8 +25,10 @@ export default function Confidentialite() {
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>1. Responsable du traitement</h2>
                 <p>
                   Le responsable du traitement des données personnelles est :<br />
-                  <strong>MAISON LA GRACE</strong> — Maison MAISON LA GRACE, France<br />
-                  Contact : contact@maisonlagrace.fr
+                  <strong>MAISON LA GRACE</strong> — KALIPE Constance<br />
+                  23 rue Aimé Césaire, 27200 Vernon, Normandie, France<br />
+                  Tél. : +33 6 6424 16 78<br />
+                  Contact : maroquinerie.lagrace@gmail.com
                 </p>
               </section>
 
@@ -71,7 +73,7 @@ export default function Confidentialite() {
                   <li><strong>Droit d&apos;opposition</strong> : vous opposer au traitement de vos données</li>
                 </ul>
                 <p style={{ marginTop: '12px' }}>
-                  Pour exercer vos droits, contactez-nous à contact@maisonlagrace.fr.
+                  Pour exercer vos droits, contactez-nous à maroquinerie.lagrace@gmail.com.
                 </p>
               </section>
 

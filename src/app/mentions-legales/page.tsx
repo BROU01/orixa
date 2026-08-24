@@ -24,9 +24,10 @@ export default function MentionsLegales() {
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>1. Éditeur du site</h2>
                 <p>
                   <strong>MAISON LA GRACE</strong><br />
-                  Épicerie et cosmétiques d&apos;Afrique de l&apos;Ouest<br />
-                  Adresse : Maison MAISON LA GRACE, France<br />
-                  E-mail : contact@maisonlagrace.fr
+                  Maroquinerie & cosmétiques naturels<br />
+                  23 rue Aimé Césaire, 27200 Vernon, Normandie, France<br />
+                  Tél. : +33 6 6424 16 78<br />
+                  E-mail : maroquinerie.lagrace@gmail.com
                 </p>
               </section>
 
@@ -49,7 +50,7 @@ export default function MentionsLegales() {
               <section>
                 <h2 className="h-display h3" style={{ marginBottom: '12px' }}>4. Données personnelles</h2>
                 <p>
-                  Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez de droits sur vos données. Pour toute demande, contactez-nous à contact@maisonlagrace.fr.
+                  Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez de droits sur vos données. Pour toute demande, contactez-nous à maroquinerie.lagrace@gmail.com.
                 </p>
                 <p style={{ marginTop: '12px' }}>
                   Pour plus d&apos;informations, consultez notre{' '}

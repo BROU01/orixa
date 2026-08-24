@@ -155,8 +155,9 @@ export default function RetoursPage() {
                   Notre équipe est disponible du lundi au vendredi, de 9 h à 18 h.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
-                  <p><strong>E-mail :</strong> contact@maisonlagrace.fr</p>
-                  <p><strong>Atelier :</strong> Maison MAISON LA GRACE, France</p>
+                  <p><strong>E-mail :</strong> maroquinerie.lagrace@gmail.com</p>
+                  <p><strong>Tél. :</strong> +33 6 6424 16 78</p>
+                  <p><strong>Atelier :</strong> 23 rue Aimé Césaire, 27200 Vernon, Normandie, France</p>
                   <p><strong>Délai de réponse :</strong> Sous 24h ouvrées</p>
                 </div>
                 <div style={{ marginTop: '16px' }}>
