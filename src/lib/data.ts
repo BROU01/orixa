@@ -11,32 +11,32 @@ import type {
 
 const DEFAULT_PRODUCTS: Product[] = [
   /* ──────────── COSMÉTIQUES (EXISTANTS) ──────────── */
-  { id: 'karite', nom: 'Beurre de karité pur', slug: 'beurre-de-karite', prix: 18.90, img: '/products/cosmetics/beurre-de-karite.jpg', cat: 'cosmetiques', unite: 'Pot 200 ml', origine: 'Burkina Faso', stock: 45, badge: '', description: 'Beurre de karité 100% pur, issu de la coopérative de femmes de Koudougou. Hydratant intense pour peaux sèches et abîmées.' },
-  { id: 'pommade', nom: 'Pommade au karité', slug: 'pommade-karite', prix: 12.50, img: '/products/cosmetics/pommade.jpg', cat: 'cosmetiques', unite: 'Pot 100 ml', origine: 'Burkina Faso', stock: 34, badge: '', description: 'Pommade réparatrice au karité et huile de coco. Cicatrisante et protectrice.' },
-  { id: 'blush', nom: 'Blush en poudre', slug: 'blush', prix: 9.50, img: '/products/cosmetics/blush.jpg', cat: 'cosmetiques', unite: '1 compas', origine: 'France', stock: 28, badge: '', description: 'Blush en poudre pour un teint naturel et lumineux.' },
-  { id: 'crayon-sourcils', nom: 'Crayon à sourcils blond', slug: 'crayon-sourcils-blond', prix: 7.90, img: '/products/cosmetics/crayon-a-sourcils-blond.jpg', cat: 'cosmetiques', unite: '1 crayon', origine: 'France', stock: 22, badge: '', description: 'Crayon à sourcils pour un dessin précis et naturel.' },
-  { id: 'faux-cils', nom: 'Faux cils', slug: 'faux-cils', prix: 6.50, img: '/products/cosmetics/faux-cils.jpg', cat: 'cosmetiques', unite: '1 paire', origine: 'France', stock: 40, badge: '', description: 'Faux cils naturels pour un regard intense.' },
-  { id: 'faux-ongles', nom: 'Faux ongles', slug: 'faux-ongles', prix: 5.90, img: '/products/cosmetics/faux-ongles.jpg', cat: 'cosmetiques', unite: '1 kit', origine: 'France', stock: 35, badge: '', description: 'Kit de faux ongles élégants, facile à poser.' },
-  { id: 'gel', nom: 'Gel coiffant', slug: 'gel', prix: 8.50, img: '/products/cosmetics/gel.jpg', cat: 'cosmetiques', unite: 'Pot 250 ml', origine: 'France', stock: 30, badge: '', description: 'Gel coiffant pour un造型 durable et brillant.' },
-  { id: 'mascara', nom: 'Mascara volume', slug: 'mascara', prix: 11.90, img: '/products/cosmetics/mascara.jpg', cat: 'cosmetiques', unite: '1 tube', origine: 'France', stock: 25, badge: '', description: 'Mascara pour un volume spectaculaire et un regard profond.' },
-  { id: 'masque-facial', nom: 'Masque facial au karité', slug: 'masque-facial', prix: 14.50, img: '/products/cosmetics/masque-facial.jpg', cat: 'cosmetiques', unite: 'Pot 150 ml', origine: 'Burkina Faso', stock: 18, badge: '', description: 'Masque purifiant et nourrissant au beurre de karité.' },
-  { id: 'parfum', nom: 'Parfum signature', slug: 'parfum', prix: 35.00, img: '/products/cosmetics/parfum.jpg', cat: 'cosmetiques', unite: 'Flacon 50 ml', origine: 'France', stock: 12, badge: '', description: 'Parfum aux notes boisées et florales, signature de la maison.' },
-  { id: 'rouge-levre', nom: 'Rouge à lèvres', slug: 'rouge-a-levre', prix: 8.90, img: '/products/cosmetics/rouge-a-levre.jpg', cat: 'cosmetiques', unite: '1 bâton', origine: 'France', stock: 30, badge: '', description: 'Rouge à lèvres saturé et longue tenue.' },
-  { id: 'vernis-ongles', nom: 'Vernis à ongles', slug: 'vernis-a-ongles', prix: 5.50, img: '/products/cosmetics/vernis-a-ongles.jpg', cat: 'cosmetiques', unite: '1 flacon 10 ml', origine: 'France', stock: 38, badge: '', description: 'Vernis à ongles brillant, séchage rapide.' },
+  { id: 'karite', nom: 'Beurre de karité pur', slug: 'beurre-de-karite', prix: 18.90, img: '/products/cosmetics/beurre-de-karite.jpg', cat: 'cosmetics', unite: 'Pot 200 ml', origine: 'Burkina Faso', stock: 45, badge: '', description: 'Beurre de karité 100% pur, issu de la coopérative de femmes de Koudougou. Hydratant intense pour peaux sèches et abîmées.' },
+  { id: 'pommade', nom: 'Pommade au karité', slug: 'pommade-karite', prix: 12.50, img: '/products/cosmetics/pommade.jpg', cat: 'cosmetics', unite: 'Pot 100 ml', origine: 'Burkina Faso', stock: 34, badge: '', description: 'Pommade réparatrice au karité et huile de coco. Cicatrisante et protectrice.' },
+  { id: 'blush', nom: 'Blush en poudre', slug: 'blush', prix: 9.50, img: '/products/cosmetics/blush.jpg', cat: 'cosmetics', unite: '1 compas', origine: 'France', stock: 28, badge: '', description: 'Blush en poudre pour un teint naturel et lumineux.' },
+  { id: 'crayon-sourcils', nom: 'Crayon à sourcils blond', slug: 'crayon-sourcils-blond', prix: 7.90, img: '/products/cosmetics/crayon-a-sourcils-blond.jpg', cat: 'cosmetics', unite: '1 crayon', origine: 'France', stock: 22, badge: '', description: 'Crayon à sourcils pour un dessin précis et naturel.' },
+  { id: 'faux-cils', nom: 'Faux cils', slug: 'faux-cils', prix: 6.50, img: '/products/cosmetics/faux-cils.jpg', cat: 'cosmetics', unite: '1 paire', origine: 'France', stock: 40, badge: '', description: 'Faux cils naturels pour un regard intense.' },
+  { id: 'faux-ongles', nom: 'Faux ongles', slug: 'faux-ongles', prix: 5.90, img: '/products/cosmetics/faux-ongles.jpg', cat: 'cosmetics', unite: '1 kit', origine: 'France', stock: 35, badge: '', description: 'Kit de faux ongles élégants, facile à poser.' },
+  { id: 'gel', nom: 'Gel coiffant', slug: 'gel', prix: 8.50, img: '/products/cosmetics/gel.jpg', cat: 'cosmetics', unite: 'Pot 250 ml', origine: 'France', stock: 30, badge: '', description: 'Gel coiffant pour un造型 durable et brillant.' },
+  { id: 'mascara', nom: 'Mascara volume', slug: 'mascara', prix: 11.90, img: '/products/cosmetics/mascara.jpg', cat: 'cosmetics', unite: '1 tube', origine: 'France', stock: 25, badge: '', description: 'Mascara pour un volume spectaculaire et un regard profond.' },
+  { id: 'masque-facial', nom: 'Masque facial au karité', slug: 'masque-facial', prix: 14.50, img: '/products/cosmetics/masque-facial.jpg', cat: 'cosmetics', unite: 'Pot 150 ml', origine: 'Burkina Faso', stock: 18, badge: '', description: 'Masque purifiant et nourrissant au beurre de karité.' },
+  { id: 'parfum', nom: 'Parfum signature', slug: 'parfum', prix: 35.00, img: '/products/cosmetics/parfum.jpg', cat: 'cosmetics', unite: 'Flacon 50 ml', origine: 'France', stock: 12, badge: '', description: 'Parfum aux notes boisées et florales, signature de la maison.' },
+  { id: 'rouge-levre', nom: 'Rouge à lèvres', slug: 'rouge-a-levre', prix: 8.90, img: '/products/cosmetics/rouge-a-levre.jpg', cat: 'cosmetics', unite: '1 bâton', origine: 'France', stock: 30, badge: '', description: 'Rouge à lèvres saturé et longue tenue.' },
+  { id: 'vernis-ongles', nom: 'Vernis à ongles', slug: 'vernis-a-ongles', prix: 5.50, img: '/products/cosmetics/vernis-a-ongles.jpg', cat: 'cosmetics', unite: '1 flacon 10 ml', origine: 'France', stock: 38, badge: '', description: 'Vernis à ongles brillant, séchage rapide.' },
 
   /* ──────────── COSMÉTIQUES (NOUVEAUX) ──────────── */
-  { id: 'cos-ct-plus', nom: 'Lotion clarifiante CT+', slug: 'lotion-ct-plus', prix: 14.90, img: '/products/cosmetics/CT+ Clear lotion.jpg', cat: 'cosmetiques', unite: 'Flacon 200 ml', origine: 'Nigeria', stock: 20, badge: 'Nouveau', description: 'Lotion clarifiante pour un teint uniforme et lumineux. Convient à tous les types de peau.' },
-  { id: 'cos-carotone', nom: 'Lotion Carotone', slug: 'lotion-carotone', prix: 12.50, img: '/products/cosmetics/Carotone Lotion 350 ML.jpg', cat: 'cosmetiques', unite: 'Flacon 350 ml', origine: 'Nigeria', stock: 25, badge: 'Nouveau', description: 'Lotion corporelle enrichie en carotte pour un teint doré et une peau douce.' },
-  { id: 'cos-coco-pulp', nom: 'Lotion Coco Pulp', slug: 'lotion-coco-pulp', prix: 11.90, img: '/products/cosmetics/Coco pulp lotion.jpg', cat: 'cosmetiques', unite: 'Flacon 250 ml', origine: 'Ghana', stock: 18, badge: 'Nouveau', description: 'Lotion hydratante à la pulpe de coco pour une peau nourrie et parfumée.' },
-  { id: 'cos-disaar', nom: 'Vaseline Disaar Beauty Skincare', slug: 'vaseline-disaar', prix: 9.90, img: '/products/cosmetics/Disaar vaseline beauty skincare.png', cat: 'cosmetiques', unite: 'Pot 200 ml', origine: 'Nigeria', stock: 30, badge: 'Nouveau', description: 'Vaseline beauté pour une peau douce, lisse et protégée au quotidien.' },
-  { id: 'cos-jaune-oeuf', nom: 'Lotion Jaune d\'Oeuf', slug: 'lotion-jaune-oeuf', prix: 10.50, img: '/products/cosmetics/Juane D\'OEUF lotion.jpg', cat: 'cosmetiques', unite: 'Flacon 250 ml', origine: 'Côte d\'Ivoire', stock: 22, badge: 'Nouveau', description: 'Lotion traditionnelle au jaune d\'oeuf pour fortifier et adoucir la peau.' },
-  { id: 'cos-kojic', nom: 'Huile Kojic Acid Brightening', slug: 'huile-kojic-acid', prix: 16.90, img: '/products/cosmetics/Kojic Acid Essential Oils For Skin Brightening & Hydrating Body Oil For Women.jpg', cat: 'cosmetiques', unite: 'Flacon 100 ml', origine: 'Japon', stock: 15, badge: 'Nouveau', description: 'Huile corporelle éclaircissante à l\'acide kojic et aux huiles essentielles. Hydrate et unifie le teint.' },
-  { id: 'cos-mary-kay', nom: 'Blush en poudre Mary Kay', slug: 'blush-mary-kay', prix: 19.90, img: '/products/cosmetics/Mary Kay blush en poudre.jpg', cat: 'cosmetiques', unite: '1 compas', origine: 'USA', stock: 12, badge: 'Nouveau', description: 'Blush en poudre Mary Kay pour un teint naturellement rosé et lumineux.' },
-  { id: 'cos-paw-paw', nom: 'Lotion Paw Paw', slug: 'lotion-paw-paw', prix: 13.50, img: '/products/cosmetics/Paw Paw lotion.jpg', cat: 'cosmetiques', unite: 'Flacon 250 ml', origine: 'Australie', stock: 20, badge: 'Nouveau', description: 'Lotion hydratante à l\'extrait de papaye pour une peau douce et repulpée.' },
-  { id: 'cos-vaseline-b3', nom: 'Huile corporelle Vaseline Vitamin B3', slug: 'huile-vaseline-b3', prix: 11.90, img: '/products/cosmetics/Vaseline Intensive Care Vitamin B3 Body Oil is a lightweight, fast-absorbing body oil enriched with Vitamin B3 (Niacinamide) and nourishing skin oils that deeply moisturize and revitalize dry, dull skin_ Its non-.jpg', cat: 'cosmetiques', unite: 'Flacon 200 ml', origine: 'USA', stock: 28, badge: 'Nouveau', description: 'Huile corporelle légère enrichie en vitamine B3 (niacinamide). Hydrate profondément et revitalise les peaux ternes.' },
-  { id: 'cos-white-secret', nom: 'Lotion éclaircissante White Secret', slug: 'lotion-white-secret', prix: 15.90, img: '/products/cosmetics/White Secret Lightening Body Lotion.jpg', cat: 'cosmetiques', unite: 'Flacon 400 ml', origine: 'Nigeria', stock: 22, badge: 'Nouveau', description: 'Lotion corporelle éclaircissante pour un teint uniforme et unifié. Texture légère et non grasse.' },
-  { id: 'cos-whitening', nom: 'Crème éclaircissante corps', slug: 'creme-whitening', prix: 13.90, img: '/products/cosmetics/Whitening skin body.png', cat: 'cosmetiques', unite: 'Pot 300 ml', origine: 'Nigeria', stock: 18, badge: 'Nouveau', description: 'Crème éclaircissante pour le corps, enrichie en actifs naturels pour un teint lumineux.' },
-  { id: 'cos-vaseline-pack', nom: 'Pack Vaseline Collection', slug: 'pack-vaseline', prix: 24.90, img: '/products/cosmetics/vaseline all products.png', cat: 'cosmetiques', unite: 'Coffret 3 pièces', origine: 'USA', stock: 10, badge: 'Nouveau', description: 'Coffret Vaseline avec trois soins essentiels pour une peau douce et hydratée au quotidien.' },
+  { id: 'cos-ct-plus', nom: 'Lotion clarifiante CT+', slug: 'lotion-ct-plus', prix: 14.90, img: '/products/cosmetics/CT+ Clear lotion.jpg', cat: 'cosmetics', unite: 'Flacon 200 ml', origine: 'Nigeria', stock: 20, badge: 'Nouveau', description: 'Lotion clarifiante pour un teint uniforme et lumineux. Convient à tous les types de peau.' },
+  { id: 'cos-carotone', nom: 'Lotion Carotone', slug: 'lotion-carotone', prix: 12.50, img: '/products/cosmetics/Carotone Lotion 350 ML.jpg', cat: 'cosmetics', unite: 'Flacon 350 ml', origine: 'Nigeria', stock: 25, badge: 'Nouveau', description: 'Lotion corporelle enrichie en carotte pour un teint doré et une peau douce.' },
+  { id: 'cos-coco-pulp', nom: 'Lotion Coco Pulp', slug: 'lotion-coco-pulp', prix: 11.90, img: '/products/cosmetics/Coco pulp lotion.jpg', cat: 'cosmetics', unite: 'Flacon 250 ml', origine: 'Ghana', stock: 18, badge: 'Nouveau', description: 'Lotion hydratante à la pulpe de coco pour une peau nourrie et parfumée.' },
+  { id: 'cos-disaar', nom: 'Vaseline Disaar Beauty Skincare', slug: 'vaseline-disaar', prix: 9.90, img: '/products/cosmetics/Disaar vaseline beauty skincare.png', cat: 'cosmetics', unite: 'Pot 200 ml', origine: 'Nigeria', stock: 30, badge: 'Nouveau', description: 'Vaseline beauté pour une peau douce, lisse et protégée au quotidien.' },
+  { id: 'cos-jaune-oeuf', nom: 'Lotion Jaune d\'Oeuf', slug: 'lotion-jaune-oeuf', prix: 10.50, img: '/products/cosmetics/Juane D\'OEUF lotion.jpg', cat: 'cosmetics', unite: 'Flacon 250 ml', origine: 'Côte d\'Ivoire', stock: 22, badge: 'Nouveau', description: 'Lotion traditionnelle au jaune d\'oeuf pour fortifier et adoucir la peau.' },
+  { id: 'cos-kojic', nom: 'Huile Kojic Acid Brightening', slug: 'huile-kojic-acid', prix: 16.90, img: '/products/cosmetics/Kojic Acid Essential Oils For Skin Brightening & Hydrating Body Oil For Women.jpg', cat: 'cosmetics', unite: 'Flacon 100 ml', origine: 'Japon', stock: 15, badge: 'Nouveau', description: 'Huile corporelle éclaircissante à l\'acide kojic et aux huiles essentielles. Hydrate et unifie le teint.' },
+  { id: 'cos-mary-kay', nom: 'Blush en poudre Mary Kay', slug: 'blush-mary-kay', prix: 19.90, img: '/products/cosmetics/Mary Kay blush en poudre.jpg', cat: 'cosmetics', unite: '1 compas', origine: 'USA', stock: 12, badge: 'Nouveau', description: 'Blush en poudre Mary Kay pour un teint naturellement rosé et lumineux.' },
+  { id: 'cos-paw-paw', nom: 'Lotion Paw Paw', slug: 'lotion-paw-paw', prix: 13.50, img: '/products/cosmetics/Paw Paw lotion.jpg', cat: 'cosmetics', unite: 'Flacon 250 ml', origine: 'Australie', stock: 20, badge: 'Nouveau', description: 'Lotion hydratante à l\'extrait de papaye pour une peau douce et repulpée.' },
+  { id: 'cos-vaseline-b3', nom: 'Huile corporelle Vaseline Vitamin B3', slug: 'huile-vaseline-b3', prix: 11.90, img: '/products/cosmetics/Vaseline Intensive Care Vitamin B3 Body Oil is a lightweight, fast-absorbing body oil enriched with Vitamin B3 (Niacinamide) and nourishing skin oils that deeply moisturize and revitalize dry, dull skin_ Its non-.jpg', cat: 'cosmetics', unite: 'Flacon 200 ml', origine: 'USA', stock: 28, badge: 'Nouveau', description: 'Huile corporelle légère enrichie en vitamine B3 (niacinamide). Hydrate profondément et revitalise les peaux ternes.' },
+  { id: 'cos-white-secret', nom: 'Lotion éclaircissante White Secret', slug: 'lotion-white-secret', prix: 15.90, img: '/products/cosmetics/White Secret Lightening Body Lotion.jpg', cat: 'cosmetics', unite: 'Flacon 400 ml', origine: 'Nigeria', stock: 22, badge: 'Nouveau', description: 'Lotion corporelle éclaircissante pour un teint uniforme et unifié. Texture légère et non grasse.' },
+  { id: 'cos-whitening', nom: 'Crème éclaircissante corps', slug: 'creme-whitening', prix: 13.90, img: '/products/cosmetics/Whitening skin body.png', cat: 'cosmetics', unite: 'Pot 300 ml', origine: 'Nigeria', stock: 18, badge: 'Nouveau', description: 'Crème éclaircissante pour le corps, enrichie en actifs naturels pour un teint lumineux.' },
+  { id: 'cos-vaseline-pack', nom: 'Pack Vaseline Collection', slug: 'pack-vaseline', prix: 24.90, img: '/products/cosmetics/vaseline all products.png', cat: 'cosmetics', unite: 'Coffret 3 pièces', origine: 'USA', stock: 10, badge: 'Nouveau', description: 'Coffret Vaseline avec trois soins essentiels pour une peau douce et hydratée au quotidien.' },
 
   /* ──────────── PRODUITS EXOTIQUES (EXISTANTS) ──────────── */
   { id: 'gari', nom: 'Gari précuit', slug: 'gari-precuit', prix: 4.50, img: '/products/exotic/gari.jpeg', cat: 'exotic', unite: 'Sac 500 g', origine: 'Côte d\'Ivoire', stock: 120, badge: '', description: 'Gari précuit traditionnel, prêt à consommer. Accompagne vos plats et sauces.', labelImg: '/products/exotic/Gari Etiquette.jpeg' },
@@ -228,7 +228,15 @@ async function fetchCms<T>(key: string, fallback: T): Promise<T> {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  return fetchCms('orixa:products', DEFAULT_PRODUCTS);
+  const stored = await fetchCms<Product[]>('orixa:products', []);
+  // Si Supabase a des produits, fusionner avec les DEFAULT_PRODUCTS
+  // pour que les nouveaux produits apparaissent même si Supabase contient les anciens seuls
+  if (stored.length > 0) {
+    const storedIds = new Set(stored.map(p => p.id));
+    const missing = DEFAULT_PRODUCTS.filter(p => !storedIds.has(p.id));
+    return [...stored, ...missing];
+  }
+  return DEFAULT_PRODUCTS;
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -265,7 +273,13 @@ export async function getPages(): Promise<Page[]> {
 }
 
 export async function getMedia(): Promise<Media[]> {
-  return fetchCms('orixa:media', DEFAULT_MEDIA);
+  const stored = await fetchCms<Media[]>('orixa:media', []);
+  if (stored.length > 0) {
+    const storedSrcs = new Set(stored.map(m => m.src));
+    const missing = DEFAULT_MEDIA.filter(m => !storedSrcs.has(m.src));
+    return [...stored, ...missing];
+  }
+  return DEFAULT_MEDIA;
 }
 
 export async function getUsers(): Promise<AdminUser[]> {
