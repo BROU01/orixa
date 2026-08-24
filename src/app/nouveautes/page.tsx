@@ -55,6 +55,7 @@ export default async function NouveautesPage() {
               <div key={product.id} className="prod-card">
                 <div className="prod-card__media">
                   <img src={product.img} alt={product.nom} loading="lazy" />
+                  {product.labelImg && <img src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" loading="lazy" />}
                   <span className="prod-card__badge badge badge--new">
                     Nouveau
                   </span>

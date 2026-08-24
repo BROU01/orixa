@@ -124,6 +124,7 @@ export default function RayonDynamicPage() {
             <div key={product.id} className="prod-card">
               <div className="prod-card__media">
                 <img src={product.img} alt={product.nom} loading="lazy" />
+                {product.labelImg && <img src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" loading="lazy" />}
                 {product.badge && (
                   <span className={`prod-card__badge badge ${product.badge === 'Nouveau' ? 'badge--new' : 'badge--promo'}`}>
                     {product.badge}

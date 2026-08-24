@@ -1,5 +1,5 @@
 /**
- * ORIXA — Types TypeScript
+ * MAISON LA GRACE — Types TypeScript
  * Types partagés entre les composants client et serveur.
  */
 
@@ -15,6 +15,7 @@ export interface Product {
   stock: number;
   badge?: 'Nouveau' | 'Promo' | '';
   description?: string;
+  labelImg?: string;  // Photo d'étiquette (optionnel) — affichée au hover de la carte
 }
 
 export interface Category {

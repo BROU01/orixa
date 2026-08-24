@@ -74,6 +74,7 @@ export default async function CosmetiquesPage() {
                 <div className="prod-card__media">
                   <a href={`/produit?id=${product.id}`} aria-label={product.nom}>
                     <img src={product.img} alt={product.nom} loading="lazy" />
+                    {product.labelImg && <img src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" loading="lazy" />}
                   </a>
                   {product.badge && (
                     <span className={`prod-card__badge badge ${product.badge === 'Nouveau' ? 'badge--new' : 'badge--promo'}`}>
