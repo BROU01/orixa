@@ -477,6 +477,25 @@ select.f__ctrl {
 .status-card__val { font-size: 24px; font-weight: 700; line-height: 1; margin-top: 4px; }
 .status-card__label { font-size: 11.5px; color: var(--a-muted); margin-top: 4px; }
 
+/* ---------------- MEDIA GRID ---------------- */
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; }
+.mgrid__i {
+  border: 1px solid var(--a-line); border-radius: var(--a-r);
+  overflow: hidden; background: var(--a-surface);
+  transition: border-color .15s, box-shadow .15s;
+  cursor: pointer;
+}
+.mgrid__i:hover { border-color: var(--a-brand); box-shadow: 0 0 0 2px var(--a-focus); }
+.mgrid__i img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.mgrid__i span { padding: 6px 8px; font-size: 11px; color: var(--a-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+
+/* ---------------- PICK (image picker) ---------------- */
+.pick { display: flex; align-items: center; gap: 12px; }
+.pick__thumb { width: 56px; height: 56px; border-radius: 8px; border: 1px solid var(--a-line); overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--a-bg); }
+.pick__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pick__none { font-size: 11px; color: var(--a-muted); }
+.pick__side { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
 @media (max-width: 1080px) {
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .grid-4 { grid-template-columns: 1fr 1fr; }

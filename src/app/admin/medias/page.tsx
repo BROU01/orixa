@@ -15,7 +15,17 @@ export default function AdminMediasPage() {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    getMedia().then(m => { setMedia(m); setLoaded(true); });
+    // Charger les médias builtins depuis data.ts
+    getMedia().then(builtins => {
+      // Charger les médias téléversés depuis localStorage
+      let uploaded: Media[] = [];
+      try {
+        const saved = localStorage.getItem('orixa:media-uploaded');
+        if (saved) uploaded = JSON.parse(saved);
+      } catch { /* ignore */ }
+      setMedia([...builtins, ...uploaded]);
+      setLoaded(true);
+    });
   }, []);
 
   const norm = (s: string) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
@@ -25,25 +35,43 @@ export default function AdminMediasPage() {
     return media.filter(m => !q || norm(m.name).includes(q));
   }, [media, query]);
 
+  const persistUploaded = useCallback((items: Media[]) => {
+    const uploaded = items.filter(m => !m.builtin);
+    try { localStorage.setItem('orixa:media-uploaded', JSON.stringify(uploaded)); } catch { /* quota exceeded */ }
+  }, []);
+
   const handleUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
     let done = 0;
+    const newItems: Media[] = [];
     files.forEach(f => {
       const reader = new FileReader();
       reader.onload = () => {
-        setMedia(prev => [...prev, { src: reader.result as string, name: f.name, builtin: false }]);
-        if (++done === files.length) alert(done + ' fichier(s) ajouté(s).');
+        const item = { src: reader.result as string, name: f.name, builtin: false };
+        newItems.push(item);
+        if (++done === files.length) {
+          setMedia(prev => {
+            const next = [...prev, ...newItems];
+            persistUploaded(next);
+            return next;
+          });
+          alert(done + ' fichier(s) ajouté(s).');
+        }
       };
       reader.readAsDataURL(f);
     });
     e.target.value = '';
-  }, []);
+  }, [persistUploaded]);
 
   const handleDelete = useCallback((src: string) => {
     if (!confirm('Supprimer ce média ?')) return;
-    setMedia(prev => prev.filter(m => m.src !== src));
-  }, []);
+    setMedia(prev => {
+      const next = prev.filter(m => m.src !== src);
+      persistUploaded(next);
+      return next;
+    });
+  }, [persistUploaded]);
 
   if (!loaded) return <div className="content"><p className="page-sub">Chargement…</p></div>;
 
