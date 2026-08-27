@@ -57,7 +57,7 @@ export default function CookieConsent() {
         Nous utilisons des cookies strictement nécessaires au fonctionnement du site
         (session panier, devise, favoris). Aucun cookie de traçage n&apos;est utilisé.
         Consultez notre{' '}
-        <a href="/cookies" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
+        <a href="/cookies" style={{ color: 'var(--accent-2)', textDecoration: 'underline' }}>
           politique de cookies
         </a>.
       </p>
@@ -84,9 +84,10 @@ export default function CookieConsent() {
           style={{
             padding: '8px 18px',
             borderRadius: '6px',
-            border: 'none',
-            background: 'var(--accent)',
+            border: '1px solid var(--paper)',
+            background: 'var(--paper)',
             color: 'var(--ink)',
+            whiteSpace: 'nowrap',
             fontSize: '13px',
             fontWeight: 600,
             cursor: 'pointer',
