@@ -112,7 +112,7 @@ export default async function HomePage() {
             <span className="eyebrow">Sélection d'exception</span>
             <h2 className="h-display h2">Nos produits phares</h2>
           </div>
-          <div className="sec-head__links">
+          <div className="sec-head__links" aria-label="Catégories de produits">
             <a href="/cosmetiques" className="sec-head__link">Cosmétiques →</a>
             <a href="/exotiques" className="sec-head__link">Exotiques →</a>
           </div>
@@ -185,13 +185,13 @@ export default async function HomePage() {
 
       {/* Section Histoire Éditoriale */}
       <section className="section" style={{ background: 'var(--paper-2)', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-        <div className="wrap text-center reveal" style={{ maxWidth: '720px', marginInline: 'auto' }}>
+        <div className="wrap reveal" style={{ maxWidth: '720px', marginInline: 'auto', textAlign: 'center' }}>
           <span className="eyebrow" style={{ marginBottom: '12px' }}>Philosophie MAISON LA GRACE</span>
           <h2 className="h-display h2" style={{ marginBottom: '20px' }}>
             Une Histoire de Passion & d'Authenticité
           </h2>
           <p className="lede" style={{ marginInline: 'auto', marginBottom: '32px' }}>
-            Imaginée en France et nourrie par la tradition familiale de Kalipé (« La Grâce »), la maison MAISON LA GRACE sélectionne directement auprès des producteurs locaux les matières brutes les plus nobles.
+            Imaginée en France et nourrie par une tradition familiale, la maison MAISON LA GRACE sélectionne directement auprès des producteurs locaux les matières brutes les plus nobles.
           </p>
           <a href="/histoire" className="btn btn--primary">
             En savoir plus sur la Maison

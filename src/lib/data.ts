@@ -25,7 +25,7 @@ const DEFAULT_PRODUCTS: Product[] = [
   { id: 'vernis-ongles', nom: 'Vernis à ongles', slug: 'vernis-a-ongles', prix: 5.50, img: '/products/cosmetics/vernis-a-ongles.jpg', cat: 'cosmetics', unite: '1 flacon 10 ml', origine: 'France', stock: 38, badge: '', description: 'Vernis à ongles brillant, séchage rapide.' },
 
   /* ──────────── COSMÉTIQUES (NOUVEAUX) ──────────── */
-  { id: 'cos-ct-plus', nom: 'Lotion clarifiante CT+', slug: 'lotion-ct-plus', prix: 14.90, img: '/products/cosmetics/CT+ Clear lotion.jpg', cat: 'cosmetics', unite: 'Flacon 200 ml', origine: 'Nigeria', stock: 20, badge: 'Nouveau', description: 'Lotion clarifiante pour un teint uniforme et lumineux. Convient à tous les types de peau.' },
+  { id: 'cos-ct-plus', nom: 'Lotion clarifiante CT+', slug: 'lotion-ct-plus', prix: 14.90, img: '/products/cosmetics/ct-clear-lotion.jpg', cat: 'cosmetics', unite: 'Flacon 200 ml', origine: 'Nigeria', stock: 20, badge: 'Nouveau', description: 'Lotion clarifiante pour un teint uniforme et lumineux. Convient à tous les types de peau.' },
   { id: 'cos-carotone', nom: 'Lotion Carotone', slug: 'lotion-carotone', prix: 12.50, img: '/products/cosmetics/Carotone Lotion 350 ML.jpg', cat: 'cosmetics', unite: 'Flacon 350 ml', origine: 'Nigeria', stock: 25, badge: 'Nouveau', description: 'Lotion corporelle enrichie en carotte pour un teint doré et une peau douce.' },
   { id: 'cos-coco-pulp', nom: 'Lotion Coco Pulp', slug: 'lotion-coco-pulp', prix: 11.90, img: '/products/cosmetics/Coco pulp lotion.jpg', cat: 'cosmetics', unite: 'Flacon 250 ml', origine: 'Ghana', stock: 18, badge: 'Nouveau', description: 'Lotion hydratante à la pulpe de coco pour une peau nourrie et parfumée.' },
   { id: 'cos-disaar', nom: 'Vaseline Disaar Beauty Skincare', slug: 'vaseline-disaar', prix: 9.90, img: '/products/cosmetics/Disaar vaseline beauty skincare.png', cat: 'cosmetics', unite: 'Pot 200 ml', origine: 'Nigeria', stock: 30, badge: 'Nouveau', description: 'Vaseline beauté pour une peau douce, lisse et protégée au quotidien.' },
@@ -134,7 +134,7 @@ const DEFAULT_MEDIA: Media[] = [
   { src: '/products/cosmetics/rouge-a-levre.jpg', name: 'rouge-a-levre.jpg', builtin: true },
   { src: '/products/cosmetics/vernis-a-ongles.jpg', name: 'vernis-a-ongles.jpg', builtin: true },
   /* ── Cosmétiques (nouveaux) ── */
-  { src: '/products/cosmetics/CT+ Clear lotion.jpg', name: 'CT+ Clear lotion.jpg', builtin: true },
+  { src: '/products/cosmetics/ct-clear-lotion.jpg', name: 'ct-clear-lotion.jpg', builtin: true },
   { src: '/products/cosmetics/Carotone Lotion 350 ML.jpg', name: 'Carotone Lotion 350 ML.jpg', builtin: true },
   { src: '/products/cosmetics/Coco pulp lotion.jpg', name: 'Coco pulp lotion.jpg', builtin: true },
   { src: '/products/cosmetics/Disaar vaseline beauty skincare.png', name: 'Disaar vaseline beauty skincare.png', builtin: true },

@@ -86,132 +86,122 @@ export default function ProductDetail({ product, menu, theme }: ProductDetailPro
     } catch { /* ignore */ }
   };
 
+  const isCosmetic = product.cat === 'cosmetics' || product.cat === 'cosmetiques';
+
   const slides = [
-    <div key="photo" className="w-full h-full flex items-center justify-center bg-gray-50">
-      <img src={product.img} alt={product.nom} className="w-full h-full object-cover" />
+    <div key="photo" className="pdp__slide">
+      <img src={product.img} alt={product.nom} />
     </div>,
-    <div key="sticker" className="w-full h-full flex items-center justify-center relative bg-gray-900 text-white">
-      <img src={product.img} alt={product.nom} className="w-full h-full object-cover opacity-80" />
-      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-        <div className="px-6 py-3 rounded-2xl shadow-2xl text-lg font-bold rotate-[-4deg] bg-[var(--accent)] text-[var(--brand)] border-2 border-white">
+    <div key="sticker" className="pdp__slide pdp__slide--sticker">
+      <img src={product.img} alt="" aria-hidden="true" />
+      <div className="pdp__slide-overlay">
+        <div className="pdp__sticker">
           {product.badge || 'Sélection MAISON LA GRACE'}
         </div>
       </div>
     </div>,
-    <div key="combo" className="w-full h-full flex items-center justify-center relative overflow-hidden">
-      <img src={product.img} alt={product.nom} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-      <div className="absolute bottom-6 left-6 right-6 text-white">
-        <p className="text-xl font-bold mb-1" style={{ fontFamily: 'var(--f-display)' }}>{product.nom}</p>
-        <p className="text-xs uppercase tracking-widest text-[var(--accent)]">{product.origine}</p>
-        <div className="mt-2 text-2xl font-bold text-[var(--accent)]">
-          <PriceTag amount={product.prix} />
-        </div>
+    <div key="combo" className="pdp__slide pdp__slide--combo">
+      <img src={product.img} alt="" aria-hidden="true" />
+      <div className="pdp__slide-gradient" />
+      <div className="pdp__slide-caption">
+        <p>{product.nom}</p>
+        <span>{product.origine}</span>
+        <PriceTag amount={product.prix} />
       </div>
     </div>,
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: theme.paper || '#FBFAF6', color: theme.text || '#2C2C2C' }}>
+    <div className="product-page" style={{ background: theme.paper, color: theme.text }}>
       <Header menu={menu} theme={theme} />
 
-      <div className="container py-4">
-        <nav className="text-xs uppercase tracking-wider text-[var(--muted)] flex items-center gap-2">
-          <a href="/" className="hover:text-[var(--accent)]">Accueil</a>
+      <div className="wrap">
+        <nav className="crumb" aria-label="Fil d’Ariane">
+          <a href="/">Accueil</a>
           <span>/</span>
-          <a href={`/${product.cat === 'cosmetiques' ? 'cosmetiques' : 'exotiques'}`} className="hover:text-[var(--accent)]">
-            {product.cat === 'cosmetiques' ? 'Cosmétiques' : 'Produits exotiques'}
+          <a href={`/${isCosmetic ? 'cosmetiques' : 'exotiques'}`}>
+            {isCosmetic ? 'Cosmétiques' : 'Produits exotiques'}
           </a>
           <span>/</span>
-          <span className="text-[var(--brand)] font-semibold">{product.nom}</span>
+          <span aria-current="page">{product.nom}</span>
         </nav>
       </div>
 
-      <div className="container pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <div className="space-y-4">
-            <div className="aspect-square rounded-2xl overflow-hidden shadow-md border border-[var(--line)] relative">
+      <main className="wrap section--tight product-page__main">
+        <div className="pdp">
+          <div className="pdp__gallery">
+            <div className="pdp__media">
               {slides[slideIndex]}
             </div>
-            <div className="flex justify-center gap-3 py-2">
+            <div className="pdp__indicators" aria-label="Galerie produit">
               {slides.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => setSlideIndex(i)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    i === slideIndex ? 'w-8 bg-[var(--accent)]' : 'w-2.5 bg-[var(--line)]'
-                  }`}
-                  aria-label={`Aller au slide ${i + 1}`}
+                  className={i === slideIndex ? 'pdp__indicator pdp__indicator--active' : 'pdp__indicator'}
+                  aria-label={`Aller au visuel ${i + 1}`}
+                  aria-current={i === slideIndex ? 'true' : undefined}
                 />
               ))}
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-[var(--accent-dark)] font-bold">
-                {product.origine} · {product.unite}
+          <div className="pdp__details">
+            <span className="eyebrow">{product.origine} · {product.unite}</span>
+            <h1 className="h-display h1 pdp__title">{product.nom}</h1>
+
+            <div className="pdp__summary">
+              <PriceTag amount={product.prix} className="pdp__price" />
+              <span className={product.stock > 0 ? 'pdp__stock' : 'pdp__stock pdp__stock--empty'}>
+                {product.stock > 0 ? `En stock (${product.stock} disponibles)` : 'Rupture de stock'}
               </span>
-              <h1 className="text-3xl md:text-5xl font-bold mt-2 text-[var(--brand)]" style={{ fontFamily: 'var(--f-display)' }}>
-                {product.nom}
-              </h1>
-              <div className="mt-4 flex items-center gap-4">
-                <PriceTag amount={product.prix} className="text-3xl font-bold text-[var(--brand)]" />
-                <span className="text-xs font-semibold px-3 py-1 bg-green-100 text-green-800 rounded-full">
-                  En stock ({product.stock} disponibles)
-                </span>
-              </div>
             </div>
 
-            <p className="text-sm text-[var(--text)]/80 leading-relaxed border-t border-b border-[var(--line)] py-4">
+            <p className="pdp__desc">
               {product.description || 'Produit d\'exception d\'origine naturelle certifiée. Sélectionné avec exigence par la Maison MAISON LA GRACE.'}
             </p>
 
-            <div className="rounded-xl p-4 text-xs flex items-center gap-3" style={{ background: 'var(--brand-soft)', border: '1px solid var(--line)' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21.2l7.7-7.8 1.1-1a5.5 5.5 0 0 0 0-7.8z" />
-              </svg>
+            <div className="pdp__loyalty">
+              <span className="pdp__loyalty-icon" aria-hidden="true">♥</span>
               <div>
-                <p className="font-bold" style={{ color: 'var(--ink)' }}>Programme Fidélité MAISON LA GRACE</p>
-                <p style={{ color: 'var(--ink-2)' }}>
-                  Cet achat vous rapporte <strong>{product.prix.toFixed(2)} €</strong> de fidélité (100 € cumulés = bon de 10 €).
-                </p>
+                <p className="pdp__loyalty-title">Programme fidélité MAISON LA GRACE</p>
+                <p>Cet achat vous rapporte <strong>{product.prix.toFixed(2)} €</strong> de fidélité (100 € cumulés = bon de 10 €).</p>
               </div>
             </div>
 
-            <div className="space-y-4 pt-2">
-              <div className="flex items-center gap-4">
-                <label className="text-xs font-bold uppercase tracking-wider text-[var(--brand)]">Quantité :</label>
-                <div className="flex items-center border border-[var(--line)] rounded-lg bg-white overflow-hidden">
-                  <button type="button" onClick={() => setQte(Math.max(1, qte - 1))} className="px-3 py-2 text-sm hover:bg-gray-100 font-bold">-</button>
-                  <span className="px-4 text-sm font-semibold">{qte}</span>
-                  <button type="button" onClick={() => setQte(Math.min(product.stock, qte + 1))} className="px-3 py-2 text-sm hover:bg-gray-100 font-bold">+</button>
+            <div className="pdp__purchase">
+              <div className="pdp__quantity-row">
+                <label htmlFor="product-quantity">Quantité</label>
+                <div className="qty">
+                  <button type="button" onClick={() => setQte(Math.max(1, qte - 1))} aria-label="Diminuer la quantité">−</button>
+                  <input id="product-quantity" type="number" min="1" max={Math.max(1, product.stock)} value={qte} onChange={(event) => setQte(Math.max(1, Math.min(product.stock || 1, Number(event.target.value) || 1)))} aria-label="Quantité" />
+                  <button type="button" onClick={() => setQte(Math.min(product.stock || 1, qte + 1))} aria-label="Augmenter la quantité">+</button>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                <button type="button" onClick={addToCart} disabled={product.stock <= 0} className="btn btn--primary btn--lg flex-1">
-                  {addedToCart ? '✓ Ajouté au panier !' : 'Ajouter au panier'}
+              <div className="pdp__actions">
+                <button type="button" onClick={addToCart} disabled={product.stock <= 0} className="btn btn--primary btn--lg">
+                  {addedToCart ? 'Ajouté au panier' : 'Ajouter au panier'}
                 </button>
-                <button type="button" onClick={toggleFavorite} className={`btn btn--secondary btn--lg ${isFav ? '!border-red-500 !text-red-500' : ''}`}>
+                <button type="button" onClick={toggleFavorite} className={isFav ? 'btn btn--secondary btn--lg pdp__favorite pdp__favorite--active' : 'btn btn--secondary btn--lg pdp__favorite'}>
                   {isFav ? '♥ Dans les favoris' : '♡ Ajouter aux favoris'}
                 </button>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl text-xs" style={{ background: 'var(--paper-2)', border: '1px solid var(--line)', color: 'var(--ink-2)' }}>
-              <p className="font-bold mb-2" style={{ color: 'var(--ink)' }}>Livraison & retours</p>
-              <p style={{ marginBottom: '8px' }}>Livraison en 3 à 5 jours. Livraison offerte dès 80 € d&apos;achat.</p>
+            <div className="pdp__shipping">
+              <p className="pdp__shipping-title">Livraison & retours</p>
+              <p>Livraison en 3 à 5 jours. Livraison offerte dès 80 € d&apos;achat.</p>
               {product.cat === 'exotiques' || product.cat === 'exotic' ? (
-                <p style={{ color: 'var(--brick)', fontWeight: 600 }}>Denrée périssable : non reprise ni échange conformément à la réglementation en vigueur.</p>
+                <p className="pdp__shipping-warning">Denrée périssable : non reprise ni échange conformément à la réglementation en vigueur.</p>
               ) : (
                 <p>Retour possible sous 14 jours si le produit est non ouvert et dans son emballage d&apos;origine.</p>
               )}
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       <Footer theme={theme} />
     </div>

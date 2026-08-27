@@ -63,6 +63,7 @@ export default function CookieConsent() {
       </p>
       <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
         <button
+          type="button"
           onClick={refuse}
           style={{
             padding: '8px 18px',
@@ -78,6 +79,7 @@ export default function CookieConsent() {
           Refuser
         </button>
         <button
+          type="button"
           onClick={accept}
           style={{
             padding: '8px 18px',
@@ -90,7 +92,7 @@ export default function CookieConsent() {
             cursor: 'pointer',
           }}
         >
-          Accepter
+          Oui, j&apos;accepte
         </button>
       </div>
     </div>

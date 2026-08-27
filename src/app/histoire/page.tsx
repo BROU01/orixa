@@ -49,7 +49,7 @@ export default async function HistoirePage() {
             Notre Philosophie & Nos Coopératives
           </h2>
           <p style={{ marginBottom: '20px' }}>
-            Fondée par la cliente Kalipé (« La Grâce »), la maison s&apos;approvisionne directement auprès de groupements de femmes et de producteurs locaux au Burkina Faso (beurres de karité bruts de Koudougou), au Sénégal (fleurs d&apos;hibiscus séchées), en Côte d&apos;Ivoire et au Maroc.
+            Fondée par une passion pour les savoir-faire et les trésors naturels d&apos;Afrique, la maison s&apos;approvisionne directement auprès de groupements de femmes et de producteurs locaux au Burkina Faso (beurres de karité bruts de Koudougou), au Sénégal (fleurs d&apos;hibiscus séchées), en Côte d&apos;Ivoire et au Maroc.
           </p>
 
           <p style={{ marginBottom: '20px' }}>
@@ -63,9 +63,9 @@ export default async function HistoirePage() {
             Chaque achat soutient directement l&apos;émancipation économique des femmes collectrices dans les villages partenaires. En supprimant les intermédiaires spéculatifs, nous garantissons une juste rémunération à la source et des prix accessibles pour nos clients en Europe.
           </p>
 
-          <div className="p-6 my-8 rounded-xl border border-[var(--line)]" style={{ background: 'var(--paper-2)' }}>
+          <div className="history-quality">
             <h3 className="h-display h3" style={{ marginBottom: '8px' }}>L&apos;Engagement Qualité MAISON LA GRACE</h3>
-            <ul className="space-y-2 text-sm" style={{ listStyle: 'disc', paddingLeft: '20px' }}>
+            <ul className="history-quality__list">
               <li>100% Ingrédients bruts d&apos;origine contrôlée</li>
               <li>Traçabilité totale du producteur au flacon</li>
               <li>Emballages recyclables et expédition neutre en carbone</li>
