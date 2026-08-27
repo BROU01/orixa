@@ -1,9 +1,16 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import CookieConsent from '@/components/CookieConsent';
 import './globals.css';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#F1FEC8',
+};
 const SITE_URL = 'https://maisonlagrace.fr';
 
 export const metadata: Metadata = {

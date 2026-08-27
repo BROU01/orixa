@@ -115,7 +115,7 @@ export default function HeaderClient({ menu, theme }: HeaderClientProps) {
           <div className="header__actions">
             
             {/* Multi-Currency Dropdown */}
-            <div style={{ position: 'relative' }}>
+            <div className="header__currency" style={{ position: 'relative' }}>
               <button
                 type="button"
                 onClick={() => setCurrencyOpen(!currencyOpen)}
@@ -223,6 +223,20 @@ export default function HeaderClient({ menu, theme }: HeaderClientProps) {
             <a href="/compte" onClick={() => setMobileMenuOpen(false)}>
               Mon compte / Connexion
             </a>
+            <div className="mobile-nav__currency">
+              <label htmlFor="mobile-currency">Devise</label>
+              <select
+                id="mobile-currency"
+                className="mobile-nav__currency-select"
+                value={currency}
+                onChange={(event) => handleSelectCurrency(event.target.value)}
+                aria-label="Choisir la devise"
+              >
+                {Object.values(ORIXA_CURRENCIES).map((c) => (
+                  <option key={c.code} value={c.code}>{c.code} — {c.name}</option>
+                ))}
+              </select>
+            </div>
           </nav>
         )}
       </header>
