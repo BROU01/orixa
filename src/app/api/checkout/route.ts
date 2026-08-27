@@ -1,7 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getDiscounts, getProducts } from '@/lib/data';
+import { getProducts, getDiscounts } from '@/lib/data';
+import { isBodyTooLarge, isJsonRequest } from '@/lib/request-security';
 
 export async function POST(request: Request) {
+  if (!isJsonRequest(request)) {
+    return NextResponse.json({ error: 'Type de contenu non pris en charge.' }, { status: 415 });
+  }
+  if (isBodyTooLarge(request)) {
+    return NextResponse.json({ error: 'Requête trop volumineuse.' }, { status: 413 });
+  }
+
   try {
     const body = await request.json();
     const { items, promoCode } = body;

@@ -3,6 +3,7 @@
 import { useState, FormEvent, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { getSafeInternalPath } from '@/lib/redirect';
 
 /**
  * Vérifie si Supabase est correctement configuré.
@@ -22,7 +23,7 @@ function isSupabaseConfigured(): boolean {
 
 function AdminLoginForm() {
   const searchParams = useSearchParams();
-  const next = searchParams.get('next') || '/admin';
+  const next = getSafeInternalPath(searchParams.get('next'), '/admin');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

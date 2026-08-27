@@ -3,11 +3,12 @@
 import { useState, FormEvent, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { getSafeInternalPath } from '@/lib/redirect';
 
 function CompteLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get('redirect') || '/';
+  const redirectUrl = getSafeInternalPath(searchParams.get('redirect'), '/');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

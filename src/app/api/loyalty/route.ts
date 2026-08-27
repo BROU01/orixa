@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isBodyTooLarge, isJsonRequest } from '@/lib/request-security';
 
 /**
  * POST /api/loyalty — Traiter une commande payée
@@ -11,6 +12,13 @@ import { NextResponse } from 'next/server';
  * le localStorage. Cette route est un hook pour une future DB.
  */
 export async function POST(request: Request) {
+  if (!isJsonRequest(request)) {
+    return NextResponse.json({ error: 'Type de contenu non pris en charge.' }, { status: 415 });
+  }
+  if (isBodyTooLarge(request)) {
+    return NextResponse.json({ error: 'Requête trop volumineuse.' }, { status: 413 });
+  }
+
   try {
     const body = await request.json();
     const { action } = body;

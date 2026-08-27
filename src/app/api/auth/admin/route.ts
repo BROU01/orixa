@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
+import { constantTimeEqual, createAdminSessionToken } from '@/lib/admin-session';
+import { isBodyTooLarge, isJsonRequest } from '@/lib/request-security';
 
 /**
  * POST /api/auth/admin — Authentification admin (mode démo, sans Supabase)
@@ -9,6 +11,13 @@ import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
  * Les credentials sont vérifiés uniquement ici.
  */
 export async function POST(request: Request) {
+  if (!isJsonRequest(request)) {
+    return NextResponse.json({ error: 'Type de contenu non pris en charge.' }, { status: 415, headers: { 'Cache-Control': 'no-store' } });
+  }
+  if (isBodyTooLarge(request)) {
+    return NextResponse.json({ error: 'Requête trop volumineuse.' }, { status: 413, headers: { 'Cache-Control': 'no-store' } });
+  }
+
   // Rate limiting : 5 tentatives / 15 minutes / IP
   const key = getRateLimitKey(request, 'admin-login');
   const { limited, retryAfter } = rateLimit(key, { windowMs: 15 * 60_000, max: 5 });
@@ -31,6 +40,19 @@ export async function POST(request: Request) {
       );
     }
 
+    if (email.length > 254 || password.length > 256) {
+      return NextResponse.json({ error: 'Identifiants incorrects.' }, { status: 401, headers: { 'Cache-Control': 'no-store' } });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const accountLimit = rateLimit(`admin-login-account:${normalizedEmail}`, { windowMs: 15 * 60_000, max: 5 });
+    if (accountLimit.limited) {
+      return NextResponse.json(
+        { error: 'Trop de tentatives. Réessayez dans 15 minutes.' },
+        { status: 429, headers: { 'Retry-After': String(accountLimit.retryAfter), 'Cache-Control': 'no-store' } }
+      );
+    }
+
     // Credentials admin — uniquement côté serveur
     const adminEmail = process.env.ADMIN_EMAIL || 'admin@2026.fr';
     const adminPassword = process.env.ADMIN_PASSWORD || '';
@@ -43,9 +65,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // Vérification timing-safe (basique)
-    const emailMatch = email.toLowerCase() === adminEmail.toLowerCase();
-    const passMatch = password === adminPassword;
+    // Comparaison du secret sans sortie anticipée sur le contenu.
+    const emailMatch = normalizedEmail === adminEmail.trim().toLowerCase();
+    const passMatch = constantTimeEqual(password, adminPassword);
 
     if (!emailMatch || !passMatch) {
       // Délai aléatoire pour éviter le timing attack
@@ -56,17 +78,12 @@ export async function POST(request: Request) {
       );
     }
 
-    // Succès — on retourne un token signé (simple pour le mode démo)
-    // En production, utiliser Supabase Auth avec session httpOnly
-    const token = Buffer.from(
-      JSON.stringify({
-        email: adminEmail,
-        role: 'admin',
-        exp: Date.now() + 8 * 60 * 60 * 1000, // 8 heures
-      })
-    ).toString('base64');
-
-    const response = NextResponse.json({ success: true });
+    // Succès — session HMAC vérifiable côté middleware.
+    // Sans secret serveur, le mode démo reste désactivé.
+    const token = await createAdminSessionToken(adminEmail);
+    const response = NextResponse.json({ success: true }, {
+      headers: { 'Cache-Control': 'no-store' },
+    });
 
     // Cookie httpOnly sécurisé
     response.cookies.set('orixa:admin-session', token, {
@@ -81,7 +98,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       { error: 'Erreur interne.' },
-      { status: 500 }
+      { status: 500, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 }
