@@ -81,6 +81,30 @@ Si ces conditions ne sont pas remplies, il redirige vers `/admin/login`.
 | `ADMIN_PASSWORD` | Mot de passe du mode démo admin | Serveur uniquement |
 | `ADMIN_SESSION_SECRET` | Secret HMAC aléatoire d'au moins 32 caractères | Serveur uniquement |
 | `NEXT_PUBLIC_SITE_URL` | URL publique utilisée pour les liens d'authentification | Client + Serveur |
+| `SUPABASE_SERVICE_ROLE_KEY` | Clé service role Supabase — persistance réelle des commandes/avis/fournisseurs | Serveur uniquement |
+| `RESEND_API_KEY` | Optionnel — active les e-mails transactionnels (commande, contact) | Serveur uniquement |
+| `EMAIL_FROM` | Optionnel — adresse d'expédition des e-mails transactionnels | Serveur uniquement |
+| `CONTACT_NOTIFICATION_EMAIL` | Optionnel — adresse recevant les notifications de contact/commande | Serveur uniquement |
+
+## 🧾 Commandes, avis, fournisseurs — mise en route
+
+Avant que les commandes passées par les clients, les avis produits et les
+fournisseurs ne soient réellement enregistrés (au lieu de rester uniquement
+dans le navigateur du client ou d'afficher des données de démonstration
+dans l'admin) :
+
+1. Exécutez une fois `supabase/schema.sql` dans l'éditeur SQL de votre
+   projet Supabase (crée les tables `orders`, `reviews`, `suppliers`,
+   `activity_log`, `contact_messages`, RLS activé sans policy publique).
+2. Renseignez `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API) dans
+   `.env.local` et dans les variables d'environnement Vercel.
+3. Optionnel : renseignez `RESEND_API_KEY` pour activer les e-mails de
+   confirmation de commande et de contact.
+
+Tant que `SUPABASE_SERVICE_ROLE_KEY` n'est pas configurée, le site continue
+de fonctionner (le tunnel de commande confirme toujours la commande côté
+client), mais les pages Admin → Commandes/Statistiques/Clients/Avis/
+Fournisseurs/Journal affichent un bandeau d'avertissement et restent vides.
 
 ## 🔄 Migration depuis le site statique
 

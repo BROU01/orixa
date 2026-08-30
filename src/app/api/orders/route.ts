@@ -2,8 +2,11 @@ import { NextResponse } from 'next/server';
 import { getProducts, getDiscounts } from '@/lib/data';
 import { createOrder } from '@/lib/orders';
 import { logActivity } from '@/lib/activity';
+import { sendEmail } from '@/lib/email';
 import { rateLimit, getRateLimitKey } from '@/lib/rate-limit';
 import { isBodyTooLarge, isJsonRequest } from '@/lib/request-security';
+
+const BUSINESS_EMAIL = process.env.CONTACT_NOTIFICATION_EMAIL || 'maroquinerie.lagrace@gmail.com';
 
 const MAX_TEXT_FIELD = 200;
 
@@ -116,6 +119,32 @@ export async function POST(request: Request) {
     if (persisted) {
       await logActivity('Système', 'Nouvelle commande reçue', `#${id}`, 'system');
     }
+
+    const itemsHtml = validatedItems
+      .map((i) => `<li>${i.qty} × ${i.nom} — ${(i.prix * i.qty).toFixed(2)} €</li>`)
+      .join('');
+
+    // E-mails best-effort : une commande valide n'est jamais bloquée par un envoi qui échoue.
+    await sendEmail({
+      to: customerEmail,
+      subject: `Confirmation de votre commande #${id} — MAISON LA GRACE`,
+      html: `
+        <p>Bonjour ${customerName},</p>
+        <p>Merci pour votre commande <strong>#${id}</strong> ! Voici son récapitulatif :</p>
+        <ul>${itemsHtml}</ul>
+        <p>Sous-total : ${subtotal.toFixed(2)} €<br />
+        Livraison : ${shipping === 0 ? 'Offerte' : `${shipping.toFixed(2)} €`}<br />
+        ${discount > 0 ? `Remise : -${discount.toFixed(2)} €<br />` : ''}
+        <strong>Total : ${total.toFixed(2)} €</strong></p>
+        <p>Livraison à : ${address}, ${postalCode} ${city}, ${country}</p>
+        <p>Nous préparons votre commande avec soin.<br />— L'équipe MAISON LA GRACE</p>
+      `,
+    });
+    await sendEmail({
+      to: BUSINESS_EMAIL,
+      subject: `Nouvelle commande #${id} — ${total.toFixed(2)} €`,
+      html: `<p>${customerName} (${customerEmail}) vient de passer la commande #${id} pour un total de ${total.toFixed(2)} €.</p><ul>${itemsHtml}</ul>`,
+    });
 
     return NextResponse.json({
       success: true,
