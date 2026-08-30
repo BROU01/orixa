@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { Theme } from '@/types';
 
 /**
@@ -64,7 +65,7 @@ export default function Footer({ theme }: FooterProps) {
           {/* Brand Col + Socials */}
           <div className="site-footer__brand">
             <a href="/" aria-label="MAISON LA GRACE">
-              <img src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" style={{ height: '40px', width: 'auto' }} />
+              <Image src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" width={160} height={40} style={{ height: '40px', width: 'auto' }} unoptimized />
             </a>
             <p className="site-footer__about" data-footer-about>
               {theme?.footerAbout || 'Cosmétiques naturels et produits exotiques sélectionnés avec soin, livrés partout en Europe depuis notre atelier.'}

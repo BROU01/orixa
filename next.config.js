@@ -2,6 +2,12 @@
 const isProduction = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.supabase.co' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
+  },
   // ── Security Headers ──
   async headers() {
     return [

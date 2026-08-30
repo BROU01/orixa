@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import type { MenuItem, Theme } from '@/types';
 import { ORIXA_CURRENCIES, getVisitorCurrency, setVisitorCurrency } from '@/lib/currency';
 
@@ -95,7 +96,7 @@ export default function HeaderClient({ menu, theme }: HeaderClientProps) {
           
           {/* Logo Original */}
           <a href="/" className="brand__mark" aria-label="MAISON LA GRACE, accueil">
-            <img src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" style={{ height: '56px', width: 'auto' }} />
+            <Image src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" width={224} height={56} style={{ height: '56px', width: 'auto' }} unoptimized priority />
           </a>
 
           {/* Navigation principale */}

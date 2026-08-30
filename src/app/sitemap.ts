@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getProducts } from '@/lib/data';
-
-const BASE = 'https://orixa.fr';
+import { SITE_URL as BASE } from '@/lib/site';
 
 /** Pages statiques publiques */
 const STATIC_PAGES: MetadataRoute.Sitemap = [
@@ -27,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getProducts();
 
   const productPages: MetadataRoute.Sitemap = products.map((p) => ({
-    url: `${BASE}/produit?id=${p.id}`,
+    url: `${BASE}/produit/${p.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,

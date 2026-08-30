@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import type { Product } from '@/types';
-import { getProducts, getTheme, getMenu } from '@/lib/data';
-import ProductDetail from '@/components/ProductDetail';
+import { getProducts } from '@/lib/data';
 
 interface ProduitPageProps {
   searchParams: Promise<{
@@ -10,21 +9,17 @@ interface ProduitPageProps {
 }
 
 /**
- * Page produit rendue côté serveur : les données sont disponibles dès la
- * première réponse et la fiche ne passe plus par un écran « Chargement ».
+ * Ancienne URL `/produit?id=...` — conservée pour ne pas casser les liens déjà
+ * partagés ou indexés. Redirige de façon permanente vers `/produit/[slug]`.
  */
-export default async function ProduitPage({ searchParams }: ProduitPageProps) {
+export default async function ProduitLegacyPage({ searchParams }: ProduitPageProps) {
   const { id } = await searchParams;
   if (!id) notFound();
 
-  const [products, menu, theme] = await Promise.all([
-    getProducts(),
-    getMenu(),
-    getTheme(),
-  ]);
+  const products = await getProducts();
   const product = products.find((item: Product) => item.id === id);
 
   if (!product) notFound();
 
-  return <ProductDetail product={product} menu={menu} theme={theme} />;
+  permanentRedirect(`/produit/${product.slug}`);
 }

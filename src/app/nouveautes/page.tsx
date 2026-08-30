@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getProducts, getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -54,8 +55,8 @@ export default async function NouveautesPage() {
             {newProducts.map((product: Product) => (
               <div key={product.id} className="prod-card">
                 <div className="prod-card__media">
-                  <img src={product.img} alt={product.nom} loading="lazy" />
-                  {product.labelImg && <img src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" loading="lazy" />}
+                  <Image src={product.img} alt={product.nom} fill sizes="(max-width: 640px) 50vw, 280px" style={{ objectFit: 'cover' }} />
+                  {product.labelImg && <Image src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" fill sizes="(max-width: 640px) 50vw, 280px" style={{ objectFit: 'cover' }} />}
                   <span className="prod-card__badge badge badge--new">
                     Nouveau
                   </span>
@@ -63,12 +64,12 @@ export default async function NouveautesPage() {
                 <div className="prod-card__body">
                   <span className="origine">{product.origine}</span>
                   <h3 className="prod-card__name">
-                    <a href={`/produit?id=${product.id}`}>{product.nom}</a>
+                    <a href={`/produit/${product.slug}`}>{product.nom}</a>
                   </h3>
                   <p className="prod-card__meta">{product.unite}</p>
                   <div className="prod-card__foot">
                     <PriceTag amount={product.prix} className="prod-card__price" />
-                    <a href={`/produit?id=${product.id}`} className="btn btn--primary btn--sm">
+                    <a href={`/produit/${product.slug}`} className="btn btn--primary btn--sm">
                       Découvrir
                     </a>
                   </div>

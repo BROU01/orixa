@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getProducts, getTheme, getMenu } from '@/lib/data';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -72,9 +73,9 @@ export default async function CosmetiquesPage() {
             {cosmeticsProducts.map((product: Product) => (
               <div key={product.id} className="prod-card">
                 <div className="prod-card__media">
-                  <a href={`/produit?id=${product.id}`} aria-label={product.nom}>
-                    <img src={product.img} alt={product.nom} loading="lazy" />
-                    {product.labelImg && <img src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" loading="lazy" />}
+                  <a href={`/produit/${product.slug}`} aria-label={product.nom}>
+                    <Image src={product.img} alt={product.nom} fill sizes="(max-width: 640px) 50vw, 280px" style={{ objectFit: 'cover' }} />
+                    {product.labelImg && <Image src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" fill sizes="(max-width: 640px) 50vw, 280px" style={{ objectFit: 'cover' }} />}
                   </a>
                   {product.badge && (
                     <span className={`prod-card__badge badge ${product.badge === 'Nouveau' ? 'badge--new' : 'badge--promo'}`}>
@@ -85,12 +86,12 @@ export default async function CosmetiquesPage() {
                 <div className="prod-card__body">
                   <span className="origine">{product.origine}</span>
                   <h3 className="prod-card__name">
-                    <a href={`/produit?id=${product.id}`}>{product.nom}</a>
+                    <a href={`/produit/${product.slug}`}>{product.nom}</a>
                   </h3>
                   {/* Pas de prod-card__meta (unite) pour les cosmétiques */}
                   <div className="prod-card__foot">
                     <PriceTag amount={product.prix} className="prod-card__price" />
-                    <a href={`/produit?id=${product.id}`} className="btn btn--primary btn--sm">
+                    <a href={`/produit/${product.slug}`} className="btn btn--primary btn--sm">
                       Découvrir
                     </a>
                   </div>

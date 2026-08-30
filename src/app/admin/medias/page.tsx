@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import type { Media } from '@/types';
 import { getMedia } from '@/lib/data';
 
@@ -134,7 +135,9 @@ export default function AdminMediasPage() {
           <div className="mgrid">
             {filtered.map((m, i) => (
               <div key={i} className="mgrid__i" style={{ position: 'relative' }}>
-                <img src={m.src} alt={m.name} loading="lazy" style={{ width: '100%', height: '120px', objectFit: 'cover' }} />
+                <div style={{ position: 'relative', width: '100%', height: '120px' }}>
+                  <Image src={m.src} alt={m.name} fill sizes="(max-width: 640px) 45vw, 180px" style={{ objectFit: 'cover' }} />
+                </div>
                 <span style={{ padding: '6px 8px', fontSize: '11px', color: 'var(--a-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
                   {m.name}
                 </span>

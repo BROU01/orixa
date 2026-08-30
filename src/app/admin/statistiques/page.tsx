@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 /* ── Données de démonstration ── */
 const KPI = {
@@ -208,7 +209,7 @@ export default function AdminStatistiquesPage() {
               {TOP_PROD.map((p, i) => (
                 <div key={i} className="rank__i">
                   <span className={`rank__n ${i < 3 ? 'rank__n--top' : ''}`}>{i + 1}</span>
-                  <img className="rank__img" src={p.img} alt={p.nom} />
+                  <Image className="rank__img" src={p.img} alt={p.nom} width={32} height={32} />
                   <div className="rank__info">
                     <div className="rank__name">{p.nom}</div>
                     <div className="rank__meta">{p.ventes} unités vendues</div>

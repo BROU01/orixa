@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import type { Product, MenuItem, Theme } from '@/types';
 import { getMenu, getTheme } from '@/lib/data';
 import Header from '@/components/Header';
@@ -93,8 +94,8 @@ export default function FavorisPage() {
             {favs.map((product) => (
               <div key={product.id} className="prod-card">
                 <div className="prod-card__media">
-                  <img src={product.img} alt={product.nom} loading="lazy" />
-                  {product.labelImg && <img src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" loading="lazy" />}
+                  <Image src={product.img} alt={product.nom} fill sizes="(max-width: 640px) 50vw, 280px" style={{ objectFit: 'cover' }} />
+                  {product.labelImg && <Image src={product.labelImg} alt={`${product.nom} étiquette`} className="prod-card__label" fill sizes="(max-width: 640px) 50vw, 280px" style={{ objectFit: 'cover' }} />}
                   <button
                     type="button"
                     onClick={() => removeFav(product.id)}
@@ -109,7 +110,7 @@ export default function FavorisPage() {
                 <div className="prod-card__body">
                   <span className="origine">{product.origine}</span>
                   <h3 className="prod-card__name">
-                    <a href={`/produit?id=${product.id}`}>{product.nom}</a>
+                    <a href={product.slug ? `/produit/${product.slug}` : `/produit?id=${product.id}`}>{product.nom}</a>
                   </h3>
                   <p className="prod-card__meta">{product.unite}</p>
                   <div className="prod-card__foot">

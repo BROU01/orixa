@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getProducts, getCategories } from '@/lib/data';
 
 /**
@@ -134,7 +135,7 @@ export default async function AdminDashboard() {
                       <tr key={p.id}>
                         <td>
                           <div className="cell-prod">
-                            <img className="thumb" src={p.img} alt={p.nom} />
+                            <Image className="thumb" src={p.img} alt={p.nom} width={38} height={38} />
                             <div>
                               <div className="cell-prod__name">{p.nom}</div>
                               <div className="cell-prod__meta">{p.unite}</div>

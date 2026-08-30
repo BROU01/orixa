@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import Image from 'next/image';
 import type { Product, Category, Media } from '@/types';
 import { getProducts, getCategories, getMedia } from '@/lib/data';
 
@@ -206,7 +207,7 @@ export default function AdminProduitsPage() {
                     <td><input type="checkbox" checked={selected.has(p.id)} onChange={() => toggleSelect(p.id)} aria-label={'Sélectionner ' + p.nom} /></td>
                     <td>
                       <div className="cell-prod">
-                        <img className="thumb" src={p.img} alt="" />
+                        <Image className="thumb" src={p.img} alt="" width={38} height={38} />
                         <div>
                           <div className="cell-prod__name">{p.nom}</div>
                           <div className="cell-prod__meta">{p.unite}{p.badge ? ' · ' + p.badge : ''}</div>
@@ -291,7 +292,7 @@ export default function AdminProduitsPage() {
               <label className="f__label" htmlFor="m-img">Image</label>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 {form.img ? (
-                  <img src={form.img} alt="" style={{ width: '48px', height: '48px', borderRadius: '6px', objectFit: 'cover', border: '1px solid var(--a-line)' }} />
+                  <Image src={form.img} alt="" width={48} height={48} style={{ width: '48px', height: '48px', borderRadius: '6px', objectFit: 'cover', border: '1px solid var(--a-line)' }} />
                 ) : (
                   <div style={{ width: '48px', height: '48px', borderRadius: '6px', border: '1px dashed var(--a-line)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: 'var(--a-muted)' }}>Aucune</div>
                 )}
@@ -329,7 +330,9 @@ export default function AdminProduitsPage() {
                   onClick={() => { setForm(f => ({ ...f, img: m.src })); setShowMediaPicker(false); }}
                   style={{ padding: 0, border: '2px solid var(--a-line)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', background: 'var(--a-surface)', textAlign: 'left' }}
                 >
-                  <img src={m.src} alt="" loading="lazy" style={{ width: '100%', height: '70px', objectFit: 'cover', display: 'block' }} />
+                  <div style={{ position: 'relative', width: '100%', height: '70px' }}>
+                    <Image src={m.src} alt="" fill sizes="90px" style={{ objectFit: 'cover' }} />
+                  </div>
                   <span style={{ padding: '4px 6px', fontSize: '10px', color: 'var(--a-muted)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
                 </button>
               ))}

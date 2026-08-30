@@ -2,6 +2,7 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import type { MenuItem, Theme } from '@/types';
 import { getMenu, getTheme } from '@/lib/data';
 import Header from '@/components/Header';
@@ -535,7 +536,7 @@ export default function CommandeCheckoutPage() {
               <div className="space-y-4 max-h-80 overflow-y-auto pr-1">
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center justify-between gap-3 text-xs border-b border-[var(--line)] pb-3">
-                    <img src={item.img} alt={item.nom} className="w-12 h-12 rounded object-cover border border-[var(--line)]" />
+                    <Image src={item.img} alt={item.nom} width={48} height={48} className="w-12 h-12 rounded object-cover border border-[var(--line)]" />
                     <div className="flex-1">
                       <p className="font-bold text-sm">{item.nom}</p>
                       <div className="flex items-center gap-2 mt-1">

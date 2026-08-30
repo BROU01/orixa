@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import type { MenuItem, Product, Theme } from '@/types';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -73,6 +74,7 @@ export default function ProductDetail({ product, menu, theme }: ProductDetailPro
       } else {
         favs.push({
           id: product.id,
+          slug: product.slug,
           nom: product.nom,
           prix: product.prix,
           img: product.img,
@@ -90,10 +92,10 @@ export default function ProductDetail({ product, menu, theme }: ProductDetailPro
 
   const slides = [
     <div key="photo" className="pdp__slide">
-      <img src={product.img} alt={product.nom} />
+      <Image src={product.img} alt={product.nom} fill sizes="(max-width: 900px) 100vw, 560px" style={{ objectFit: 'cover' }} priority />
     </div>,
     <div key="sticker" className="pdp__slide pdp__slide--sticker">
-      <img src={product.img} alt="" aria-hidden="true" />
+      <Image src={product.img} alt="" aria-hidden="true" fill sizes="(max-width: 900px) 100vw, 560px" style={{ objectFit: 'cover' }} />
       <div className="pdp__slide-overlay">
         <div className="pdp__sticker">
           {product.badge || 'Sélection MAISON LA GRACE'}
@@ -101,7 +103,7 @@ export default function ProductDetail({ product, menu, theme }: ProductDetailPro
       </div>
     </div>,
     <div key="combo" className="pdp__slide pdp__slide--combo">
-      <img src={product.img} alt="" aria-hidden="true" />
+      <Image src={product.img} alt="" aria-hidden="true" fill sizes="(max-width: 900px) 100vw, 560px" style={{ objectFit: 'cover' }} />
       <div className="pdp__slide-gradient" />
       <div className="pdp__slide-caption">
         <p>{product.nom}</p>

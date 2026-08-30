@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
+import Image from 'next/image';
 
 /**
  * Sidebar admin — navigation complète fidèle au projet orixa-site-complet.
@@ -23,7 +24,7 @@ export default function Sidebar() {
     <aside className="side">
       <div className="side__brand">
         <a href="/" style={{ display: 'block', lineHeight: 0 }}>
-          <img src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" style={{ height: '42px', width: 'auto', filter: 'brightness(0) invert(1)' }} />
+          <Image src="/logo-maison-la-grace.svg" alt="MAISON LA GRACE" width={168} height={42} style={{ height: '42px', width: 'auto', filter: 'brightness(0) invert(1)' }} unoptimized />
         </a>
         <span className="side__role">Administration</span>
       </div>
