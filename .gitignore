@@ -4,6 +4,11 @@ node_modules/
 out/
 *.tsbuildinfo
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+
 # Environment — ne jamais versionner de secrets
 .env
 .env.*
