@@ -1670,6 +1670,82 @@ body { font-size: var(--base-size); }
   font-weight: 600;
 }
 
+/* ---------------- AVIS PRODUIT ---------------- */
+.pdp-reviews {
+  margin-top: var(--s8);
+  padding-top: var(--s6);
+  border-top: 1px solid var(--line);
+  max-width: 720px;
+}
+
+.pdp-reviews__summary {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  margin-bottom: var(--s5);
+}
+
+.pdp-reviews__stars { color: #B8862E; font-size: 15px; letter-spacing: 1px; }
+
+.pdp-reviews__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  margin-bottom: var(--s6);
+}
+
+.pdp-reviews__item {
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-2);
+}
+
+.pdp-reviews__item-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.pdp-reviews__author { font-weight: 700; color: var(--ink); }
+.pdp-reviews__date { margin-left: auto; color: var(--muted); font-size: 12px; }
+.pdp-reviews__comment { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+.pdp-reviews__empty { color: var(--muted); font-size: 13.5px; margin-bottom: var(--s6); }
+
+.pdp-reviews__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.pdp-reviews__form-row { display: flex; flex-direction: column; gap: 6px; }
+.pdp-reviews__form-row label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2); }
+.pdp-reviews__form-row input,
+.pdp-reviews__form-row textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--paper);
+  color: var(--ink);
+}
+.pdp-reviews__rating { display: flex; gap: 4px; }
+.pdp-reviews__rating button {
+  background: none; border: none; cursor: pointer; padding: 2px;
+  font-size: 20px; line-height: 1; color: var(--line-strong);
+}
+.pdp-reviews__rating button.is-active { color: #B8862E; }
+.pdp-reviews__form-msg { font-size: 13px; }
+.pdp-reviews__form-msg--ok { color: var(--brand, #2f6e46); }
+.pdp-reviews__form-msg--error { color: var(--brick); }
+
 @media (max-width: 620px) {
   .pdp__actions { grid-template-columns: 1fr; }
   .pdp__slide-caption { right: 16px; bottom: 16px; left: 16px; }

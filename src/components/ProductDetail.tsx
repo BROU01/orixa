@@ -3,17 +3,20 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import type { MenuItem, Product, Theme } from '@/types';
+import type { ReviewRow } from '@/lib/reviews';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PriceTag from '@/components/PriceTag';
+import ProductReviews from '@/components/ProductReviews';
 
 interface ProductDetailProps {
   product: Product;
   menu: MenuItem[];
   theme: Theme;
+  reviews?: ReviewRow[];
 }
 
-export default function ProductDetail({ product, menu, theme }: ProductDetailProps) {
+export default function ProductDetail({ product, menu, theme, reviews = [] }: ProductDetailProps) {
   const [qte, setQte] = useState(1);
   const [slideIndex, setSlideIndex] = useState(0);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -203,6 +206,8 @@ export default function ProductDetail({ product, menu, theme }: ProductDetailPro
             </div>
           </div>
         </div>
+
+        <ProductReviews productId={product.id} productName={product.nom} reviews={reviews} />
       </main>
 
       <Footer theme={theme} />

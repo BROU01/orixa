@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { Product } from '@/types';
 import { getProducts, getTheme, getMenu } from '@/lib/data';
+import { listApprovedReviewsForProduct } from '@/lib/reviews';
 import { SITE_URL } from '@/lib/site';
 import ProductDetail from '@/components/ProductDetail';
 
@@ -61,7 +62,9 @@ export default async function ProduitPage({ params }: ProduitPageProps) {
 
   if (!product) notFound();
 
-  const jsonLd = {
+  const reviews = await listApprovedReviewsForProduct(product.id);
+
+  const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.nom,
@@ -78,13 +81,21 @@ export default async function ProduitPage({ params }: ProduitPageProps) {
     },
   };
 
+  if (reviews.length > 0) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1),
+      reviewCount: reviews.length,
+    };
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductDetail product={product} menu={menu} theme={theme} />
+      <ProductDetail product={product} menu={menu} theme={theme} reviews={reviews} />
     </>
   );
 }

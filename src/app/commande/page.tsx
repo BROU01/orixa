@@ -225,8 +225,25 @@ export default function CommandeCheckoutPage() {
     if (items.length === 0) return;
     setLoading(true);
 
-    const ref = `ORX-${Math.floor(100000 + Math.random() * 900000)}`;
     const sub = items.reduce((sum, i) => sum + i.prix * i.qty, 0);
+    let ref = `MLG-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items,
+          promoCode,
+          customer: { firstName, lastName, email, address, city, postalCode, country },
+          delivery: { method: deliveryMethod, paymentMethod },
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success && data.id) {
+        ref = data.id;
+      }
+    } catch { /* la commande reste confirmée localement même si l'API est indisponible */ }
 
     const newOrder = {
       id: ref,

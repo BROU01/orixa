@@ -1,17 +1,8 @@
-/**
- * Page admin — Journal d'activité.
- * Historique des actions du back-office.
- */
-const DEMO_LOG = [
-  { user: 'Ama K.', action: 'Connexion', target: '', time: 'il y a 5 min', type: 'auth' },
-  { user: 'Ama K.', action: 'Modifié le produit', target: 'Beurre de karité pur', time: 'il y a 20 min', type: 'edit' },
-  { user: 'Ama K.', action: 'Ajouté un produit', target: 'Savon noir au lait', time: 'il y a 1h', type: 'create' },
-  { user: 'Système', action: 'Nouvelle commande reçue', target: '#ORX-2418', time: 'il y a 2h', type: 'system' },
-  { user: 'Ama K.', action: 'Modifié le thème', target: 'Couleur d\'accent', time: 'hier', type: 'edit' },
-  { user: 'Ama K.', action: 'Exporté un rapport', target: 'Ventes — juillet 2026', time: 'hier', type: 'export' },
-  { user: 'Système', action: 'Rupture de stock', target: 'Igname fléchée', time: 'il y a 2 jours', type: 'system' },
-  { user: 'Ama K.', action: 'Supprimé un code promo', target: 'TEST10', time: 'il y a 3 jours', type: 'delete' },
-];
+import { listActivity } from '@/lib/activity';
+import { isSupabaseAdminConfigured } from '@/lib/supabase-admin';
+import AdminJournalExport from './AdminJournalExport';
+export const dynamic = 'force-dynamic';
+
 
 const TYPE_COLOR: Record<string, string> = {
   auth: 'var(--a-ok)',
@@ -22,44 +13,71 @@ const TYPE_COLOR: Record<string, string> = {
   delete: 'var(--a-danger)',
 };
 
-export default function AdminJournalPage() {
+function timeAgo(iso: string): string {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const minutes = Math.floor(diffMs / 60_000);
+  if (minutes < 1) return 'à l’instant';
+  if (minutes < 60) return `il y a ${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `il y a ${hours} h`;
+  const days = Math.floor(hours / 24);
+  if (days === 1) return 'hier';
+  return `il y a ${days} jours`;
+}
+
+/**
+ * Page admin — Journal d'activité, alimenté par les évènements réels
+ * (commandes, avis, fournisseurs) via src/lib/activity.ts au lieu de
+ * données de démonstration.
+ */
+export default async function AdminJournalPage() {
+  const log = await listActivity();
+
   return (
     <div className="content">
       <div className="page-head">
         <div>
           <h2 className="page-title">Journal d&apos;activité</h2>
-          <p className="page-sub">Historique des actions effectuées dans le back-office.</p>
+          <p className="page-sub">Historique des évènements réels du back-office et de la boutique.</p>
         </div>
-        <button className="b b--default">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
-          Exporter
-        </button>
+        <AdminJournalExport entries={log} />
       </div>
 
-      <div className="card">
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {DEMO_LOG.map((l, i) => (
-            <div key={i} style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              padding: '12px 18px',
-              borderBottom: i < DEMO_LOG.length - 1 ? '1px solid var(--a-line)' : 'none',
-            }}>
-              <span style={{
-                width: '8px', height: '8px', borderRadius: '999px',
-                background: TYPE_COLOR[l.type] || 'var(--a-muted)',
-                flex: 'none',
-              }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ fontWeight: 600, fontSize: '13px' }}>{l.user}</span>
-                <span style={{ fontSize: '13px' }}> {l.action}</span>
-                {l.target && <span style={{ fontSize: '13px', color: 'var(--a-brand)' }}> {l.target}</span>}
-              </div>
-              <span style={{ fontSize: '11.5px', color: 'var(--a-muted)', whiteSpace: 'nowrap' }}>{l.time}</span>
-            </div>
-          ))}
+      {!isSupabaseAdminConfigured && (
+        <div className="note">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+          <span>SUPABASE_SERVICE_ROLE_KEY n&apos;est pas configuré : aucun évènement n&apos;est journalisé tant qu&apos;il ne l&apos;est pas.</span>
         </div>
+      )}
+
+      <div className="card">
+        {log.length === 0 ? (
+          <div className="empty-a">Aucune activité enregistrée pour le moment.</div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {log.map((l, i) => (
+              <div key={l.id} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '12px 18px',
+                borderBottom: i < log.length - 1 ? '1px solid var(--a-line)' : 'none',
+              }}>
+                <span style={{
+                  width: '8px', height: '8px', borderRadius: '999px',
+                  background: TYPE_COLOR[l.type] || 'var(--a-muted)',
+                  flex: 'none',
+                }} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ fontWeight: 600, fontSize: '13px' }}>{l.actor}</span>
+                  <span style={{ fontSize: '13px' }}> {l.action}</span>
+                  {l.target && <span style={{ fontSize: '13px', color: 'var(--a-brand)' }}> {l.target}</span>}
+                </div>
+                <span style={{ fontSize: '11.5px', color: 'var(--a-muted)', whiteSpace: 'nowrap' }}>{timeAgo(l.created_at)}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
