@@ -1,3 +1,21 @@
+/* Tailwind — utilitaires uniquement (grid-cols-*, p-*, space-y-*, lg:*…)
+   utilisés par certaines pages (commande, commandes, compte, legal, rayon).
+   Le layer "preflight" est volontairement omis : le reste du site a son
+   propre reset ci-dessous et ses propres styles de balises (h1, p, button…)
+   que le reset agressif de Tailwind casserait.
+
+   Ordre des layers déclaré explicitement : les règles CSS "non layered"
+   (tout le reste de ce fichier, dont .btn, .f__ctrl, .prod-card…) gagnent
+   toujours face à une règle "layered", quelle que soit sa spécificité — il
+   ne suffit donc pas de mettre les utilitaires Tailwind après le reset
+   `button { border: none; background: none; padding: 0 }` ci-dessous : ce
+   reset est déplacé dans le layer `reset` (le plus bas de l'ordre déclaré)
+   pour que les classes Tailwind (`border`, `bg-*`, `p-*`…) appliquées à un
+   <button> dans les pages ci-dessus puissent bien le surcharger. */
+@layer reset, theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 /* =========================================================
    MAISON LA GRACE — Design system (front office)
    Direction : Éditorial contemporain.
@@ -89,8 +107,12 @@ img { height: auto; }
 
 a { color: inherit; text-decoration: none; }
 
-button, input, select, textarea { font: inherit; color: inherit; }
-button { cursor: pointer; background: none; border: none; padding: 0; }
+/* Dans le layer `reset` (voir plus haut) : une classe utilitaire Tailwind
+   (border, bg-*, p-*…) appliquée à un <button> doit pouvoir le surcharger. */
+@layer reset {
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; background: none; border: none; padding: 0; }
+}
 
 ul, ol { list-style: none; margin: 0; padding: 0; }
 
