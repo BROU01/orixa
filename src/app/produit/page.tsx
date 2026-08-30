@@ -4,9 +4,9 @@ import { getProducts, getTheme, getMenu } from '@/lib/data';
 import ProductDetail from '@/components/ProductDetail';
 
 interface ProduitPageProps {
-  searchParams: {
+  searchParams: Promise<{
     id?: string;
-  };
+  }>;
 }
 
 /**
@@ -14,7 +14,7 @@ interface ProduitPageProps {
  * première réponse et la fiche ne passe plus par un écran « Chargement ».
  */
 export default async function ProduitPage({ searchParams }: ProduitPageProps) {
-  const id = searchParams.id;
+  const { id } = await searchParams;
   if (!id) notFound();
 
   const [products, menu, theme] = await Promise.all([
